@@ -267,6 +267,7 @@ APCRCMDts <- function(dataFrame) {
 }
 
 ## Test statistic for APCSSA ----
+#' @export
 APCSSAts <- function(dataFrame, numTrial) {
   ## Get the scaled, unstandardized test statistics
   APCCRAD <- APCCRADts(dataFrame)
@@ -281,6 +282,7 @@ APCSSAts <- function(dataFrame, numTrial) {
 }
 
 ## Test statistic for APCSSM ----
+#' @export
 APCSSMts <- function(dataFrame, numTrial) {
   ## Get the scaled, unstandardized test statistics
   APCCRMD <- APCCRMDts(dataFrame)
