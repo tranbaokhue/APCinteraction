@@ -11,10 +11,10 @@
 
 #' APCSSA
 #'
-#' @description This tests check All Possible Comparisons using rank-based calculations with alignment done using the average (mean).
+#' @description This test uses all possible crossed comparisons (APC) based on aligned ranks with alignment done using the average (mean).
 #'
-#' @param dataFrame Dataframe in long format with the observed values in the first column, Factor A in the second, and Factor B in column 3.
-#' @param numTrial Since the critical values are generated using simulations, this number lets the functions know which critical values we are comparing the test statistics to.
+#' @param dataFrame dataFrame should be in long format with the observed values in the first column, Factor A in the second, and Factor B in the third.
+#' @param numTrial Since the critical values are generated using simulations, this number lets the function know which critical values we are comparing the test statistics to.
 #' @return The output is the APCSSA test statistics, which is the maximum of standardized statistics APCCRA and APCRCA.
 #' @examples
 #' library(Rfit)
