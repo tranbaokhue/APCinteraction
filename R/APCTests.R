@@ -9,15 +9,17 @@
 
 ## Test statistic for APCSSA ----
 
-#' Title: APCSSA
+#' APCSSA
 #'
-#' @description A more detailed explanation of what the function does.
+#' @description This tests check All Possible Comparisons using rank-based calculations with alignment done using the average (mean).
 #'
-#' @param x Description of input parameter x
-#' @param y Description of input parameter y
-#' @return Description of the output
+#' @param dataFrame Dataframe in long format with the observed values in the first column, Factor A in the second, and Factor B in column 3.
+#' @param numTrial Since the critical values are generated using simulations, this number lets the functions know which critical values we are comparing the test statistics to.
+#' @return The output is the APCSSA test statistics, which is the maximum of standardized statistics APCCRA and APCRCA.
 #' @examples
-#' A(10, 20) # Example usage
+#' library(Rfit)
+#' data(BoxCox) # From Rfit Library
+#' APCSSAts(BoxCox)
 #'
 #' @export
 APCSSAts <- function(dataFrame, numTrial) {
