@@ -24,8 +24,8 @@
 #' @export
 APCSSAts <- function(dataFrame, numTrial) {
   ## Get the scaled, unstandardized test statistics
-  APCCRAD <- APCCRADts(dataFrame)
-  APCRCAD <- APCRCADts(dataFrame)
+  APCCRAD <- .APCCRADts(dataFrame)
+  APCRCAD <- .APCRCADts(dataFrame)
 
   ## Standardize and pick the max of the two
   APCCRADstar <- (APCCRAD - APCSSnullDist[1])/APCSSnullDist[2]
@@ -39,8 +39,8 @@ APCSSAts <- function(dataFrame, numTrial) {
 #' @export
 APCSSMts <- function(dataFrame, numTrial) {
   ## Get the scaled, unstandardized test statistics
-  APCCRMD <- APCCRMDts(dataFrame)
-  APCRCMD <- APCRCMDts(dataFrame)
+  APCCRMD <- .APCCRMDts(dataFrame)
+  APCRCMD <- .APCRCMDts(dataFrame)
 
   ## Standardize and pick the max of the two
   APCCRMDstar <- (APCCRMD - APCSSnullDist[5])/APCSSnullDist[6]

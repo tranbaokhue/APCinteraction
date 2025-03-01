@@ -7,15 +7,15 @@
 APCSSAts(dataFrame, numTrial)
 }
 \arguments{
-\item{dataFrame}{Dataframe in long format with the observed values in the first column, Factor A in the second, and Factor B in column 3.}
+\item{dataFrame}{dataFrame should be in long format with the observed values in the first column, Factor A in the second, and Factor B in the third.}
 
-\item{numTrial}{Since the critical values are generated using simulations, this number lets the functions know which critical values we are comparing the test statistics to.}
+\item{numTrial}{Since the critical values are generated using simulations, this number lets the function know which critical values we are comparing the test statistics to.}
 }
 \value{
 The output is the APCSSA test statistics, which is the maximum of standardized statistics APCCRA and APCRCA.
 }
 \description{
-This tests check All Possible Comparisons using rank-based calculations with alignment done using the average (mean).
+This test uses all possible crossed comparisons (APC) based on aligned ranks with alignment done using the average (mean).
 }
 \examples{
 library(Rfit)
