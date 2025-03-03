@@ -1,4 +1,4 @@
-#' Filter the existing null table for APCSSA based on I, J, K values for null mean & sd
+#' Filter the existing null table for APCCRA and APCRCA based on I, J, K values for null mean and standard deviations
 #'
 #' @param I The number of levels in factor A
 #' @param J The number of levels in factor B
@@ -30,7 +30,7 @@ filter_nullAPCSSA <- function(I1, J1, K1) {
   return(result)
 }
 
-#' Filter the existing null table for APCSSM based on I, J, K values for null mean & sd
+#' Filter the existing null table for APCCRM and APCRCM based on I, J, K values for null mean and standard deviations
 #'
 #' @param I The number of levels in factor A
 #' @param J The number of levels in factor B
@@ -69,8 +69,8 @@ filter_nullAPCSSM <- function(I1, J1, K1) {
 #' @param K The number of observations at each level of factor A and B
 #' @return A numeric vector of null values of length 100,000
 #' @export
-# Function to load APCSSA data
-load_APCSSA_data <- function(I, J, K) {
+# Function to load APCSSA null data
+load_APCSSAnull <- function(I, J, K) {
   # Construct the file name based on I, J, K
   file_name <- paste0("APCSSA Null Distribution ", I, "x", J, "x", K, "_100kSim.RData")
 
@@ -95,7 +95,7 @@ load_APCSSA_data <- function(I, J, K) {
 #' @return A numeric vector of null values of length 100,000
 #' @export
 # Function to load APCSSM data
-load_APCSSM_data <- function(I, J, K) {
+load_APCSSMnull <- function(I, J, K) {
   # Construct the file name based on I, J, K
   file_name <- paste0("APCSSM Null Distribution ", I, "x", J, "x", K, "_100kSim.RData")
 
