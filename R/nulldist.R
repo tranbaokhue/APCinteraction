@@ -62,7 +62,55 @@ filter_nullAPCSSM <- function(I1, J1, K1) {
   return(result)
 }
 
+#' Load standardized null for APCSSA to find critical values and approximate p-values later
+#'
+#' @param I The number of levels in factor A
+#' @param J The number of levels in factor B
+#' @param K The number of observations at each level of factor A and B
+#' @return A numeric vector of null values of length 100,000
+#' @export
+# Function to load APCSSA data
+load_APCSSA_data <- function(I, J, K) {
+  # Construct the file name based on I, J, K
+  file_name <- paste0("APCSSA Null Distribution ", I, "x", J, "x", K, "_100kSim.RData")
 
+  # Construct the full path to the file in extdata directory
+  file_path <- system.file("extdata", file_name, package = "APCinteraction")
+
+  # Check if the file exists before trying to load
+  if (file.exists(file_path)) {
+    # Load the data
+    load(file_path)
+    message("Loaded data from ", file_name)
+  } else {
+    stop("File not found: ", file_name)
+  }
+}
+
+#' Load standardized null for APCSSM to find critical values and approximate p-values later
+#'
+#' @param I The number of levels in factor A
+#' @param J The number of levels in factor B
+#' @param K The number of observations at each level of factor A and B
+#' @return A numeric vector of null values of length 100,000
+#' @export
+# Function to load APCSSM data
+load_APCSSM_data <- function(I, J, K) {
+  # Construct the file name based on I, J, K
+  file_name <- paste0("APCSSM Null Distribution ", I, "x", J, "x", K, "_100kSim.RData")
+
+  # Construct the full path to the file in extdata directory
+  file_path <- system.file("extdata", file_name, package = "APCinteraction")
+
+  # Check if the file exists before trying to load
+  if (file.exists(file_path)) {
+    # Load the data
+    load(file_path)
+    message("Loaded data from ", file_name)
+  } else {
+    stop("File not found: ", file_name)
+  }
+}
 
 
 
