@@ -2,7 +2,7 @@
 
 export(APCSSAts)
 export(APCSSMts)
-export(filter_nullAPCSSA)
-export(filter_nullAPCSSM)
-export(load_APCSSAnull)
-export(load_APCSSMnull)
+export(firstNullAPC_A)
+export(firstNullAPC_M)
+export(secondNullAPCSSA)
+export(secondNullAPCSSM)
