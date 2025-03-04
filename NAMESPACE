@@ -2,6 +2,7 @@
 
 export(APCSSAts)
 export(APCSSMts)
+export(calc_p_value)
 export(firstNullAPC_A)
 export(firstNullAPC_M)
 export(secondNullAPCSSA)
