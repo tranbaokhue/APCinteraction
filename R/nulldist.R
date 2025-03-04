@@ -79,7 +79,7 @@ secondNullAPCSSA <- function(i, j, k) {
 
   # Ensure file exists
   if (!file.exists(file_path)) {
-    stop("File not found: ", file_name)
+    stop("File not found: ", file_name, ". Try running simulate_APCSSA_null(i, j, k).")
   }
 
   # Load the data into a temporary environment
@@ -116,7 +116,7 @@ secondNullAPCSSM <- function(i, j, k) {
 
   # Ensure file exists
   if (!file.exists(file_path)) {
-    stop("File not found: ", file_name)
+    stop("File not found: ", file_name, ". Try running simulate_APCSSM_null(i, j, k).")
   }
 
   # Load the data into a temporary environment
@@ -178,5 +178,10 @@ calc_p_value <- function(type, i, j, k, stat) {
   p_value <- mean(nullvals >= stat)
 
   return(p_value)
+}
+
+simulate_APCSSA_null <- function(i, j, k){
+
+
 }
 
