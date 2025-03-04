@@ -82,8 +82,18 @@ secondNullAPCSSA <- function(i, j, k) {
     stop("File not found: ", file_name)
   }
 
-  # Load the data directly into the global environment
-  load(file_path, envir = .GlobalEnv)
+  # Load the data into a temporary environment
+  env <- new.env()
+  loaded_objects <- load(file_path, envir = env)
+
+  # Ensure at least one object was loaded
+  if (length(loaded_objects) == 0) {
+    stop("No objects found in the loaded file: ", file_name)
+  }
+
+  # Rename the first loaded object and assign it to the global environment
+  new_name <- paste0("APCSSA_", i, "x", j, "x", k)
+  assign(new_name, env[[loaded_objects[1]]], envir = .GlobalEnv)
 
   message("Data successfully loaded into the global environment.")
 }
@@ -109,8 +119,19 @@ secondNullAPCSSM <- function(i, j, k) {
     stop("File not found: ", file_name)
   }
 
-  # Load the data directly into the global environment
-  load(file_path, envir = .GlobalEnv)
+  # Load the data into a temporary environment
+  env <- new.env()
+  loaded_objects <- load(file_path, envir = env)
+
+  # Ensure at least one object was loaded
+  if (length(loaded_objects) == 0) {
+    stop("No objects found in the loaded file: ", file_name)
+  }
+
+  # Rename the first loaded object and assign it to the global environment
+  new_name <- paste0("APCSSM_", i, "x", j, "x", k)
+  assign(new_name, env[[loaded_objects[1]]], envir = .GlobalEnv)
+
 
   message("Data successfully loaded into the global environment.")
 }
