@@ -2,7 +2,7 @@
 library(tidyverse)
 
 # Read and process the dataset for APCSSA
-FirstNullAPCSSA <- read_csv("data-raw/NullDistributionAPCSSA.csv") %>%
+nullAPCXXA_summary <- read_csv("data-raw/NullDistributionAPCSSA.csv") %>%
   mutate(
     SD_CRA = sqrt(V_CRA),
     SD_RCA = sqrt(V_RCA)

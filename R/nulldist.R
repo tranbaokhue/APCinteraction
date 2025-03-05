@@ -5,15 +5,15 @@
 #' @param k The number of observations at each level of factor A and B
 #' @return The null mean and standard deviation of tests APCCRA and APCRCA
 #' @export
-firstNullAPC_A <- function(i, j, k) {
+nullAPCXXA <- function(i, j, k) {
   # Check if the data set exists
-  if (!exists("FirstNullAPCSSA")) stop("Error: FirstNullAPCSSA is not available in the package.")
+  if (!exists("nullAPCXXA_summary")) stop("Error: nullAPCXXA_summary is not available in the package.")
 
   # Extract column names
-  col_names <- colnames(FirstNullAPCSSA)
+  col_names <- colnames(nullAPCXXA_summary)
 
   # Filter null table
-  result <- FirstNullAPCSSA %>%
+  result <- nullAPCXXA_summary %>%
     dplyr::filter(
       .data[[col_names[1]]] == i,
       .data[[col_names[2]]] == j,
@@ -37,15 +37,15 @@ firstNullAPC_A <- function(i, j, k) {
 #' @param k The number of observations at each level of factor A and B
 #' @return The null mean and standard deviation of tests APCCRA and APCRCA
 #' @export
-firstNullAPC_M <- function(i, j, k) {
+nullAPCXXM <- function(i, j, k) {
   # Check if the data set exists
-  if (!exists("FirstNullAPCSSM")) stop("Error: FirstNullAPCSSM is not available in the package.")
+  if (!exists("nullAPCXXM_summary")) stop("Error: nullAPCXXM_summary is not available in the package.")
 
   # Extract column names
-  col_names <- colnames(FirstNullAPCSSM)
+  col_names <- colnames(nullAPCXXM_summary)
 
   # Filter null table
-  result <- FirstNullAPCSSM %>%
+  result <- nullAPCXXM_summary %>%
     dplyr::filter(
       .data[[col_names[1]]] == i,
       .data[[col_names[2]]] == j,
@@ -70,7 +70,7 @@ firstNullAPC_M <- function(i, j, k) {
 #' @return A numeric vector of null values of length 100,000
 #' @export
 # Function to load APCSSA null data
-secondNullAPCSSA <- function(i, j, k) {
+nullAPCSSA <- function(i, j, k) {
   # Construct the file name
   file_name <- paste0("APCSSA Null Distribution ", i, "x", j, "x", k, "_100kSim.RData")
 
@@ -92,7 +92,7 @@ secondNullAPCSSA <- function(i, j, k) {
   }
 
   # Rename the first loaded object and assign it to the global environment
-  new_name <- paste0("APCSSA_", i, "x", j, "x", k)
+  new_name <- paste0("nullAPCSSA_", i, "x", j, "x", k)
   assign(new_name, env[[loaded_objects[1]]], envir = .GlobalEnv)
 
   message("Data successfully loaded into the global environment.")
@@ -107,7 +107,7 @@ secondNullAPCSSA <- function(i, j, k) {
 #' @return A numeric vector of null values of length 100,000
 #' @export
 # Function to load APCSSM data
-secondNullAPCSSM <- function(i, j, k) {
+nullAPCSSM <- function(i, j, k) {
   # Construct the file name
   file_name <- paste0("APCSSM Null Distribution ", i, "x", j, "x", k, "_100kSim.RData")
 
@@ -129,14 +129,13 @@ secondNullAPCSSM <- function(i, j, k) {
   }
 
   # Rename the first loaded object and assign it to the global environment
-  new_name <- paste0("APCSSM_", i, "x", j, "x", k)
+  new_name <- paste0("nullAPCSSM_", i, "x", j, "x", k)
   assign(new_name, env[[loaded_objects[1]]], envir = .GlobalEnv)
-
 
   message("Data successfully loaded into the global environment.")
 }
 
-#' Title
+#' This function gives the approximate p-value for the test statistics APCSSA or APCSSM
 #'
 #' @param type The test type, either "APCSSA" or "APCSSM"
 #' @param i The number of levels in factor A
@@ -180,8 +179,103 @@ calc_p_value <- function(type, i, j, k, stat) {
   return(p_value)
 }
 
-simulate_APCSSA_null <- function(i, j, k){
-
-
-}
-
+# simulate_APCSSA_null <- function(i, j, k){
+#
+# }
+#
+# # First Null
+#
+# #### Null Matrices ----
+# cl <- parallel::makeCluster(detectCores()-1)
+# registerDoParallel(cl)
+# # Parallelized foreach loop
+# I <- Ai
+# J <- Bj
+# K <- NumReps
+# numTrial <- 100000
+# APCnull<- NULL
+# APCnull <- foreach(i = 1:numTrial) %dopar% {
+#   nullData <- data.frame(value = rnorm(I * J * K),
+#                          A = rep(1:I, each = K, times = J),
+#                          B = rep(1:J, each = I * K)
+#   )
+#   APCnull[[i]] <- nullData
+# }
+# # Stop the cluster
+# stopCluster(cl)
+#
+# #### Null Mean & Variance ----
+# cl <- parallel::makeCluster(detectCores()-1)
+# registerDoParallel(cl)
+# nullDistCRA <- unlist(parLapply(cl, APCnull,APCCRADts), use.names = FALSE)
+# nullDistRCA <- unlist(parLapply(cl, APCnull,APCRCADts), use.names = FALSE)
+# nullDistCRM <- unlist(parLapply(cl, APCnull,APCCRMDts), use.names = FALSE)
+# nullDistRCM <- unlist(parLapply(cl, APCnull,APCRCMDts), use.names = FALSE)
+# stopCluster(cl)
+#
+# summary<- c(mean(nullDistCRA), sd(nullDistCRA), mean(nullDistRCA), sd(nullDistRCA), mean(nullDistCRM), sd(nullDistCRM), mean(nullDistRCM), sd(nullDistRCM))
+#
+# ## Means and standard deviations of CRA, RCA, CRM, RCM
+# APCSSnullDist_AixBjxK<-list(nullDistCRA, nullDistRCA, nullDistCRM, nullDistRCM, summary)
+# save(APCSSnullDist_AixBjxK,file="APCSSnullDist_AixBjxK_100kSim.RData")
+#
+# APCSSNull_results_AixBjxK<-tibble(Stats=c("CRA Mean", "CRA sd","RCA Mean", "RCA sd","CRM Mean","CRM sd","RCM Mean","RCM sd"))%>%
+#   mutate(Value=APCSSnullDist_AixBjxK[[5]])
+#
+# ## 100k Sim ----
+# nullDistAPCSSA <-NULL
+# nullDistAPCSSM <-NULL
+# APCSSnullDist <- NULL
+# APCSSnullDist_AixBjxK[[5]]
+# APCSSnullDist<- c()
+#
+# cl <- parallel::makeCluster(detectCores()-1)
+# registerDoParallel(cl)
+# I <- Ai
+# J <- Bj
+# K <- NumReps
+# numTrial <- 100000
+# APCSSAnull <- NULL
+# APCSSMnull <- NULL
+# clusterExport(cl,list("APCCRADts","APCRCADts","APCSSAts","APCCRMDts",
+#                       "APCRCMDts","APCSSMts","APCSSnullDist"))
+#
+# # Second null for Average
+# APCSSAnull <- foreach(i = 1:numTrial) %dopar% {
+#   nullData <- data.frame(value = rnorm(I * J * K),
+#                          A = rep(1:I, each = K, times = J),
+#                          B = rep(1:J, each = I * K)
+#   )
+#   APCSSAnull[[i]] <- nullData
+# }
+#
+# nullDistAPCSSA <- unlist(parLapply(cl, APCSSAnull,APCSSAts), use.names = FALSE)
+# save(nullDistAPCSSA,file="APCSSA Null Distribution AixBjxK_100kSim.RData")
+# stopCluster(cl)
+#
+# # Second null for Median
+# cl <- parallel::makeCluster(detectCores()-1)
+# registerDoParallel(cl)
+# I <- Ai
+# J <- Bj
+# K <- NumReps
+# numTrial <- 100000
+# APCSSAnull <- NULL
+# APCSSMnull <- NULL
+# clusterExport(cl,list("APCCRADts","APCRCADts","APCSSAts","APCCRMDts",
+#                       "APCRCMDts","APCSSMts","APCSSnullDist"))
+#
+# APCSSMnull <- foreach(i = 1:numTrial) %dopar% {
+#   nullData <- data.frame(value = rnorm(I * J * K),
+#                          A = rep(1:I, each = K, times = J),
+#                          B = rep(1:J, each = I * K)
+#   )
+#   APCSSMnull[[i]] <- nullData
+# }
+#
+# nullDistAPCSSM <- unlist(parLapply(cl, APCSSMnull,APCSSMts), use.names = FALSE)
+# save(nullDistAPCSSM,file="APCSSM Null Distribution AixBjxK_100kSim.RData")
+# stopCluster(cl)
+#
+#
+#

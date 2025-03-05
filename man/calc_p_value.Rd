@@ -2,7 +2,7 @@
 % Please edit documentation in R/nulldist.R
 \name{calc_p_value}
 \alias{calc_p_value}
-\title{Title}
+\title{This function gives the approximate p-value for the test statistics APCSSA or APCSSM}
 \usage{
 calc_p_value(type, i, j, k, stat)
 }
@@ -21,5 +21,5 @@ calc_p_value(type, i, j, k, stat)
 The p-value of given statistics
 }
 \description{
-Title
+This function gives the approximate p-value for the test statistics APCSSA or APCSSM
 }
