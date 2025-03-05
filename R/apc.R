@@ -22,13 +22,13 @@
 #' APCSSAts(BoxCox)
 #'
 #' @export
-APCSSAts <- function(dataFrame, numTrial) {
+APCSSA <- function(dataFrame, numTrial) {
   ## Get the scaled, unstandardized test statistics
   APCCRAD <- .APCCRADts(dataFrame)
   APCRCAD <- .APCRCADts(dataFrame)
 
   ## Standardize and pick the max of the two
-  APCCRADstar <- (APCCRAD - APCSSnullDist[1])/APCSSnullDist[2]
+  APCCRADstar <- (APCCRAD - APCSSnullDist[1])/APCSSnullDist[2] # will have to change the name of the data set where we get these initial null
   APCRCADstar <- (APCRCAD - APCSSnullDist[3])/APCSSnullDist[4]
 
   APCSSA <- max(APCCRADstar, APCRCADstar)
@@ -37,7 +37,7 @@ APCSSAts <- function(dataFrame, numTrial) {
 
 ## Test statistic for APCSSM ----
 #' @export
-APCSSMts <- function(dataFrame, numTrial) {
+APCSSM <- function(dataFrame, numTrial) {
   ## Get the scaled, unstandardized test statistics
   APCCRMD <- .APCCRMDts(dataFrame)
   APCRCMD <- .APCRCMDts(dataFrame)
