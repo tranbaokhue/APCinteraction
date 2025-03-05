@@ -1,5 +1,5 @@
 ## APC CRA ----
-.APCCRADts <- function(dataFrame) {
+.APCCRAD <- function(dataFrame) {
   ## Number of levels of factors A (I) and B (J), and number of replications per cell (K)
   I <- nlevels(as.factor(dataFrame[, 2]))
   J <- nlevels(as.factor(dataFrame[, 3]))
@@ -64,7 +64,7 @@
 }
 
 ## APC RCA ----
-.APCRCADts <- function(dataFrame) {
+.APCRCAD <- function(dataFrame) {
   ## Number of levels of factors A (I) and B (J), and number of replication per cell (K)
   I <- nlevels(as.factor(dataFrame[, 2]))
   J <- nlevels(as.factor(dataFrame[, 3]))
@@ -129,7 +129,7 @@
 }
 
 ## APC CRM ----
-.APCCRMDts <- function(dataFrame) {
+.APCCRMD <- function(dataFrame) {
   ## Number of levels of factors A (I) and B (J), and number of replication per cell (K)
   I <- nlevels(as.factor(dataFrame[, 2]))
   J <- nlevels(as.factor(dataFrame[, 3]))
@@ -194,7 +194,7 @@
 
 
 ## APC RCM ----
-.APCRCMDts <- function(dataFrame) {
+.APCRCMD <- function(dataFrame) {
   ## Number of levels of factors A (I) and B (J), and number of replication per cell (K)
   I <- nlevels(as.factor(dataFrame[, 2]))
   J <- nlevels(as.factor(dataFrame[, 3]))

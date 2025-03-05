@@ -7,7 +7,10 @@
 
 ######## APCSSA/APCSSM ########
 
-## Test statistic for APCSSA ----
+# @examples
+# library(Rfit)
+# data(BoxCox) # From Rfit Library
+# APCSSAts(BoxCox)
 
 #' APCSSA
 #'
@@ -16,16 +19,13 @@
 #' @param dataFrame dataFrame should be in long format with the observed values in the first column, Factor A in the second, and Factor B in the third.
 #' @param numTrial Since the critical values are generated using simulations, this number lets the function know which critical values we are comparing the test statistics to.
 #' @return The output is the APCSSA test statistics, which is the maximum of standardized statistics APCCRA and APCRCA.
-#' @examples
-#' library(Rfit)
-#' data(BoxCox) # From Rfit Library
-#' APCSSAts(BoxCox)
 #'
 #' @export
+## Test statistic for APCSSA ----
 APCSSA <- function(dataFrame, numTrial) {
   ## Get the scaled, unstandardized test statistics
-  APCCRAD <- .APCCRADts(dataFrame)
-  APCRCAD <- .APCRCADts(dataFrame)
+  APCCRAD <- .APCCRAD(dataFrame)
+  APCRCAD <- .APCRCAD(dataFrame)
 
   ## Standardize and pick the max of the two
   APCCRADstar <- (APCCRAD - APCSSnullDist[1])/APCSSnullDist[2] # will have to change the name of the data set where we get these initial null
@@ -35,12 +35,21 @@ APCSSA <- function(dataFrame, numTrial) {
   return(APCSSA)
 }
 
-## Test statistic for APCSSM ----
+
+#' APCSSM
+#'
+#' @description This test uses all possible crossed comparisons (APC) based on aligned ranks with alignment done using the median.
+#'
+#' @param dataFrame dataFrame should be in long format with the observed values in the first column, Factor A in the second, and Factor B in the third.
+#' @param numTrial Since the critical values are generated using simulations, this number lets the function know which critical values we are comparing the test statistics to.
+#' @return The output is the APCSSM test statistics, which is the maximum of standardized statistics APCCRM and APCRCM.
+#'
 #' @export
+## Test statistic for APCSSM ----
 APCSSM <- function(dataFrame, numTrial) {
   ## Get the scaled, unstandardized test statistics
-  APCCRMD <- .APCCRMDts(dataFrame)
-  APCRCMD <- .APCRCMDts(dataFrame)
+  APCCRMD <- .APCCRMD(dataFrame)
+  APCRCMD <- .APCRCMD(dataFrame)
 
   ## Standardize and pick the max of the two
   APCCRMDstar <- (APCCRMD - APCSSnullDist[5])/APCSSnullDist[6]
