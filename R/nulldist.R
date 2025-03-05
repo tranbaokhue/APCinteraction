@@ -154,20 +154,20 @@ calc_p_value <- function(type, i, j, k, stat) {
   }
 
   # Construct the expected object name
-  nullDist <- paste0(type, "_", i, "x", j, "x", k)
+  nullDist <- paste0("null", type, "_", i, "x", j, "x", k)
 
   # Load data if not already in memory
   if (!exists(nullDist, envir = .GlobalEnv)) {
     if (type == "APCSSA") {
-      secondNullAPCSSA(i, j, k)
+      nullAPCSSA(i, j, k)
     } else {
-      secondNullAPCSSM(i, j, k)
+      nullAPCSSM(i, j, k)
     }
   }
 
   # Check if loading was successful
   if (!exists(nullDist, envir = .GlobalEnv)) {
-    stop("No null distribution readily available. Try running simulate_", type, "_null(i, j, k).")
+    stop("No null distribution readily available. Try running sim_", type, "_null(i, j, k).")
   }
 
   # Retrieve the null distribution
