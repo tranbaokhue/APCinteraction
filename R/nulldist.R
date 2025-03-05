@@ -188,60 +188,7 @@ calc_p_value <- function(type, i, j, k, stat) {
 
 # function for first null -> nullAPCSSA_ixjxk that contains the 4 values (2 means, 2 sd) -> make sure the final result is saved into .RData file in that same directory of the user and also loaded in the environment
 
-# merge the following! and add command for saving the RData file
-null1APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
-  I <- i
-  J <- j
-  K <- k
-
-  if (parallel) {
-    # Create cluster
-    cl <- parallel::makeCluster(parallel::detectCores() - 1)
-    doParallel::registerDoParallel(cl)
-
-    # Parallelized null matrix generation
-    APCnull <- foreach(n = 1:numSim, .packages = "dplyr") %dopar% {
-      data.frame(value = rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    }
-
-    # Compute null distributions in parallel
-    nullDistCRA <- unlist(parLapply(cl, APCnull, .APCCRAD), use.names = FALSE)
-    nullDistRCA <- unlist(parLapply(cl, APCnull, .APCRCAD), use.names = FALSE)
-
-    # Stop the cluster
-    stopCluster(cl)
-
-  } else {
-    # Non-parallel version
-    APCnull <- lapply(1:numSim, function(n) {
-      data.frame(value = rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    })
-
-    # Compute null distributions sequentially
-    nullDistCRA <- unlist(lapply(APCnull, .APCCRAD), use.names = FALSE)
-    nullDistRCA <- unlist(lapply(APCnull, .APCRCAD), use.names = FALSE)
-  }
-
-  # Summarize results
-  nullAPCXXA_summary <- data.frame(
-    E_CRA = mean(nullDistCRA),
-    SD_CRA = sd(nullDistCRA),
-    E_RCA = mean(nullDistRCA),
-    SD_RCA = sd(nullDistRCA)
-  )
-
-  # Assign to global environment with a formatted name
-  nameA <- paste0("nullAPCXXA_", i, "x", j, "x", k)
-  assign(nameA, nullAPCXXA_summary, envir = .GlobalEnv)
-
-  return(nullAPCXXA_summary)
-}
-
-
+# add command for saving the RData file
 null1APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
   I <- i
   J <- j
@@ -265,12 +212,13 @@ null1APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
 
     # Stop the cluster
     parallel::stopCluster(cl)
+
   } else {
     # Non-parallel version
     APCnull <- lapply(1:numSim, function(n) {
-      data.frame(value = rnorm(i * j * k),
-                 A = rep(1:i, each = k, times = j),
-                 B = rep(1:j, each = i * k))
+      data.frame(value = rnorm(I * J * K),
+                 A = rep(1:I, each = K, times = J),
+                 B = rep(1:J, each = I * K))
     })
 
     # Compute null distributions sequentially
@@ -297,9 +245,9 @@ null1APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
 # function for second null -> nullAPCSSA_ixjxk the 100k or demanded number of simulations numeric vector
 
 
-sim_nullAPCSSA <- function(i, j, k){
-
-}
+# sim_nullAPCSSA <- function(i, j, k){
+#  call to null1APCSSA
+# }
 
 # First Null -> successfully turned into function
 #### Null Matrices ----
