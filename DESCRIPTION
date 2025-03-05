@@ -1,9 +1,9 @@
 Package: APCinteraction
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Calculate the statistics for nonparametric tests of interaction in balanced two-way ANOVA models.
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Author: Bao Khue Tran
+Maintainer: The package maintainer <tran3@kenyon.edu>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
@@ -13,3 +13,7 @@ RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Depends: 
     R (>= 2.10)
+Imports: 
+    doParallel,
+    foreach,
+    parallel
