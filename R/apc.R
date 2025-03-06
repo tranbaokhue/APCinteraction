@@ -28,7 +28,7 @@ APCSSA <- function(dataFrame, numTrial) {
   APCRCAD <- .APCRCAD(dataFrame)
 
   ## Standardize and pick the max of the two
-  APCCRADstar <- (APCCRAD - APCSSnullDist[1])/APCSSnullDist[2] # will have to change the name of the data set where we get these initial null
+  APCCRADstar <- (APCCRAD - APCSSnullDist[1])/APCSSnullDist[2]
   APCRCADstar <- (APCRCAD - APCSSnullDist[3])/APCSSnullDist[4]
 
   APCSSA <- max(APCCRADstar, APCRCADstar)
@@ -52,8 +52,8 @@ APCSSM <- function(dataFrame, numTrial) {
   APCRCMD <- .APCRCMD(dataFrame)
 
   ## Standardize and pick the max of the two
-  APCCRMDstar <- (APCCRMD - APCSSnullDist[5])/APCSSnullDist[6]
-  APCRCMDstar <- (APCRCMD - APCSSnullDist[7])/APCSSnullDist[8]
+  APCCRMDstar <- (APCCRMD - APCSSnullDist[1])/APCSSnullDist[2]
+  APCRCMDstar <- (APCRCMD - APCSSnullDist[3])/APCSSnullDist[4]
 
   APCSSM <- max(APCCRMDstar, APCRCMDstar)
   return(APCSSM)
