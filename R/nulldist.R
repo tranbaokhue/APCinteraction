@@ -186,9 +186,19 @@ calc_p_value <- function(type, i, j, k, stat) {
 }
 
 
-# function for first null -> nullAPCSSA_ixjxk that contains the 4 values (2 means, 2 sd) -> make sure the final result is saved into .RData file in that same directory of the user and also loaded in the environment
 
-# add command for saving the RData file
+
+
+#' This function helps simulate the first null for APCSSA test statistics.
+#'
+#' @param i The number of levels in factor A
+#' @param j The number of levels in factor B
+#' @param k The number of observations at each level of factor A and B
+#' @param numSim The number of simulations required to generate this null distribution (the number of cases/data sets the tests are applied to)
+#' @param parallel This is a Boolean option to run this simulation using multiple cores parallelly or not
+#'
+#' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA.
+#' @export
 null1APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
   I <- i
   J <- j
@@ -235,14 +245,21 @@ null1APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
   )
 
   # Assign to global environment with a formatted name
-  nameA <- paste0("nullAPCXXA_", i, "x", j, "x", k)
-  assign(nameA, nullAPCXXA_summary, envir = .GlobalEnv)
+  name <- paste0("nullAPCXXA_", i, "x", j, "x", k)
+  assign(name, nullAPCXXA_summary, envir = .GlobalEnv)
+
+  # Save to the working directory
+  save_path <- file.path(getwd(), paste0(name, ".RData"))
+  save(list = name, file = save_path)
+
+  message("Saved result to: ", save_path)
 
   return(nullAPCXXA_summary)
 }
 
 
 # function for second null -> nullAPCSSA_ixjxk the 100k or demanded number of simulations numeric vector
+
 
 
 # sim_nullAPCSSA <- function(i, j, k){
