@@ -257,8 +257,17 @@ null1APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
   return(nullAPCXXA_summary)
 }
 
-
-# function for second null -> nullAPCSSA_ixjxk the 100k or demanded number of simulations numeric vector
+#' This function helps simulate the second null for APCSSA test statistics.
+#'
+#' @param i The number of levels in factor A
+#' @param j The number of levels in factor B
+#' @param k The number of observations at each level of factor A and B
+#' @param numSim The number of simulations required to generate this null distribution (the number of cases/data sets the tests are applied to)
+#' @param parallel This is a Boolean option to run this simulation using multiple cores parallelly or not
+#'
+#' @returns A numeric vector with length equals to the numSim of all APCSSA statistics on the null data sets
+#' @export
+# Second Null
 null2APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
   I <- i
   J <- j
@@ -316,69 +325,21 @@ null2APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
   return(nullDistSSA)
 }
 
-
-
-# sim_nullAPCSSA <- function(i, j, k){
-#  call to null1APCSSA
-# }
-
-# First Null -> successfully turned into function
-#### Null Matrices ----
-cl <- parallel::makeCluster(detectCores()-1)
-registerDoParallel(cl)
-# Parallelized foreach loop
-I <- i
-J <- j
-K <- k
-numSim <- 100000
-APCnull<- NULL
-APCnull <- foreach(i = 1:numSim) %dopar% {
-  nullData <- data.frame(value = rnorm(I * J * K),
-                         A = rep(1:I, each = K, times = J),
-                         B = rep(1:J, each = I * K)
-  )
-  APCnull[[i]] <- nullData
+#' This function helps simulate the null for APCSSA test statistics.
+#'
+#' @param i The number of levels in factor A
+#' @param j The number of levels in factor B
+#' @param k The number of observations at each level of factor A and B
+#' @param numSim The number of simulations required to generate this null distribution (the number of cases/data sets the tests are applied to)
+#' @param parallel This is a Boolean option to run this simulation using multiple cores parallelly or not
+#'
+#' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equals to the numSim of all APCSSA statistics on the null data sets
+#' @export
+sim_nullAPCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
+  null1APCSSA(i, j, k, numSim, parallel)
+  null2APCSSA(i, j, k, numSim, parallel)
 }
 
-#### Null Mean & Variance ----
-nullDistCRA <- unlist(parLapply(cl, APCnull, .APCCRAD), use.names = FALSE)
-nullDistRCA <- unlist(parLapply(cl, APCnull, .APCRCAD), use.names = FALSE)
-
-# Stop the cluster
-stopCluster(cl)
-
-nullAPCXXA_summary <- c(mean(nullDistCRA), sd(nullDistCRA), mean(nullDistRCA), sd(nullDistRCA))
-nameA <- paste0("nullAPCXXA_", i, "x", j, "x", k)
-assign(nameA, nullAPCXXA_summary, envir = .GlobalEnv)
-
-
-# Second Null - start with another set of new data for independence
-nullAPCSSA <-NULL
-APCSSnullDist <- NULL
-APCSSnullDist <- nullAPCXXA_ixjxk  # Add: calll in the returned data set from function null1APCSSA. Make this so that it changes with the i, j, k
-
-cl <- parallel::makeCluster(detectCores()-1)
-registerDoParallel(cl)
-I <- i
-J <- j
-K <- k
-numSim <- 100000
-APCnull <- NULL
-clusterExport(cl,list(".APCCRAD",".APCRCAD",".APCSSA",".APCCRMD",
-                      ".APCRCMD",".APCSSM","APCSSnullDist"))
-
-# Second null for Average
-APCnull <- foreach(i = 1:numSim) %dopar% {
-  nullData <- data.frame(value = rnorm(I * J * K),
-                         A = rep(1:I, each = K, times = J),
-                         B = rep(1:J, each = I * K)
-  )
-  APCnull[[i]] <- nullData
-}
-
-nullDistSSA <- unlist(parLapply(cl, APCnull, APCSSA), use.names = FALSE)
-
-stopCluster(cl)
 
 # Second null for Median
 cl <- parallel::makeCluster(detectCores()-1)
