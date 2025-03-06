@@ -259,6 +259,62 @@ null1APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
 
 
 # function for second null -> nullAPCSSA_ixjxk the 100k or demanded number of simulations numeric vector
+null2APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
+  I <- i
+  J <- j
+  K <- k
+
+  # Retrieve the correct null distribution from null1APCSSA
+  prev_name <- paste0("nullAPCXXA_", i, "x", j, "x", k)
+  if (!exists(prev_name, envir = .GlobalEnv)) {
+    stop("Error: The required null distribution from null1APCSSA does not exist. Run null1APCSSA() first.")
+  }
+  APCSSnullDist <- get(prev_name, envir = .GlobalEnv)
+
+  if (parallel) {
+    # Create and register cluster
+    cl <- parallel::makeCluster(parallel::detectCores() - 1)
+    doParallel::registerDoParallel(cl)
+
+    # Export required functions and data
+    parallel::clusterExport(cl, list("APCSSA", ".APCCRAD", ".APCRCAD", "APCSSnullDist"))
+
+    # Generate null matrices in parallel
+    APCnull <- foreach::foreach(n = 1:numSim) %dopar% {
+      data.frame(value = stats::rnorm(I * J * K),
+                 A = rep(1:I, each = K, times = J),
+                 B = rep(1:J, each = I * K))
+    }
+
+    # Compute null distribution in parallel
+    nullDistSSA <- unlist(parallel::parLapply(cl, APCnull, .APCSSA), use.names = FALSE)
+
+    # Stop the cluster
+    parallel::stopCluster(cl)
+  } else {
+    # Non-parallel version
+    APCnull <- lapply(1:numSim, function(n) {
+      data.frame(value = stats::rnorm(I * J * K),
+                 A = rep(1:I, each = K, times = J),
+                 B = rep(1:J, each = I * K))
+    })
+
+    # Compute null distribution sequentially
+    nullDistSSA <- unlist(lapply(APCnull, .APCSSA), use.names = FALSE)
+  }
+
+  # Assign to global environment
+  nameA <- paste0("nullAPCSSA_", i, "x", j, "x", k)
+  assign(nameA, nullDistSSA, envir = .GlobalEnv)
+
+  # Save to working directory
+  save_path <- file.path(getwd(), paste0(nameA, ".RData"))
+  save(list = nameA, file = save_path)
+
+  message("Saved result to: ", save_path)
+
+  return(nullDistSSA)
+}
 
 
 
@@ -299,28 +355,28 @@ assign(nameA, nullAPCXXA_summary, envir = .GlobalEnv)
 # Second Null - start with another set of new data for independence
 nullAPCSSA <-NULL
 APCSSnullDist <- NULL
-APCSSnullDist<- APCSSnullDist_AixBjxK[[5]]
+APCSSnullDist <- nullAPCXXA_ixjxk  # Add: calll in the returned data set from function null1APCSSA. Make this so that it changes with the i, j, k
 
 cl <- parallel::makeCluster(detectCores()-1)
 registerDoParallel(cl)
-I <- Ai
-J <- Bj
-K <- NumReps
+I <- i
+J <- j
+K <- k
 numSim <- 100000
-APCSSAnull <- NULL
+APCnull <- NULL
 clusterExport(cl,list(".APCCRAD",".APCRCAD",".APCSSA",".APCCRMD",
                       ".APCRCMD",".APCSSM","APCSSnullDist"))
 
 # Second null for Average
-APCSSAnull <- foreach(i = 1:numSim) %dopar% {
+APCnull <- foreach(i = 1:numSim) %dopar% {
   nullData <- data.frame(value = rnorm(I * J * K),
                          A = rep(1:I, each = K, times = J),
                          B = rep(1:J, each = I * K)
   )
-  APCSSAnull[[i]] <- nullData
+  APCnull[[i]] <- nullData
 }
 
-nullAPCSSA <- unlist(parLapply(cl, APCSSAnull, APCSSA), use.names = FALSE)
+nullDistSSA <- unlist(parLapply(cl, APCnull, APCSSA), use.names = FALSE)
 
 stopCluster(cl)
 
