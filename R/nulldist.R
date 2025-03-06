@@ -228,10 +228,10 @@ null1APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
 
   # Summarize results
   nullAPCXXA_summary <- data.frame(
-    E_CRA = mean(nullDistCRA),
-    SD_CRA = sd(nullDistCRA),
-    E_RCA = mean(nullDistRCA),
-    SD_RCA = sd(nullDistRCA)
+    E_CRA = stats::mean(nullDistCRA),
+    SD_CRA = stats::sd(nullDistCRA),
+    E_RCA = stats::mean(nullDistRCA),
+    SD_RCA = stats::sd(nullDistRCA)
   )
 
   # Assign to global environment with a formatted name
