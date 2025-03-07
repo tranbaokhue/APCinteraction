@@ -185,9 +185,7 @@ calc_p_value <- function(type, i, j, k, stat) {
   return(p_value)
 }
 
-
-
-
+# ---- Up until here, all the functions have been tested! ---- #
 
 #' This function helps simulate the first null for APCSSA test statistics.
 #'
