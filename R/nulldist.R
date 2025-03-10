@@ -205,18 +205,14 @@ null1APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
   if (parallel) {
     # Create cluster
     cl <- parallel::makeCluster(parallel::detectCores() - 1)
-    doParallel::registerDoParallel(cl)
-
-    # Ensure %dopar% is available
-    foreach::getDoParWorkers()  # Check if workers are registered
+    parallel::clusterExport(cl, varlist = c("I", "J", "K"), envir = environment())
 
     # Parallelized null matrix generation
-    APCnull <- foreach::foreach(n = 1:numSim, .export = c("%dopar%"),
-                                .packages = c("dplyr")) %dopar% {
-                                  data.frame(value = stats::rnorm(I * J * K),
-                                             A = rep(1:I, each = K, times = J),
-                                             B = rep(1:J, each = I * K))
-                                  }
+    APCnull <- parallel::parLapply(cl, 1:numSim, function(n) {
+      data.frame(value = stats::rnorm(I * J * K),
+                 A = rep(1:I, each = K, times = J),
+                 B = rep(1:J, each = I * K))
+    })
 
     # Compute null distributions in parallel
     nullDistCRA <- unlist(parallel::parLapply(cl, APCnull, .APCCRAD), use.names = FALSE)
@@ -285,27 +281,23 @@ null2APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
   if (parallel) {
     # Create and register cluster
     cl <- parallel::makeCluster(parallel::detectCores() - 1)
-    doParallel::registerDoParallel(cl)
 
     # Export required functions and data
-    parallel::clusterExport(cl, list("APCSSA", ".APCCRAD", ".APCRCAD", "APCSSnullDist"))
-
-    # Ensure %dopar% is available
-    foreach::getDoParWorkers()  # Check if workers are registered
+    parallel::clusterExport(cl, varlist = c("APCSSA", ".APCCRAD", ".APCRCAD", "APCSSnullDist", "I", "J", "K"), envir = environment())
 
     # Parallelized null matrix generation
-    APCnull <- foreach::foreach(n = 1:numSim, .export = c("%dopar%"),
-                                .packages = c("dplyr")) %dopar% {
-                                  data.frame(value = stats::rnorm(I * J * K),
-                                             A = rep(1:I, each = K, times = J),
-                                             B = rep(1:J, each = I * K))
-                                }
+    APCnull <- parallel::parLapply(cl, 1:numSim, function(n) {
+      data.frame(value = stats::rnorm(I * J * K),
+                 A = rep(1:I, each = K, times = J),
+                 B = rep(1:J, each = I * K))
+    })
 
     # Compute null distribution in parallel
-    nullDistSSA <- unlist(parallel::parLapply(cl, APCnull, .APCSSA), use.names = FALSE)
+    nullDistSSA <- unlist(parallel::parLapply(cl, APCnull, APCSSA), use.names = FALSE)
 
     # Stop the cluster
     parallel::stopCluster(cl)
+
   } else {
     # Non-parallel version
     APCnull <- lapply(1:numSim, function(n) {
