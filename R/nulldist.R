@@ -339,26 +339,26 @@ sim_nullAPCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
 }
 
 
-# Second null for Median
-cl <- parallel::makeCluster(detectCores()-1)
-registerDoParallel(cl)
-I <- Ai
-J <- Bj
-K <- NumReps
-numSim <- 100000
-APCSSMnull <- NULL
-clusterExport(cl,list(".APCCRAD",".APCRCAD",".APCSSA",".APCCRMD",
-                      ".APCRCMD",".APCSSM","APCSSnullDist"))
-
-APCSSMnull <- foreach(i = 1:numSim) %dopar% {
-  nullData <- data.frame(value = rnorm(I * J * K),
-                         A = rep(1:I, each = K, times = J),
-                         B = rep(1:J, each = I * K)
-  )
-  APCSSMnull[[i]] <- nullData
-}
-
-nullDistAPCSSM <- unlist(parLapply(cl, APCSSMnull,APCSSM), use.names = FALSE)
-save(nullDistAPCSSM,file="APCSSM Null Distribution AixBjxK_100kSim.RData")
-stopCluster(cl)
+# # Second null for Median
+# cl <- parallel::makeCluster(detectCores()-1)
+# registerDoParallel(cl)
+# I <- Ai
+# J <- Bj
+# K <- NumReps
+# numSim <- 100000
+# APCSSMnull <- NULL
+# clusterExport(cl,list(".APCCRAD",".APCRCAD",".APCSSA",".APCCRMD",
+#                       ".APCRCMD",".APCSSM","APCSSnullDist"))
+#
+# APCSSMnull <- foreach(i = 1:numSim) %dopar% {
+#   nullData <- data.frame(value = rnorm(I * J * K),
+#                          A = rep(1:I, each = K, times = J),
+#                          B = rep(1:J, each = I * K)
+#   )
+#   APCSSMnull[[i]] <- nullData
+# }
+#
+# nullDistAPCSSM <- unlist(parLapply(cl, APCSSMnull,APCSSM), use.names = FALSE)
+# save(nullDistAPCSSM,file="APCSSM Null Distribution AixBjxK_100kSim.RData")
+# stopCluster(cl)
 
