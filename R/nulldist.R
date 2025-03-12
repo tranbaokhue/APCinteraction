@@ -306,7 +306,7 @@ null2APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
     })
 
     # Compute null distribution sequentially
-    nullDistSSA <- unlist(lapply(APCnull, .APCSSA), use.names = FALSE)
+    nullDistSSA <- unlist(lapply(APCnull, APCSSA), use.names = FALSE)
   }
 
   # Assign to global environment
@@ -338,4 +338,153 @@ sim_nullAPCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
 }
 
 # ---- Up until here, all the functions have been tested! ---- #
+#' This function helps simulate the first null for APCSSM test statistics.
+#'
+#' @param i The number of levels in factor A
+#' @param j The number of levels in factor B
+#' @param k The number of observations at each level of factor A and B
+#' @param numSim The number of simulations required to generate this null distribution (the number of cases/data sets the tests are applied to)
+#' @param parallel This is a Boolean option to run this simulation using multiple cores parallelly or not
+#'
+#' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRM and APCRCM) that will get standardized into APCSSM.
+#' @export
+null1APCSSM <- function(i, j, k, numSim = 100000, parallel = TRUE) {
+  I <- i
+  J <- j
+  K <- k
 
+  if (parallel) {
+    # Create cluster
+    cl <- parallel::makeCluster(parallel::detectCores() - 1)
+    parallel::clusterExport(cl, varlist = c("I", "J", "K"), envir = environment())
+
+    # Parallelized null matrix generation
+    APCnull <- parallel::parLapply(cl, 1:numSim, function(n) {
+      data.frame(value = stats::rnorm(I * J * K),
+                 A = rep(1:I, each = K, times = J),
+                 B = rep(1:J, each = I * K))
+    })
+
+    # Compute null distributions in parallel
+    nullDistCRM <- unlist(parallel::parLapply(cl, APCnull, .APCCRMD), use.names = FALSE)
+    nullDistRCM <- unlist(parallel::parLapply(cl, APCnull, .APCRCMD), use.names = FALSE)
+
+    # Stop the cluster
+    parallel::stopCluster(cl)
+
+  } else {
+    # Non-parallel version
+    APCnull <- lapply(1:numSim, function(n) {
+      data.frame(value = stats::rnorm(I * J * K),
+                 A = rep(1:I, each = K, times = J),
+                 B = rep(1:J, each = I * K))
+    })
+
+    # Compute null distributions sequentially
+    nullDistCRM <- unlist(lapply(APCnull, .APCCRMD), use.names = FALSE)
+    nullDistRCM <- unlist(lapply(APCnull, .APCRCMD), use.names = FALSE)
+  }
+
+  # Summarize results
+  nullAPCXXM_summary <- data.frame(
+    E_CRM = mean(nullDistCRM),
+    SD_CRM = sd(nullDistCRM),
+    E_RCM = mean(nullDistRCM),
+    SD_RCM = sd(nullDistRCM)
+  )
+
+  # Assign to global environment with a formatted name
+  name <- paste0("nullAPCXXM_", i, "x", j, "x", k)
+  assign(name, nullAPCXXM_summary, envir = .GlobalEnv)
+
+  # Save to the working directory
+  save_path <- file.path(getwd(), paste0(name, ".RData"))
+  save(list = name, file = save_path)
+
+  message("Saved result to: ", save_path)
+
+  return(nullAPCXXM_summary)
+}
+
+#' This function helps simulate the second null for APCSSM test statistics.
+#'
+#' @param i The number of levels in factor A
+#' @param j The number of levels in factor B
+#' @param k The number of observations at each level of factor A and B
+#' @param numSim The number of simulations required to generate this null distribution (the number of cases/data sets the tests are applied to)
+#' @param parallel This is a Boolean option to run this simulation using multiple cores parallelly or not
+#'
+#' @returns A numeric vector with length equals to the numSim of all APCSSM statistics on the null data sets
+#' @export
+# Second Null
+null2APCSSM <- function(i, j, k, numSim = 100000, parallel = TRUE) {
+  I <- i
+  J <- j
+  K <- k
+
+  # Retrieve the correct null distribution from null1APCSSA
+  prev_name <- paste0("nullAPCXXM_", i, "x", j, "x", k)
+  if (!exists(prev_name, envir = .GlobalEnv)) {
+    stop("Error: The required null distribution from null1APCSSM does not exist. Run null1APCSSM() first.")
+  }
+  APCSSnullDist <- get(prev_name, envir = .GlobalEnv)
+
+  if (parallel) {
+    # Create and register cluster
+    cl <- parallel::makeCluster(parallel::detectCores() - 1)
+
+    # Export required functions and data
+    parallel::clusterExport(cl, varlist = c("APCSSM", ".APCCRMD", ".APCRCMD", "APCSSnullDist", "I", "J", "K"), envir = environment())
+
+    # Parallelized null matrix generation
+    APCnull <- parallel::parLapply(cl, 1:numSim, function(n) {
+      data.frame(value = stats::rnorm(I * J * K),
+                 A = rep(1:I, each = K, times = J),
+                 B = rep(1:J, each = I * K))
+    })
+
+    # Compute null distribution in parallel
+    nullDistSSA <- unlist(parallel::parLapply(cl, APCnull, APCSSM), use.names = FALSE)
+
+    # Stop the cluster
+    parallel::stopCluster(cl)
+
+  } else {
+    # Non-parallel version
+    APCnull <- lapply(1:numSim, function(n) {
+      data.frame(value = stats::rnorm(I * J * K),
+                 A = rep(1:I, each = K, times = J),
+                 B = rep(1:J, each = I * K))
+    })
+
+    # Compute null distribution sequentially
+    nullDistSSA <- unlist(lapply(APCnull, APCSSM), use.names = FALSE)
+  }
+
+  # Assign to global environment
+  nameA <- paste0("nullAPCSSM_", i, "x", j, "x", k)
+  assign(nameA, nullDistSSM, envir = .GlobalEnv)
+
+  # Save to working directory
+  save_path <- file.path(getwd(), paste0(nameA, ".RData"))
+  save(list = nameA, file = save_path)
+
+  message("Saved result to: ", save_path)
+
+  return(nullDistSSM)
+}
+
+#' This function helps simulate the null for APCSSM test statistics.
+#'
+#' @param i The number of levels in factor A
+#' @param j The number of levels in factor B
+#' @param k The number of observations at each level of factor A and B
+#' @param numSim The number of simulations required to generate this null distribution (the number of cases/data sets the tests are applied to)
+#' @param parallel This is a Boolean option to run this simulation using multiple cores parallelly or not
+#'
+#' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRM and APCRCM) that will get standardized into APCSSM and a numeric vector with length equals to the numSim of all APCSSA statistics on the null data sets
+#' @export
+sim_nullAPCSSM <- function(i, j, k, numSim = 100000, parallel = TRUE) {
+  null1APCSSM(i, j, k, numSim, parallel)
+  null2APCSSM(i, j, k, numSim, parallel)
+}
