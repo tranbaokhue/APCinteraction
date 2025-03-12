@@ -141,50 +141,6 @@ nullAPCSSM <- function(i, j, k) {
   message("Data successfully loaded into the global environment.")
 }
 
-#' This function gives the approximate p-value for the test statistics APCSSA or APCSSM
-#'
-#' @param type The test type, either "APCSSA" or "APCSSM"
-#' @param i The number of levels in factor A
-#' @param j The number of levels in factor B
-#' @param k The number of observations at each level of factor A and B
-#' @param stat The calculated statistics using one of the two tests on a data set
-#'
-#' @returns The p-value of given statistics
-#' @export
-# Function to calculate the p-value given a test stats and test type (combined)
-calc_p_value <- function(type, i, j, k, stat) {
-
-  # Validate input type
-  if (!type %in% c("APCSSA", "APCSSM")) {
-    stop("Invalid type. Use 'APCSSA' or 'APCSSM'.")
-  }
-
-  # Construct the expected object name
-  nullDist <- paste0("null", type, "_", i, "x", j, "x", k)
-
-  # Load data if not already in memory
-  if (!exists(nullDist, envir = .GlobalEnv)) {
-    if (type == "APCSSA") {
-      nullAPCSSA(i, j, k)
-    } else {
-      nullAPCSSM(i, j, k)
-    }
-  }
-
-  # Check if loading was successful
-  if (!exists(nullDist, envir = .GlobalEnv)) {
-    stop("No null distribution readily available. Try running sim_", type, "_null(i, j, k).")
-  }
-
-  # Retrieve the null distribution
-  nullvals <- get(nullDist, envir = .GlobalEnv)
-
-  # Compute the approximate p-value (right-tailed)
-  p_value <- mean(nullvals >= stat)
-
-  return(p_value)
-}
-
 
 #' This function helps simulate the null for APCSSA test statistics.
 #'
