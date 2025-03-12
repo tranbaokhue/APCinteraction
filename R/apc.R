@@ -31,12 +31,18 @@ APCSSA <- function(formula, data, numSim) {
     stop("Formula must include exactly one response and two factors.")
   }
 
+  # Extract factor names from the formula
+  response_name <- names(df)[1]
+  factorA_name <- names(df)[2]
+  factorB_name <- names(df)[3]
+
   # Prepare data in the required format
   dataFrame <- data.frame(
     value = df[, 1],
     A = df[, 2],
     B = df[, 3]
   )
+
   # Extract i, j, k from factor levels
   i <- nlevels(as.factor(dataFrame[, 2]))
   j <- nlevels(as.factor(dataFrame[, 3]))
@@ -63,6 +69,13 @@ APCSSA <- function(formula, data, numSim) {
     }
   }
 
+  # Retrieve the correct null distribution
+  prev_name <- paste0("nullAPCXXA_", i, "x", j, "x", k)
+  if (!exists(prev_name, envir = .GlobalEnv)) {
+    stop("Error: The required null distribution does not exist. Run sim_nullAPCSSA() first.")
+  }
+  APCSSnullDist <- get(prev_name, envir = .GlobalEnv)
+
   ## Get the scaled, unstandardized test statistics
   APCCRAD <- .APCCRAD(dataFrame)
   APCRCAD <- .APCRCAD(dataFrame)
@@ -72,7 +85,39 @@ APCSSA <- function(formula, data, numSim) {
   APCRCADstar <- (APCRCAD - APCSSnullDist[3])/APCSSnullDist[4]
 
   APCSSA <- max(APCCRADstar, APCRCADstar)
-  return(APCSSA)
+
+  # Calculate p-value
+  p_value <- .calc_p_value("APCSSA", i, j, k, APCSSA)
+
+  # Display result
+  result <- data.frame(
+    Interaction = paste0(factorA_name, ":", factorB_name),
+    Statistic = APCSSA,
+    `P-value` = p_value
+  )
+
+  # Display result in aov-style format
+  cat("\nAPCSSA Test Summary\n")
+  print(result, row.names = FALSE)
+
+  # Generate Viridis-like color palette with `hcl.colors()`
+  num_levels <- nlevels(as.factor(dataFrame$B))
+  color_palette <- hcl.colors(num_levels, "Viridis")
+
+  # Generate interaction plot with gradient colors
+  interaction.plot(
+    x.factor = dataFrame$A,
+    trace.factor = dataFrame$B,
+    response = dataFrame$value,
+    xlab = factorA_name,
+    ylab = response_name,
+    trace.label = factorB_name,
+    col = color_palette,
+    lwd = 2,
+    main = "Interaction Plot"
+  )
+  # Return result invisibly for flexibility
+  invisible(result)
 }
 
 
