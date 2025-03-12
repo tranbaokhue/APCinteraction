@@ -4,12 +4,12 @@
 \alias{APCSSA}
 \title{APCSSA}
 \usage{
-APCSSA(dataFrame, numTrial)
+APCSSA(formula, data, numSim)
 }
 \arguments{
-\item{dataFrame}{dataFrame should be in long format with the observed values in the first column, Factor A in the second, and Factor B in the third.}
+\item{numSim}{Since the critical values are generated using simulations, this number lets the function know which critical values we are comparing the test statistics to.}
 
-\item{numTrial}{Since the critical values are generated using simulations, this number lets the function know which critical values we are comparing the test statistics to.}
+\item{dataFrame}{dataFrame should be in long format with the observed values in the first column, Factor A in the second, and Factor B in the third.}
 }
 \value{
 The output is the APCSSA test statistics, which is the maximum of standardized statistics APCCRA and APCRCA.

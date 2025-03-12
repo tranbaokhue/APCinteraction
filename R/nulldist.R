@@ -7,7 +7,7 @@
 #' @export
 nullAPCXXA <- function(i, j, k) {
   # Check if the data set exists
-  if (!exists("nullAPCXXA_summary")) stop("Error: nullAPCXXA_summary is not available in the package.")
+  if (!exists("nullAPCXXA_summary")) stop("Error: nullAPCXXA_summary not found. Try running sim_nullAPCSSA().")
 
   # Extract column names
   col_names <- colnames(nullAPCXXA_summary)
@@ -85,7 +85,7 @@ nullAPCSSA <- function(i, j, k) {
 
   # Ensure file exists
   if (!file.exists(file_path)) {
-    stop("File not found: ", file_name, ". Try running simulate_APCSSA_null(i, j, k).")
+    stop("Error: File not found: ", file_name, ". Try running sim_nullAPCSSA().")
   }
 
   # Load the data into a temporary environment

@@ -4,12 +4,12 @@
 \alias{APCSSM}
 \title{APCSSM}
 \usage{
-APCSSM(dataFrame, numTrial)
+APCSSM(dataFrame, numSim)
 }
 \arguments{
 \item{dataFrame}{dataFrame should be in long format with the observed values in the first column, Factor A in the second, and Factor B in the third.}
 
-\item{numTrial}{Since the critical values are generated using simulations, this number lets the function know which critical values we are comparing the test statistics to.}
+\item{numSim}{Since the critical values are generated using simulations, this number lets the function know which critical values we are comparing the test statistics to.}
 }
 \value{
 The output is the APCSSM test statistics, which is the maximum of standardized statistics APCCRM and APCRCM.
