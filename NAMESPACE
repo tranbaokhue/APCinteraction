@@ -3,8 +3,6 @@
 export(APCSSA)
 export(APCSSM)
 export(calc_p_value)
-export(null1APCSSM)
-export(null2APCSSM)
 export(nullAPCSSA)
 export(nullAPCSSM)
 export(nullAPCXXA)
