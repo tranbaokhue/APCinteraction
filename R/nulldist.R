@@ -186,142 +186,6 @@ calc_p_value <- function(type, i, j, k, stat) {
 }
 
 
-#' This function helps simulate the first null for APCSSA test statistics.
-#'
-#' @param i The number of levels in factor A
-#' @param j The number of levels in factor B
-#' @param k The number of observations at each level of factor A and B
-#' @param numSim The number of simulations required to generate this null distribution (the number of cases/data sets the tests are applied to)
-#' @param parallel This is a Boolean option to run this simulation using multiple cores parallelly or not
-#'
-#' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA.
-#' @export
-null1APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
-  I <- i
-  J <- j
-  K <- k
-
-  if (parallel) {
-    # Create cluster
-    cl <- parallel::makeCluster(parallel::detectCores() - 1)
-    parallel::clusterExport(cl, varlist = c("I", "J", "K"), envir = environment())
-
-    # Parallelized null matrix generation
-    APCnull <- parallel::parLapply(cl, 1:numSim, function(n) {
-      data.frame(value = stats::rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    })
-
-    # Compute null distributions in parallel
-    nullDistCRA <- unlist(parallel::parLapply(cl, APCnull, .APCCRAD), use.names = FALSE)
-    nullDistRCA <- unlist(parallel::parLapply(cl, APCnull, .APCRCAD), use.names = FALSE)
-
-    # Stop the cluster
-    parallel::stopCluster(cl)
-
-  } else {
-    # Non-parallel version
-    APCnull <- lapply(1:numSim, function(n) {
-      data.frame(value = stats::rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    })
-
-    # Compute null distributions sequentially
-    nullDistCRA <- unlist(lapply(APCnull, .APCCRAD), use.names = FALSE)
-    nullDistRCA <- unlist(lapply(APCnull, .APCRCAD), use.names = FALSE)
-  }
-
-  # Summarize results
-  nullAPCXXA_summary <- data.frame(
-    E_CRA = mean(nullDistCRA),
-    SD_CRA = sd(nullDistCRA),
-    E_RCA = mean(nullDistRCA),
-    SD_RCA = sd(nullDistRCA)
-  )
-
-  # Assign to global environment with a formatted name
-  name <- paste0("nullAPCXXA_", i, "x", j, "x", k)
-  assign(name, nullAPCXXA_summary, envir = .GlobalEnv)
-
-  # Save to the working directory
-  save_path <- file.path(getwd(), paste0(name, ".RData"))
-  save(list = name, file = save_path)
-
-  message("Saved result to: ", save_path)
-
-  return(nullAPCXXA_summary)
-}
-
-#' This function helps simulate the second null for APCSSA test statistics.
-#'
-#' @param i The number of levels in factor A
-#' @param j The number of levels in factor B
-#' @param k The number of observations at each level of factor A and B
-#' @param numSim The number of simulations required to generate this null distribution (the number of cases/data sets the tests are applied to)
-#' @param parallel This is a Boolean option to run this simulation using multiple cores parallelly or not
-#'
-#' @returns A numeric vector with length equals to the numSim of all APCSSA statistics on the null data sets
-#' @export
-# Second Null
-null2APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
-  I <- i
-  J <- j
-  K <- k
-
-  # Retrieve the correct null distribution from null1APCSSA
-  prev_name <- paste0("nullAPCXXA_", i, "x", j, "x", k)
-  if (!exists(prev_name, envir = .GlobalEnv)) {
-    stop("Error: The required null distribution from null1APCSSA does not exist. Run null1APCSSA() first.")
-  }
-  APCSSnullDist <- get(prev_name, envir = .GlobalEnv)
-
-  if (parallel) {
-    # Create and register cluster
-    cl <- parallel::makeCluster(parallel::detectCores() - 1)
-
-    # Export required functions and data
-    parallel::clusterExport(cl, varlist = c("APCSSA", ".APCCRAD", ".APCRCAD", "APCSSnullDist", "I", "J", "K"), envir = environment())
-
-    # Parallelized null matrix generation
-    APCnull <- parallel::parLapply(cl, 1:numSim, function(n) {
-      data.frame(value = stats::rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    })
-
-    # Compute null distribution in parallel
-    nullDistSSA <- unlist(parallel::parLapply(cl, APCnull, APCSSA), use.names = FALSE)
-
-    # Stop the cluster
-    parallel::stopCluster(cl)
-
-  } else {
-    # Non-parallel version
-    APCnull <- lapply(1:numSim, function(n) {
-      data.frame(value = stats::rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    })
-
-    # Compute null distribution sequentially
-    nullDistSSA <- unlist(lapply(APCnull, APCSSA), use.names = FALSE)
-  }
-
-  # Assign to global environment
-  nameA <- paste0("nullAPCSSA_", i, "x", j, "x", k)
-  assign(nameA, nullDistSSA, envir = .GlobalEnv)
-
-  # Save to working directory
-  save_path <- file.path(getwd(), paste0(nameA, ".RData"))
-  save(list = nameA, file = save_path)
-
-  message("Saved result to: ", save_path)
-
-  return(nullDistSSA)
-}
-
 #' This function helps simulate the null for APCSSA test statistics.
 #'
 #' @param i The number of levels in factor A
@@ -333,8 +197,8 @@ null2APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
 #' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equals to the numSim of all APCSSA statistics on the null data sets
 #' @export
 sim_nullAPCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
-  null1APCSSA(i, j, k, numSim, parallel)
-  null2APCSSA(i, j, k, numSim, parallel)
+  .null1APCSSA(i, j, k, numSim, parallel)
+  .null2APCSSA(i, j, k, numSim, parallel)
 }
 
 # ---- Up until here, all the functions have been tested! ---- #
