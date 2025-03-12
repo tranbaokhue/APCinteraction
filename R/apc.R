@@ -22,7 +22,7 @@
 #'
 #' @export
 ## Test statistic for APCSSA ----
-APCSSA <- function(formula, data, numSim) {
+APCSSA <- function(formula, data, numSim = 100000) {
   # Extract the data frame from the formula
   df <- model.frame(formula, data)
 

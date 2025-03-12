@@ -4,7 +4,7 @@
 \alias{APCSSA}
 \title{APCSSA}
 \usage{
-APCSSA(formula, data, numSim)
+APCSSA(formula, data, numSim = 1e+05)
 }
 \arguments{
 \item{numSim}{Since the critical values are generated using simulations, this number lets the function know which critical values we are comparing the test statistics to.}
