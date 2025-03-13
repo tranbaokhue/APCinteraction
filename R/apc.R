@@ -19,6 +19,9 @@
 #' @param dataFrame dataFrame should be in long format with the observed values in the first column, Factor A in the second, and Factor B in the third.
 #' @param numSim Since the critical values are generated using simulations, this number lets the function know which critical values we are comparing the test statistics to.
 #' @return The output is the APCSSA test statistics, which is the maximum of standardized statistics APCCRA and APCRCA.
+#' @example library(Stat2Data)
+#' data("BirdCalcium")
+#' APCSSA(Ca~Sex+Hormone, data = BirdCalcium)
 #'
 #' @export
 ## Test statistic for APCSSA ----
