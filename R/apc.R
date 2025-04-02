@@ -8,9 +8,10 @@
 ######## APCSSA/APCSSM ########
 
 # @examples
-# library(Rfit)
-# data(BoxCox) # From Rfit Library
-# APCSSAts(BoxCox)
+# library(Stat2Data)
+# birdcalc <- BirdCalcium %>%select(Ca, Sex, Hormone)
+# aov(Ca~factor(Hormone)*factor(Sex), data=birdcalc)
+# APCSSA(Ca~factor(Hormone)*factor(Sex), data=birdcalc)
 
 #' APCSSA
 #'
