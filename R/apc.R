@@ -59,8 +59,8 @@ APCSSA <- function(formula, data, numSim = 100000) {
     if (numSim == 100000) {
       # Attempt to generate null distributions
       tryCatch({
-        nullAPCXXA(i, j, k, numSim)
-        nullAPCSSA(i, j, k, numSim)
+        nullAPCXXA(i, j, k)
+        nullAPCSSA(i, j, k)
       }, error = function(e) {
         stop("Error generating null distributions. Try running `sim_nullAPCSSA()` manually.")
       })
