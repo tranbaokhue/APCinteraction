@@ -17,3 +17,15 @@ The output is the APCSSA test statistics, which is the maximum of standardized s
 \description{
 This test uses all possible crossed comparisons (APC) based on aligned ranks with alignment done using the average (mean).
 }
+\examples{
+# Generate sample data with interaction and normal error
+A <- factor(rep(1:3, each = 9))   # 3 levels
+B <- factor(rep(rep(1:3, each = 3), times = 3))  # 3 levels, repeated
+interaction <- as.numeric(as.character(A)) * as.numeric(as.character(B))
+value <- interaction + rnorm(27)
+data <- data.frame(value, A, B)
+
+# Run the APCSSA test
+APCSSA(value ~ A + B, data = data)
+
+}

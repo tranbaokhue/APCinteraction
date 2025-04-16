@@ -6,13 +6,6 @@
 # in a balanced two-way ANOVA
 
 ######## APCSSA/APCSSM ########
-
-# @examples
-# library(Stat2Data)
-# birdcalc <- BirdCalcium %>%select(Ca, Sex, Hormone)
-# aov(Ca~factor(Hormone)*factor(Sex), data=birdcalc)
-# APCSSA(Ca~factor(Hormone)*factor(Sex), data=birdcalc)
-
 #' APCSSA
 #'
 #' @description This test uses all possible crossed comparisons (APC) based on aligned ranks with alignment done using the average (mean).
@@ -20,6 +13,18 @@
 #' @param dataFrame dataFrame should be in long format with the observed values in the first column, Factor A in the second, and Factor B in the third.
 #' @param numSim Since the critical values are generated using simulations, this number lets the function know which critical values we are comparing the test statistics to.
 #' @return The output is the APCSSA test statistics, which is the maximum of standardized statistics APCCRA and APCRCA.
+#'
+#' @examples
+#' # Generate sample data with interaction and normal error
+#' A <- factor(rep(1:3, each = 9))   # 3 levels
+#' B <- factor(rep(rep(1:3, each = 3), times = 3))  # 3 levels, repeated
+#' interaction <- as.numeric(as.character(A)) * as.numeric(as.character(B))
+#' value <- interaction + rnorm(27)
+#' data <- data.frame(value, A, B)
+#'
+#' # Run the APCSSA test
+#' APCSSA(value ~ A + B, data = data)
+#'
 #' @export
 ## Test statistic for APCSSA ----
 APCSSA <- function(formula, data, numSim = 100000) {
