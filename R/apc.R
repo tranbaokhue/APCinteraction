@@ -8,11 +8,35 @@
 ######## APCSSA/APCSSM ########
 #' APCSSA
 #'
-#' @description This test uses all possible crossed comparisons (APC) based on aligned ranks with alignment done using the average (mean).
+#' @description
+#' This function tests for interaction in a two-way layout using all possible crossed comparisons (APC) based on aligned ranks, with alignment performed using the mean.
 #'
-#' @param dataFrame dataFrame should be in long format with the observed values in the first column, Factor A in the second, and Factor B in the third.
-#' @param numSim Since the critical values are generated using simulations, this number lets the function know which critical values we are comparing the test statistics to.
-#' @return The output is the APCSSA test statistics, which is the maximum of standardized statistics APCCRA and APCRCA.
+#' @param formula A formula specifying the model, with one response and two factors.
+#' @param data A data frame in long format: the first column contains observed values, the second Factor A, and the third Factor B.
+#' @param numSim An integer specifying the number of simulations used to estimate the null distribution. Defaults to 100000.
+#'
+#' @details
+#' `APCSSA` performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics—APCCRA and APCRCA—by aligning the data by means and ranking across rows or columns.
+#'
+#' These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A p-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
+#'
+#' If the design is not covered by the package's pre-simulated settings or if higher precision is desired by increasing `numSim`, users must first generate the null distribution manually using \code{\link{nullAPCXXA}} and \code{\link{nullAPCSSA}}.
+#'
+#' For more information, see the referenced article.
+#'
+#' @references
+#' Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. *arXiv preprint* arXiv:2410.04700.
+#'
+#' @return
+#' A data frame with the following columns:
+#' \itemize{
+#'   \item \strong{Statistic}: The APCSSA test statistic (maximum of APCCRA and APCRCA).
+#'   \item \strong{P-value}: The estimated p-value.
+#' }
+#' A summary table is printed to the console, and an interaction plot is generated.
+#'
+#' @seealso
+#' \code{\link{nullAPCXXA}}, \code{\link{nullAPCSSA}}, \code{\link{APCSSM}}
 #'
 #' @examples
 #' # Generate sample data with interaction and normal error
@@ -26,6 +50,7 @@
 #' APCSSA(value ~ A + B, data = data)
 #'
 #' @export
+
 ## Test statistic for APCSSA ----
 APCSSA <- function(formula, data, numSim = 100000) {
   # Extract the data frame from the formula
