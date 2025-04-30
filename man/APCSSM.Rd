@@ -4,16 +4,50 @@
 \alias{APCSSM}
 \title{APCSSM}
 \usage{
-APCSSM(dataFrame, numSim)
+APCSSM(formula, data, numSim = 1e+05)
 }
 \arguments{
-\item{dataFrame}{dataFrame should be in long format with the observed values in the first column, Factor A in the second, and Factor B in the third.}
+\item{formula}{A formula specifying the model, with one response and two factors.}
 
-\item{numSim}{Since the critical values are generated using simulations, this number lets the function know which critical values we are comparing the test statistics to.}
+\item{data}{A data frame in long format: the first column contains observed values, the second Factor A, and the third Factor B.}
+
+\item{numSim}{An integer specifying the number of simulations used to estimate the null distribution. Defaults to 100000.}
 }
 \value{
-The output is the APCSSM test statistics, which is the maximum of standardized statistics APCCRM and APCRCM.
+A data frame with the following columns:
+\itemize{
+\item \strong{Statistic}: The APCSSM test statistic (maximum of APCCRM and APCRCM).
+\item \strong{P-value}: The estimated p-value.
+}
+A summary table is printed to the console, and an interaction plot is generated.
 }
 \description{
-This test uses all possible crossed comparisons (APC) based on aligned ranks with alignment done using the median.
+This function tests for interaction in a two-way layout using all possible crossed comparisons (APC) based on aligned ranks, with alignment performed using the median.
+}
+\details{
+\code{APCSSM} performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics—APCCRM and APCRCM—by aligning the data by means and ranking across rows or columns.
+
+These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A p-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
+
+If the design is not covered by the package's pre-simulated settings or if higher precision is desired by increasing \code{numSim}, users must first generate the null distribution manually using \code{\link{sim_nullAPCSSM}}.
+
+For more information, see the referenced article.
+}
+\examples{
+# Generate sample data with interaction and normal error
+A <- factor(rep(1:3, each = 9))   # 3 levels
+B <- factor(rep(rep(1:3, each = 3), times = 3))  # 3 levels, repeated
+interaction <- as.numeric(as.character(A)) * as.numeric(as.character(B))
+value <- interaction + rnorm(27)
+data <- data.frame(value, A, B)
+
+# Run the APCSSM test
+APCSSM(value ~ A + B, data = data)
+
+}
+\references{
+Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. \emph{arXiv preprint} arXiv:2410.04700.
+}
+\seealso{
+\code{\link{nullAPCXXM}}, \code{\link{nullAPCSSM}}, \code{\link{sim_nullAPCSSM}}, \code{\link{APCSSA}}
 }

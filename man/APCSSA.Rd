@@ -29,7 +29,7 @@ This function tests for interaction in a two-way layout using all possible cross
 
 These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A p-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
 
-If the design is not covered by the package's pre-simulated settings or if higher precision is desired by increasing \code{numSim}, users must first generate the null distribution manually using \code{\link{nullAPCXXA}} and \code{\link{nullAPCSSA}}.
+If the design is not covered by the package's pre-simulated settings or if higher precision is desired by increasing \code{numSim}, users must first generate the null distribution manually using \code{\link{sim_nullAPCSSA}},
 
 For more information, see the referenced article.
 }
@@ -49,5 +49,5 @@ APCSSA(value ~ A + B, data = data)
 Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. \emph{arXiv preprint} arXiv:2410.04700.
 }
 \seealso{
-\code{\link{nullAPCXXA}}, \code{\link{nullAPCSSA}}, \code{\link{APCSSM}}
+\code{\link{nullAPCXXA}}, \code{\link{nullAPCSSA}}, \code{\link{sim_nullAPCSSA}}, \code{\link{APCSSM}}
 }
