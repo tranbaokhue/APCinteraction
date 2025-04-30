@@ -53,7 +53,5 @@ APCSSA(value ~ A + B, data = data)
 
 ## Citation
 
-Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024).  
-*Nonparametric tests for interaction in two-way ANOVA with balanced replications*.  
-arXiv preprint [arXiv:2410.04700](https://arxiv.org/abs/2410.04700).
+Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024).  *Nonparametric tests for interaction in two-way ANOVA with balanced replications*.  arXiv preprint [arXiv:2410.04700](https://arxiv.org/abs/2410.04700).
 
