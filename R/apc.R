@@ -130,7 +130,7 @@ APCSSA <- function(formula, data, numSim = 100000) {
   cat("\nAPCSSA Test Summary\n")
   print(result, row.names = FALSE)
 
-  # Generate Viridis-like color palette with `hcl.colors()`
+  # Generate a color palette with `hcl.colors()`
   num_levels <- nlevels(as.factor(dataFrame$B))
   color_palette <- hcl.colors(num_levels, "Viridis")
 
@@ -273,7 +273,7 @@ APCSSM <- function(formula, data, numSim = 100000) {
   cat("\nAPCSSM Test Summary\n")
   print(result, row.names = FALSE)
 
-  # Generate Viridis-like color palette with `hcl.colors()`
+  # Generate a color palette with `hcl.colors()`
   num_levels <- nlevels(as.factor(dataFrame$B))
   color_palette <- hcl.colors(num_levels, "Viridis")
 
