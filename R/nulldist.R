@@ -151,6 +151,7 @@ nullAPCSSM <- function(i, j, k) {
 #' @param parallel This is a Boolean option to run this simulation using multiple cores parallelly or not
 #'
 #' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equals to the numSim of all APCSSA statistics on the null data sets
+#' @importFrom magrittr %>%
 #' @export
 sim_nullAPCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
   .null1APCSSA(i, j, k, numSim, parallel)
@@ -166,6 +167,7 @@ sim_nullAPCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
 #' @param parallel This is a Boolean option to run this simulation using multiple cores parallelly or not
 #'
 #' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRM and APCRCM) that will get standardized into APCSSM and a numeric vector with length equals to the numSim of all APCSSA statistics on the null data sets
+#' @importFrom magrittr %>%
 #' @export
 sim_nullAPCSSM <- function(i, j, k, numSim = 100000, parallel = TRUE) {
   .null1APCSSM(i, j, k, numSim, parallel)

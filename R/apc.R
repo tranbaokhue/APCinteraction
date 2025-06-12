@@ -49,6 +49,7 @@
 #' # Run the APCSSA test
 #' APCSSA(value ~ A + B, data = data)
 #'
+#' @importFrom magrittr %>%
 #' @export
 
 ## Test statistic for APCSSA ----
@@ -194,6 +195,7 @@ APCSSA <- function(formula, data, numSim = 100000) {
 #' # Run the APCSSM test
 #' APCSSM(value ~ A + B, data = data)
 #'
+#' @importFrom magrittr %>%
 #' @export
 ## Test statistic for APCSSM ----
 APCSSM <- function(formula, data, numSim = 100000) {
