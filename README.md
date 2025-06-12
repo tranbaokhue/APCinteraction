@@ -46,7 +46,7 @@ interaction <- as.numeric(as.character(A)) * as.numeric(as.character(B))
 value <- interaction + rnorm(27)
 data <- data.frame(value, A, B)
 
-# Run the APCSSM test
+# Run the APCSSA test
 APCSSA(value ~ A + B, data = data)
 ```
 
