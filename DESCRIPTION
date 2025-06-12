@@ -13,6 +13,7 @@ Roxygen: list(markdown = TRUE)
 Depends: 
     R (>= 2.10)
 Imports: 
+    tidyverse,
     doParallel,
     dplyr,
     foreach,
