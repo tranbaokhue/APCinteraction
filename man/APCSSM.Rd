@@ -11,13 +11,13 @@ APCSSM(formula, data, numSim = 1e+05)
 
 \item{data}{A data frame in long format: the first column contains observed values, the second Factor A, and the third Factor B.}
 
-\item{numSim}{An integer specifying the number of simulations used to estimate the null distribution. Defaults to 100000.}
+\item{numSim}{An integer specifying the number of simulations used to estimate the null distribution. Defaults to 100,000.}
 }
 \value{
 A data frame with the following columns:
 \itemize{
 \item \strong{Statistic}: The APCSSM test statistic (maximum of APCCRM and APCRCM).
-\item \strong{P-value}: The estimated p-value.
+\item \strong{\emph{p}-value}: The estimated \emph{p}-value.
 }
 A summary table is printed to the console, and an interaction plot is generated.
 }
@@ -27,7 +27,7 @@ This function tests for interaction in a two-way layout using all possible cross
 \details{
 \code{APCSSM} performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics - APCCRM and APCRCM - by aligning the data by means and ranking across rows or columns.
 
-These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A p-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
+These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A \emph{p}-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
 
 If the design is not covered by the package's pre-simulated settings or if higher precision is desired by increasing \code{numSim}, users must first generate the null distribution manually using \code{\link{sim_nullAPCSSM}}.
 
@@ -69,5 +69,5 @@ APCSSM(value ~ A + B, data = data)
 Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. \emph{arXiv preprint} arXiv:2410.04700.
 }
 \seealso{
-\code{\link{nullAPCXXM}}, \code{\link{nullAPCSSM}}, \code{\link{sim_nullAPCSSM}}, \code{\link{APCSSA}}
+\code{\link{sim_nullAPCSSM}}, \code{\link{APCSSA}}
 }

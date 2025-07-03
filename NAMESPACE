@@ -2,10 +2,6 @@
 
 export(APCSSA)
 export(APCSSM)
-export(nullAPCSSA)
-export(nullAPCSSM)
-export(nullAPCXXA)
-export(nullAPCXXM)
 export(sim_nullAPCSSA)
 export(sim_nullAPCSSM)
 importFrom(magrittr,"%>%")

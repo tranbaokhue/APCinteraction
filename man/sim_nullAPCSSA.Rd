@@ -2,7 +2,7 @@
 % Please edit documentation in R/nulldist.R
 \name{sim_nullAPCSSA}
 \alias{sim_nullAPCSSA}
-\title{This function helps simulate the null for APCSSA test statistics.}
+\title{Simulate the null distribution for APCSSA}
 \usage{
 sim_nullAPCSSA(i, j, k, numSim = 1e+05, parallel = TRUE)
 }
@@ -15,11 +15,22 @@ sim_nullAPCSSA(i, j, k, numSim = 1e+05, parallel = TRUE)
 
 \item{numSim}{The number of simulations required to generate this null distribution (the number of cases/data sets the tests are applied to)}
 
-\item{parallel}{This is a Boolean option to run this simulation using multiple cores parallelly or not}
+\item{parallel}{This is a Boolean option to run this simulation using multiple cores in parallel or not}
 }
 \value{
-A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equals to the numSim of all APCSSA statistics on the null data sets
+A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equals to the \code{numSim} of all APCSSA statistics on the null data sets
 }
 \description{
-This function helps simulate the null for APCSSA test statistics.
+A complete function that simulate the null distribution for APCSSA and automatically save it to the working directory
+}
+\details{
+While we have provided null distributions for various settings in this package, there are still two-way settings that we don't readily have the null distribution to evaluate the significance of the test statistics (see References for the complete list of settings available). For example, one might wish to estimate the \emph{p}-value with a higher \code{numSim}, ie. 250,000.
+
+The parameter \code{parallel} is defaulted to TRUE and will use 1 less than the total number of cores on user's device. This setting helps speed up the simulation by a factor of the number of cores utilized, so please refrain from changing the default unless the device do not work well with parallel-computing.
+}
+\references{
+Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. \emph{arXiv preprint} arXiv:2410.04700.
+}
+\seealso{
+\code{\link{APCSSA}}, \code{\link{sim_nullAPCSSM}}
 }

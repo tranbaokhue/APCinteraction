@@ -18,7 +18,7 @@
 #' @details
 #' `APCSSA` performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics - APCCRA and APCRCA - by aligning the data by means and ranking across rows or columns.
 #'
-#' These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A p-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
+#' These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A *p*-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
 #'
 #' If the design is not covered by the package's pre-simulated settings or if higher precision is desired by increasing `numSim`, users must first generate the null distribution manually using \code{\link{sim_nullAPCSSA}},
 #'
@@ -31,7 +31,7 @@
 #' A data frame with the following columns:
 #' \itemize{
 #'   \item \strong{Statistic}: The APCSSA test statistic (maximum of APCCRA and APCRCA).
-#'   \item \strong{P-value}: The estimated p-value.
+#'   \item \strong{*p*-value}: The estimated *p*-value.
 #' }
 #' A summary table is printed to the console, and an interaction plot is generated.
 #'
@@ -140,7 +140,7 @@ APCSSA <- function(formula, data, numSim = 100000) {
   result <- data.frame(
     Interaction = paste0(factorA_name, ":", factorB_name),
     Statistic = APCSSA,
-    `P-value` = p_value
+    `p-value` = p_value
   )
 
   # Display result in aov-style format
@@ -180,12 +180,12 @@ APCSSA <- function(formula, data, numSim = 100000) {
 #'
 #' @param formula A formula specifying the model, with one response and two factors.
 #' @param data A data frame in long format: the first column contains observed values, the second Factor A, and the third Factor B.
-#' @param numSim An integer specifying the number of simulations used to estimate the null distribution. Defaults to 100000.
+#' @param numSim An integer specifying the number of simulations used to estimate the null distribution. Defaults to 100,000.
 #'
 #' @details
 #' `APCSSM` performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics - APCCRM and APCRCM - by aligning the data by means and ranking across rows or columns.
 #'
-#' These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A p-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
+#' These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A *p*-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
 #'
 #' If the design is not covered by the package's pre-simulated settings or if higher precision is desired by increasing `numSim`, users must first generate the null distribution manually using \code{\link{sim_nullAPCSSM}}.
 #'
@@ -198,7 +198,7 @@ APCSSA <- function(formula, data, numSim = 100000) {
 #' A data frame with the following columns:
 #' \itemize{
 #'   \item \strong{Statistic}: The APCSSM test statistic (maximum of APCCRM and APCRCM).
-#'   \item \strong{P-value}: The estimated p-value.
+#'   \item \strong{*p*-value}: The estimated *p*-value.
 #' }
 #' A summary table is printed to the console, and an interaction plot is generated.
 #'
@@ -310,7 +310,7 @@ APCSSM <- function(formula, data, numSim = 100000) {
   result <- data.frame(
     Interaction = paste0(factorA_name, ":", factorB_name),
     Statistic = APCSSM,
-    `P-value` = p_value
+    `p-value` = p_value
   )
 
   # Display result in aov-style format

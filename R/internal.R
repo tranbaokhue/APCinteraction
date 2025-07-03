@@ -313,7 +313,8 @@
 #' @param j The number of levels in factor B
 #' @param k The number of observations at each level of factor A and B
 #' @return The null mean and standard deviation of tests APCCRA and APCRCA
-#' @export
+#' @keywords internal
+#' @noRd
 .nullAPCXXA <- function(i, j, k) {
   # Check if the data set exists
   if (!exists("nullAPCXXA_summary")) stop("Error: nullAPCXXA_summary not found. Try running sim_nullAPCSSA().")
@@ -348,7 +349,8 @@
 #' @param j The number of levels in factor B
 #' @param k The number of observations at each level of factor A and B
 #' @return The null mean and standard deviation of tests APCCRA and APCRCA
-#' @export
+#' @keywords internal
+#' @noRd
 .nullAPCXXM <- function(i, j, k) {
   # Check if the data set exists
   if (!exists("nullAPCXXM_summary")) stop("Error: nullAPCXXM_summary is not available in the package.")
@@ -383,7 +385,8 @@
 #' @param j The number of levels in factor B
 #' @param k The number of observations at each level of factor A and B
 #' @return A numeric vector of null values of length 100,000
-#' @export
+#' @keywords internal
+#' @noRd
 # Function to load APCSSA null data
 .nullAPCSSA <- function(i, j, k) {
   # Construct the file name
@@ -420,7 +423,8 @@
 #' @param j The number of levels in factor B
 #' @param k The number of observations at each level of factor A and B
 #' @return A numeric vector of null values of length 100,000
-#' @export
+#' @keywords internal
+#' @noRd
 # Function to load APCSSM data
 .nullAPCSSM <- function(i, j, k) {
   # Construct the file name
