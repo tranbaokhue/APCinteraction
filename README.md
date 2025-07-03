@@ -18,7 +18,7 @@ devtools::install_github("tranbaokhue/APCinteraction")
 
 ## Overview
 
-The **APCinteraction** R package provides nonparametric tests for detecting interaction in two-way ANOVA designs with balanced replications. The core test statistics—**APCSSA** and **APCSSM**—are based on *All Possible Crossed Comparisons* (APC) and extend the methods of Hartlaub, Dean, and Wolfe (1999) to settings with replication, as recommended by Salazar-Alvarez et al. (2014).
+The **APCinteraction** R package provides nonparametric tests for detecting interaction in two-way ANOVA designs with balanced replications. The core test statistics — **APCSSA** and **APCSSM** — are based on *All Possible Crossed Comparisons* (APC) and extend the methods of Hartlaub, Dean, and Wolfe (1999) to settings with replication, as recommended by Salazar-Alvarez et al. (2014).
 
 These tests are designed to be robust and flexible, avoiding reliance on restrictive parametric assumptions. The methods utilize rank-based procedures with alignment to eliminate nuisance effects, offering enhanced power and interpretability in detecting interactions.
 
