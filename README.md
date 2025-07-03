@@ -105,7 +105,8 @@ data <- data.frame(
 
 # With Cauchy errors, we opt for APCSSM to check for interaction
 APCSSM(value ~ A + B, data = data)
-</td> </tr> </table> ```
+```
+</td> </tr> </table> 
 
 ## Citation
 
