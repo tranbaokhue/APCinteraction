@@ -33,23 +33,73 @@ Key features include:
 This package is particularly useful for researchers seeking robust alternatives to traditional ANOVA F-tests when normality assumptions may not hold.
 
 
-## Example
+## Examples
 
-This is a basic example which shows you how to solve a common problem:
+The following are basic examples which show you how to solve a common problem of determining whether there is interaction within a dataset.
+
+### Example 1: Data with normal error (recommended: aov or APCSSA)
 
 ``` r
 library(APCinteraction)
-# Generate sample data with interaction and normal error
-A <- factor(rep(1:3, each = 9))   # 3 levels
-B <- factor(rep(rep(1:3, each = 3), times = 3))  # 3 levels, repeated
-interaction <- as.numeric(as.character(A)) * as.numeric(as.character(B))
-value <- interaction + rnorm(27)
-data <- data.frame(value, A, B)
+# Set the seed for reproducibility
+set.seed(206)
+
+# Parameters - number of levels for factors A and B, and replications
+nA <- 3; nB <- 3; nrep <- 3
+
+# Generate levels and create the full design
+A_vals <- 1:nA
+B_vals <- 1:nB
+design <- expand.grid(A = A_vals, B = B_vals)
+design <- design[rep(seq_len(nrow(design)), each = nrep), ]
+
+# Compute response as interaction (product of numeric factor levels)
+mu <- A_vals[design$A] * B_vals[design$B]
+value <- mu + rnorm(length(mu))  # Add normal noise
+
+# Assemble the data
+data <- data.frame(
+  value = value,
+  A = factor(design$A),
+  B = factor(design$B)
+)
 
 # Run the APCSSA test
 APCSSA(value ~ A + B, data = data)
 ```
+### Example 2: Data with Cauchy error (recommended: APCSSM)
 
+``` r
+# Set seed for reproducibility
+set.seed(36)
+
+# Parameters - number of levels for factos A and B, replications, and interaction effect
+nA <- 3; nB <- 4; nrep <- 2; c <- 1.25
+
+# Generate levels and create the full design
+A_vals <- seq(-2, 2, length.out = nA)
+B_vals <- seq(-1.5, 1.5, length.out = nB)
+design <- expand.grid(A = 1:nA, B = 1:nB)
+design <- design[rep(seq_len(nrow(design)), each = nrep), ]
+
+# Create the specific interaction matrix: alternate ±c in top rows
+specInt <- matrix(0, nA, nB)
+specInt[1:2, 1:nB] <- matrix(c(c, -c, -c, c), nrow = 2, byrow = TRUE)
+
+# Compute response
+mu <- A_vals[design$A] + B_vals[design$B] + specInt[cbind(design$A, design$B)]
+value <- mu + rt(length(mu), df = 1)
+
+# Assemble the data
+data <- data.frame(
+  value = value,
+  A = factor(design$A, labels = round(A_vals, 2)),
+  B = factor(design$B, labels = round(B_vals, 2))
+)
+
+# With Cauchy errors, we opt for APCSSM to check for interaction
+APCSSM(value ~ A + B, data = data)
+```
 
 ## Citation
 
