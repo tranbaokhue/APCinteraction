@@ -39,9 +39,9 @@ The following are basic examples which show you how to solve a common problem of
 
 <table>
 <tr>
-<td>
+<td style="width: 49%; vertical-align: top;">
 
-### Example 1: Data with normal error (recommended: aov or APCSSA)
+### Example 1: Data with normal error (recommend: aov or APCSSA)
 
 ``` r
 library(APCinteraction)
@@ -71,9 +71,9 @@ data <- data.frame(
 # Run the APCSSA test
 APCSSA(value ~ A + B, data = data)
 ```
-</td> <td>
+</td> <td style="width: 49%; vertical-align: top;">
 
-### Example 2: Data with Cauchy error (recommended: APCSSM)
+### Example 2: Data with Cauchy error (recommend: APCSSM)
 
 ``` r
 # Set seed for reproducibility
