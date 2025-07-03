@@ -13,7 +13,7 @@
 #'
 #' @param formula A formula specifying the model, with one response and two factors.
 #' @param data A data frame in long format: the first column contains observed values, the second Factor A, and the third Factor B.
-#' @param numSim An integer specifying the number of simulations used to estimate the null distribution. Defaults to 100000.
+#' @param numSim An integer specifying the number of simulations used to estimate the null distribution. Defaults to 100,000.
 #'
 #' @details
 #' `APCSSA` performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics - APCCRA and APCRCA - by aligning the data by means and ranking across rows or columns.
@@ -36,7 +36,7 @@
 #' A summary table is printed to the console, and an interaction plot is generated.
 #'
 #' @seealso
-#' \code{\link{nullAPCXXA}}, \code{\link{nullAPCSSA}}, \code{\link{sim_nullAPCSSA}}, \code{\link{APCSSM}}
+#' \code{\link{sim_nullAPCSSA}}, \code{\link{APCSSM}}
 #'
 #' @examples
 #' # Set the seed for reproducibility
@@ -106,8 +106,8 @@ APCSSA <- function(formula, data, numSim = 100000) {
     if (numSim == 100000) {
       # Attempt to generate null distributions
       tryCatch({
-        nullAPCXXA(i, j, k)
-        nullAPCSSA(i, j, k)
+        .nullAPCXXA(i, j, k)
+        .nullAPCSSA(i, j, k)
       }, error = function(e) {
         stop("Error generating null distributions. Try running `sim_nullAPCSSA()` manually.")
       })
@@ -203,7 +203,7 @@ APCSSA <- function(formula, data, numSim = 100000) {
 #' A summary table is printed to the console, and an interaction plot is generated.
 #'
 #' @seealso
-#' \code{\link{nullAPCXXM}}, \code{\link{nullAPCSSM}}, \code{\link{sim_nullAPCSSM}}, \code{\link{APCSSA}}
+#' \code{\link{sim_nullAPCSSM}}, \code{\link{APCSSA}}
 #'
 #' @examples
 #' # Set seed for reproducibility
@@ -276,8 +276,8 @@ APCSSM <- function(formula, data, numSim = 100000) {
     if (numSim == 100000) {
       # Attempt to generate null distributions
       tryCatch({
-        nullAPCXXM(i, j, k)
-        nullAPCSSM(i, j, k)
+        .nullAPCXXM(i, j, k)
+        .nullAPCSSM(i, j, k)
       }, error = function(e) {
         stop("Error generating null distributions. Try running `sim_nullAPCSSM()` manually.")
       })
