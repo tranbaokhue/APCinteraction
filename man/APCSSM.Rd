@@ -25,7 +25,7 @@ A summary table is printed to the console, and an interaction plot is generated.
 This function tests for interaction in a two-way layout using all possible crossed comparisons (APC) based on aligned ranks, with alignment performed using the median.
 }
 \details{
-\code{APCSSM} performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics—APCCRM and APCRCM—by aligning the data by means and ranking across rows or columns.
+\code{APCSSM} performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics - APCCRM and APCRCM - by aligning the data by means and ranking across rows or columns.
 
 These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A p-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
 
@@ -34,14 +34,34 @@ If the design is not covered by the package's pre-simulated settings or if highe
 For more information, see the referenced article.
 }
 \examples{
-# Generate sample data with interaction and normal error
-A <- factor(rep(1:3, each = 9))   # 3 levels
-B <- factor(rep(rep(1:3, each = 3), times = 3))  # 3 levels, repeated
-interaction <- as.numeric(as.character(A)) * as.numeric(as.character(B))
-value <- interaction + rnorm(27)
-data <- data.frame(value, A, B)
+# Set seed for reproducibility
+set.seed(36)
 
-# Run the APCSSM test
+# Parameters - number of levels for factos A and B, replications, and interaction effect
+nA <- 3; nB <- 4; nrep <- 2; c <- 1.25
+
+# Generate levels and create the full design
+A_vals <- seq(-2, 2, length.out = nA)
+B_vals <- seq(-1.5, 1.5, length.out = nB)
+design <- expand.grid(A = 1:nA, B = 1:nB)
+design <- design[rep(seq_len(nrow(design)), each = nrep), ]
+
+# Create the specific interaction matrix: alternate ±c in top rows
+specInt <- matrix(0, nA, nB)
+specInt[1:2, 1:nB] <- matrix(c(c, -c, -c, c), nrow = 2, byrow = TRUE)
+
+# Compute response
+mu <- A_vals[design$A] + B_vals[design$B] + specInt[cbind(design$A, design$B)]
+value <- mu + rt(length(mu), df = 1)
+
+# Assemble the data
+data <- data.frame(
+  value = value,
+  A = factor(design$A, labels = round(A_vals, 2)),
+  B = factor(design$B, labels = round(B_vals, 2))
+)
+
+# With Cauchy errors, we opt for APCSSM to check for interaction
 APCSSM(value ~ A + B, data = data)
 
 }

@@ -16,7 +16,7 @@
 #' @param numSim An integer specifying the number of simulations used to estimate the null distribution. Defaults to 100000.
 #'
 #' @details
-#' `APCSSA` performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics—APCCRA and APCRCA—by aligning the data by means and ranking across rows or columns.
+#' `APCSSA` performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics - APCCRA and APCRCA - by aligning the data by means and ranking across rows or columns.
 #'
 #' These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A p-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
 #'
@@ -39,12 +39,28 @@
 #' \code{\link{nullAPCXXA}}, \code{\link{nullAPCSSA}}, \code{\link{sim_nullAPCSSA}}, \code{\link{APCSSM}}
 #'
 #' @examples
-#' # Generate sample data with interaction and normal error
-#' A <- factor(rep(1:3, each = 9))   # 3 levels
-#' B <- factor(rep(rep(1:3, each = 3), times = 3))  # 3 levels, repeated
-#' interaction <- as.numeric(as.character(A)) * as.numeric(as.character(B))
-#' value <- interaction + rnorm(27)
-#' data <- data.frame(value, A, B)
+#' # Set the seed for reproducibility
+#' set.seed(206)
+#'
+#' # Parameters - number of levels for factors A and B, and replications
+#' nA <- 3; nB <- 3; nrep <- 3
+#'
+#' # Generate levels and create the full design
+#' A_vals <- 1:nA
+#' B_vals <- 1:nB
+#' design <- expand.grid(A = A_vals, B = B_vals)
+#' design <- design[rep(seq_len(nrow(design)), each = nrep), ]
+#'
+#' # Compute response as interaction (product of numeric factor levels)
+#' mu <- A_vals[design$A] * B_vals[design$B]
+#' value <- mu + rnorm(length(mu))  # Add normal noise
+#'
+#' # Assemble the data
+#' data <- data.frame(
+#'   value = value,
+#'   A = factor(design$A),
+#'   B = factor(design$B)
+#' )
 #'
 #' # Run the APCSSA test
 #' APCSSA(value ~ A + B, data = data)
@@ -128,8 +144,13 @@ APCSSA <- function(formula, data, numSim = 100000) {
   )
 
   # Display result in aov-style format
-  cat("\nAPCSSA Test Summary\n")
+  cat(strrep("=", 40), "\n")
+  cat("APCSSA Test Summary\n")
+  cat(strrep("=", 40), "\n")
+
   print(result, row.names = FALSE)
+
+  cat("\nNote: The p-value is estimated using the null distribution with", numSim, "simulations.\n\n")
 
   # Generate a color palette with `hcl.colors()`
   num_levels <- nlevels(as.factor(dataFrame$B))
@@ -162,7 +183,7 @@ APCSSA <- function(formula, data, numSim = 100000) {
 #' @param numSim An integer specifying the number of simulations used to estimate the null distribution. Defaults to 100000.
 #'
 #' @details
-#' `APCSSM` performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics—APCCRM and APCRCM—by aligning the data by means and ranking across rows or columns.
+#' `APCSSM` performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics - APCCRM and APCRCM - by aligning the data by means and ranking across rows or columns.
 #'
 #' These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A p-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
 #'
@@ -185,14 +206,34 @@ APCSSA <- function(formula, data, numSim = 100000) {
 #' \code{\link{nullAPCXXM}}, \code{\link{nullAPCSSM}}, \code{\link{sim_nullAPCSSM}}, \code{\link{APCSSA}}
 #'
 #' @examples
-#' # Generate sample data with interaction and normal error
-#' A <- factor(rep(1:3, each = 9))   # 3 levels
-#' B <- factor(rep(rep(1:3, each = 3), times = 3))  # 3 levels, repeated
-#' interaction <- as.numeric(as.character(A)) * as.numeric(as.character(B))
-#' value <- interaction + rnorm(27)
-#' data <- data.frame(value, A, B)
+#' # Set seed for reproducibility
+#' set.seed(36)
 #'
-#' # Run the APCSSM test
+#' # Parameters - number of levels for factos A and B, replications, and interaction effect
+#' nA <- 3; nB <- 4; nrep <- 2; c <- 1.25
+#'
+#'# Generate levels and create the full design
+#' A_vals <- seq(-2, 2, length.out = nA)
+#' B_vals <- seq(-1.5, 1.5, length.out = nB)
+#' design <- expand.grid(A = 1:nA, B = 1:nB)
+#' design <- design[rep(seq_len(nrow(design)), each = nrep), ]
+#'
+#' # Create the specific interaction matrix: alternate ±c in top rows
+#' specInt <- matrix(0, nA, nB)
+#' specInt[1:2, 1:nB] <- matrix(c(c, -c, -c, c), nrow = 2, byrow = TRUE)
+#'
+#' # Compute response
+#' mu <- A_vals[design$A] + B_vals[design$B] + specInt[cbind(design$A, design$B)]
+#' value <- mu + rt(length(mu), df = 1)
+#'
+#' # Assemble the data
+#' data <- data.frame(
+#'   value = value,
+#'   A = factor(design$A, labels = round(A_vals, 2)),
+#'   B = factor(design$B, labels = round(B_vals, 2))
+#' )
+#'
+#' # With Cauchy errors, we opt for APCSSM to check for interaction
 #' APCSSM(value ~ A + B, data = data)
 #'
 #' @importFrom magrittr %>%
@@ -271,9 +312,15 @@ APCSSM <- function(formula, data, numSim = 100000) {
     Statistic = APCSSM,
     `P-value` = p_value
   )
+
   # Display result in aov-style format
-  cat("\nAPCSSM Test Summary\n")
+  cat(strrep("=", 40), "\n")
+  cat("APCSSM Test Summary\n")
+  cat(strrep("=", 40), "\n")
+
   print(result, row.names = FALSE)
+
+  cat("\nNote: The p-value is estimated using the null distribution with", numSim, "simulations.\n\n")
 
   # Generate a color palette with `hcl.colors()`
   num_levels <- nlevels(as.factor(dataFrame$B))

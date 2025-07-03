@@ -25,7 +25,7 @@ A summary table is printed to the console, and an interaction plot is generated.
 This function tests for interaction in a two-way layout using all possible crossed comparisons (APC) based on aligned ranks, with alignment performed using the mean.
 }
 \details{
-\code{APCSSA} performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics—APCCRA and APCRCA—by aligning the data by means and ranking across rows or columns.
+\code{APCSSA} performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics - APCCRA and APCRCA - by aligning the data by means and ranking across rows or columns.
 
 These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A p-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
 
@@ -34,12 +34,28 @@ If the design is not covered by the package's pre-simulated settings or if highe
 For more information, see the referenced article.
 }
 \examples{
-# Generate sample data with interaction and normal error
-A <- factor(rep(1:3, each = 9))   # 3 levels
-B <- factor(rep(rep(1:3, each = 3), times = 3))  # 3 levels, repeated
-interaction <- as.numeric(as.character(A)) * as.numeric(as.character(B))
-value <- interaction + rnorm(27)
-data <- data.frame(value, A, B)
+# Set the seed for reproducibility
+set.seed(206)
+
+# Parameters - number of levels for factors A and B, and replications
+nA <- 3; nB <- 3; nrep <- 3
+
+# Generate levels and create the full design
+A_vals <- 1:nA
+B_vals <- 1:nB
+design <- expand.grid(A = A_vals, B = B_vals)
+design <- design[rep(seq_len(nrow(design)), each = nrep), ]
+
+# Compute response as interaction (product of numeric factor levels)
+mu <- A_vals[design$A] * B_vals[design$B]
+value <- mu + rnorm(length(mu))  # Add normal noise
+
+# Assemble the data
+data <- data.frame(
+  value = value,
+  A = factor(design$A),
+  B = factor(design$B)
+)
 
 # Run the APCSSA test
 APCSSA(value ~ A + B, data = data)
