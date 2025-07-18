@@ -37,9 +37,6 @@ This package is particularly useful for researchers seeking robust alternatives 
 
 The following are basic examples which show you how to solve a common problem of determining whether there is interaction within a dataset.
 
-<table>
-<tr>
-<td style="width: 49%; vertical-align: top;">
 
 ### Example 1: Data with normal error (recommend: aov or APCSSA)
 
@@ -71,7 +68,7 @@ data <- data.frame(
 # Run the APCSSA test
 APCSSA(value ~ A + B, data = data)
 ```
-</td> <td style="width: 49%; vertical-align: top;">
+
 
 ### Example 2: Data with Cauchy error (recommend: APCSSM)
 
@@ -106,7 +103,7 @@ data <- data.frame(
 # With Cauchy errors, we opt for APCSSM to check for interaction
 APCSSM(value ~ A + B, data = data)
 ```
-</td> </tr> </table> 
+
 
 ## Citation
 
