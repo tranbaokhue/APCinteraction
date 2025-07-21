@@ -467,63 +467,88 @@
 #' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA.
 #' @keywords internal
 #' @noRd
+#' @importFrom pbapply pblapply
 # First Null
-.null1APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
-  I <- i
-  J <- j
-  K <- k
+.null1APCSSA <- function(i, j, k,
+                         numSim   = 100000,
+                         parallel = TRUE,
+                         verbose  = TRUE) {
+  I <- i; J <- j; K <- k
 
-  if (parallel) {
-    # Create cluster
-    cl <- parallel::makeCluster(parallel::detectCores() - 1)
-    parallel::clusterExport(cl, varlist = c("I", "J", "K"), envir = environment())
+  # turn pbapply bar on or off
+  pbapply::pboptions(type = if (verbose) "timer" else "none")
 
-    # Parallelized null matrix generation
-    APCnull <- parallel::parLapply(cl, 1:numSim, function(n) {
-      data.frame(value = stats::rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    })
-
-    # Compute null distributions in parallel
-    nullDistCRA <- unlist(parallel::parLapply(cl, APCnull, .APCCRAD), use.names = FALSE)
-    nullDistRCA <- unlist(parallel::parLapply(cl, APCnull, .APCRCAD), use.names = FALSE)
-
-    # Stop the cluster
-    parallel::stopCluster(cl)
-
-  } else {
-    # Non-parallel version
-    APCnull <- lapply(1:numSim, function(n) {
-      data.frame(value = stats::rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    })
-
-    # Compute null distributions sequentially
-    nullDistCRA <- unlist(lapply(APCnull, .APCCRAD), use.names = FALSE)
-    nullDistRCA <- unlist(lapply(APCnull, .APCRCAD), use.names = FALSE)
+  if (verbose) {
+    message("→ [.null1APCSSA] Generating ", numSim, " null data sets …")
   }
 
-  # Summarize results
+  if (parallel) {
+    cl <- parallel::makeCluster(parallel::detectCores() - 1)
+    on.exit(parallel::stopCluster(cl), add = TRUE)
+    parallel::clusterExport(cl, varlist = c("I", "J", "K"), envir = environment())
+
+    APCnull <- pbapply::pblapply(seq_len(numSim), function(n) {
+      data.frame(
+        value = stats::rnorm(I * J * K),
+        A     = rep(1:I, each = K, times = J),
+        B     = rep(1:J, each = I * K)
+      )
+    }, cl = cl)
+
+  } else {
+    APCnull <- pbapply::pblapply(seq_len(numSim), function(n) {
+      data.frame(
+        value = stats::rnorm(I * J * K),
+        A     = rep(1:I, each = K, times = J),
+        B     = rep(1:J, each = I * K)
+      )
+    })
+  }
+
+  if (verbose) {
+    message("→ [.null1APCSSA] Computing APCCRA for each null …")
+  }
+  if (parallel) {
+    nullDistCRA <- unlist(
+      pbapply::pblapply(APCnull, .APCCRAD, cl = cl),
+      use.names = FALSE
+    )
+  } else {
+    nullDistCRA <- unlist(
+      pbapply::pblapply(APCnull, .APCCRAD),
+      use.names = FALSE
+    )
+  }
+
+  if (verbose) {
+    message("→ [.null1APCSSA] Computing APCRCA for each null …")
+  }
+  if (parallel) {
+    nullDistRCA <- unlist(
+      pbapply::pblapply(APCnull, .APCRCAD, cl = cl),
+      use.names = FALSE
+    )
+  } else {
+    nullDistRCA <- unlist(
+      pbapply::pblapply(APCnull, .APCRCAD),
+      use.names = FALSE
+    )
+  }
+
+  # summarize, assign, save
   nullAPCXXA_summary <- data.frame(
     E_CRA = mean(nullDistCRA),
     SD_CRA = sd(nullDistCRA),
     E_RCA = mean(nullDistRCA),
     SD_RCA = sd(nullDistRCA)
   )
-
-  # Assign to global environment with a formatted name
-  name <- paste0("nullAPCXXA_", i, "x", j, "x", k)
+  name      <- paste0("nullAPCXXA_", i, "x", j, "x", k)
   assign(name, nullAPCXXA_summary, envir = .GlobalEnv)
-
-  # Save to the working directory
   save_path <- file.path(getwd(), paste0(name, ".RData"))
   save(list = name, file = save_path)
+  if (verbose) message("→ [.null1APCSSA] Saved summary to ", save_path)
 
-  message("Saved result to: ", save_path)
-
-  return(nullAPCXXA_summary)
+  nullAPCXXA_summary
 }
 
 #' This function helps simulate the second null for APCSSA test statistics.
@@ -537,64 +562,76 @@
 #' @returns A numeric vector with length equals to the numSim of all APCSSA statistics on the null data sets
 #' @keywords internal
 #' @noRd
+#' @importFrom pbapply pblapply
 # Second Null
-.null2APCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
-  I <- i
-  J <- j
-  K <- k
+.null2APCSSA <- function(i, j, k,
+                         numSim   = 100000,
+                         parallel = TRUE,
+                         verbose  = TRUE) {
+  I <- i; J <- j; K <- k
 
-  # Retrieve the correct null distribution from null1APCSSA
   prev_name <- paste0("nullAPCXXA_", i, "x", j, "x", k)
   if (!exists(prev_name, envir = .GlobalEnv)) {
-    stop("Error: The required null distribution from null1APCSSA does not exist. Run null1APCSSA() first.")
+    stop("Error: run .null1APCSSA() first for this (i,j,k).")
   }
   APCSSnullDist <- get(prev_name, envir = .GlobalEnv)
 
-  if (parallel) {
-    # Create and register cluster
-    cl <- parallel::makeCluster(parallel::detectCores() - 1)
+  pbapply::pboptions(type = if (verbose) "timer" else "none")
 
-    # Export required functions and data
-    parallel::clusterExport(cl, varlist = c("APCSSA", ".APCCRAD", ".APCRCAD", "APCSSnullDist", "I", "J", "K"), envir = environment())
-
-    # Parallelized null matrix generation
-    APCnull <- parallel::parLapply(cl, 1:numSim, function(n) {
-      data.frame(value = stats::rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    })
-
-    # Compute null distribution in parallel
-    nullDistSSA <- unlist(parallel::parLapply(cl, APCnull, APCSSA), use.names = FALSE)
-
-    # Stop the cluster
-    parallel::stopCluster(cl)
-
-  } else {
-    # Non-parallel version
-    APCnull <- lapply(1:numSim, function(n) {
-      data.frame(value = stats::rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    })
-
-    # Compute null distribution sequentially
-    nullDistSSA <- unlist(lapply(APCnull, APCSSA), use.names = FALSE)
+  if (verbose) {
+    message("→ [.null2APCSSA] Generating ", numSim, " null data sets …")
   }
 
-  # Assign to global environment
-  nameA <- paste0("nullAPCSSA_", i, "x", j, "x", k)
-  assign(nameA, nullDistSSA, envir = .GlobalEnv)
+  if (parallel) {
+    cl <- parallel::makeCluster(parallel::detectCores() - 1)
+    on.exit(parallel::stopCluster(cl), add = TRUE)
+    parallel::clusterExport(
+      cl,
+      varlist = c("APCSSA", ".APCCRAD", ".APCRCAD", "APCSSnullDist", "I", "J", "K"),
+      envir = environment()
+    )
 
-  # Save to working directory
+    APCnull <- pbapply::pblapply(seq_len(numSim), function(n) {
+      data.frame(
+        value = stats::rnorm(I * J * K),
+        A     = rep(1:I, each = K, times = J),
+        B     = rep(1:J, each = I * K)
+      )
+    }, cl = cl)
+
+  } else {
+    APCnull <- pbapply::pblapply(seq_len(numSim), function(n) {
+      data.frame(
+        value = stats::rnorm(I * J * K),
+        A     = rep(1:I, each = K, times = J),
+        B     = rep(1:J, each = I * K)
+      )
+    })
+  }
+
+  if (verbose) {
+    message("→ [.null2APCSSA] Computing APCSSA for each null …")
+  }
+  if (parallel) {
+    nullDistSSA <- unlist(
+      pbapply::pblapply(APCnull, APCSSA, cl = cl),
+      use.names = FALSE
+    )
+  } else {
+    nullDistSSA <- unlist(
+      pbapply::pblapply(APCnull, APCSSA),
+      use.names = FALSE
+    )
+  }
+
+  nameA     <- paste0("nullAPCSSA_", i, "x", j, "x", k)
+  assign(nameA, nullDistSSA, envir = .GlobalEnv)
   save_path <- file.path(getwd(), paste0(nameA, ".RData"))
   save(list = nameA, file = save_path)
+  if (verbose) message("→ [.null2APCSSA] Saved result to ", save_path)
 
-  message("Saved result to: ", save_path)
-
-  return(nullDistSSA)
+  nullDistSSA
 }
-
 
 #' This function helps simulate the first null for APCSSM test statistics.
 #'
@@ -607,63 +644,91 @@
 #' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRM and APCRCM) that will get standardized into APCSSM.
 #' @keywords internal
 #' @noRd
+#' @importFrom pbapply pblapply
 # First Null
-.null1APCSSM <- function(i, j, k, numSim = 100000, parallel = TRUE) {
-  I <- i
-  J <- j
-  K <- k
+.null1APCSSM <- function(i, j, k,
+                         numSim   = 100000,
+                         parallel = TRUE,
+                         verbose  = TRUE) {
+  I <- i; J <- j; K <- k
 
-  if (parallel) {
-    # Create cluster
-    cl <- parallel::makeCluster(parallel::detectCores() - 1)
-    parallel::clusterExport(cl, varlist = c("I", "J", "K"), envir = environment())
+  # toggle pbapply style
+  pbapply::pboptions(type = if (verbose) "timer" else "none")
 
-    # Parallelized null matrix generation
-    APCnull <- parallel::parLapply(cl, 1:numSim, function(n) {
-      data.frame(value = stats::rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    })
-
-    # Compute null distributions in parallel
-    nullDistCRM <- unlist(parallel::parLapply(cl, APCnull, .APCCRMD), use.names = FALSE)
-    nullDistRCM <- unlist(parallel::parLapply(cl, APCnull, .APCRCMD), use.names = FALSE)
-
-    # Stop the cluster
-    parallel::stopCluster(cl)
-
-  } else {
-    # Non-parallel version
-    APCnull <- lapply(1:numSim, function(n) {
-      data.frame(value = stats::rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    })
-
-    # Compute null distributions sequentially
-    nullDistCRM <- unlist(lapply(APCnull, .APCCRMD), use.names = FALSE)
-    nullDistRCM <- unlist(lapply(APCnull, .APCRCMD), use.names = FALSE)
+  if (verbose) {
+    message("→ [.null1APCSSM] Generating ", numSim, " null data sets …")
   }
 
-  # Summarize results
+  if (parallel) {
+    cl <- parallel::makeCluster(parallel::detectCores() - 1)
+    on.exit(parallel::stopCluster(cl), add = TRUE)
+    parallel::clusterExport(cl, varlist = c("I", "J", "K"), envir = environment())
+
+    APCnull <- pbapply::pblapply(
+      seq_len(numSim),
+      function(n) {
+        data.frame(
+          value = stats::rnorm(I * J * K),
+          A     = rep(1:I, each = K, times = J),
+          B     = rep(1:J, each = I * K)
+        )
+      },
+      cl = cl
+    )
+  } else {
+    APCnull <- pbapply::pblapply(
+      seq_len(numSim),
+      function(n) {
+        data.frame(
+          value = stats::rnorm(I * J * K),
+          A     = rep(1:I, each = K, times = J),
+          B     = rep(1:J, each = I * K)
+        )
+      }
+    )
+  }
+
+  if (verbose) {
+    message("→ [.null1APCSSM] Computing CRM for each null …")
+  }
+  nullDistCRM <- unlist(
+    if (parallel) {
+      pbapply::pblapply(APCnull, .APCCRMD, cl = cl)
+    } else {
+      pbapply::pblapply(APCnull, .APCCRMD)
+    },
+    use.names = FALSE
+  )
+
+  if (verbose) {
+    message("→ [.null1APCSSM] Computing RCM for each null …")
+  }
+  nullDistRCM <- unlist(
+    if (parallel) {
+      pbapply::pblapply(APCnull, .APCRCMD, cl = cl)
+    } else {
+      pbapply::pblapply(APCnull, .APCRCMD)
+    },
+    use.names = FALSE
+  )
+
+  # summarize & save
   nullAPCXXM_summary <- data.frame(
     E_CRM = mean(nullDistCRM),
     SD_CRM = sd(nullDistCRM),
     E_RCM = mean(nullDistRCM),
     SD_RCM = sd(nullDistRCM)
   )
-
-  # Assign to global environment with a formatted name
-  name <- paste0("nullAPCXXM_", i, "x", j, "x", k)
+  name      <- paste0("nullAPCXXM_", i, "x", j, "x", k)
   assign(name, nullAPCXXM_summary, envir = .GlobalEnv)
-
-  # Save to the working directory
   save_path <- file.path(getwd(), paste0(name, ".RData"))
   save(list = name, file = save_path)
 
-  message("Saved result to: ", save_path)
+  if (verbose) {
+    message("→ [.null1APCSSM] Saved result to: ", save_path)
+  }
 
-  return(nullAPCXXM_summary)
+  nullAPCXXM_summary
 }
 
 #' This function helps simulate the second null for APCSSM test statistics.
@@ -677,60 +742,80 @@
 #' @returns A numeric vector with length equals to the numSim of all APCSSM statistics on the null data sets
 #' @keywords internal
 #' @noRd
+#' @importFrom pbapply pblapply
 # Second Null
-.null2APCSSM <- function(i, j, k, numSim = 100000, parallel = TRUE) {
-  I <- i
-  J <- j
-  K <- k
 
-  # Retrieve the correct null distribution from null1APCSSA
+.null2APCSSM <- function(i, j, k,
+                         numSim   = 100000,
+                         parallel = TRUE,
+                         verbose  = TRUE) {
+  I <- i; J <- j; K <- k
+
   prev_name <- paste0("nullAPCXXM_", i, "x", j, "x", k)
   if (!exists(prev_name, envir = .GlobalEnv)) {
-    stop("Error: The required null distribution from null1APCSSM does not exist. Run null1APCSSM() first.")
+    stop("Error: .null1APCSSM() must be run first for this (i,j,k).")
   }
   APCSSnullDist <- get(prev_name, envir = .GlobalEnv)
 
-  if (parallel) {
-    # Create and register cluster
-    cl <- parallel::makeCluster(parallel::detectCores() - 1)
+  pbapply::pboptions(type = if (verbose) "timer" else "none")
 
-    # Export required functions and data
-    parallel::clusterExport(cl, varlist = c("APCSSM", ".APCCRMD", ".APCRCMD", "APCSSnullDist", "I", "J", "K"), envir = environment())
-
-    # Parallelized null matrix generation
-    APCnull <- parallel::parLapply(cl, 1:numSim, function(n) {
-      data.frame(value = stats::rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    })
-
-    # Compute null distribution in parallel
-    nullDistSSM <- unlist(parallel::parLapply(cl, APCnull, APCSSM), use.names = FALSE)
-
-    # Stop the cluster
-    parallel::stopCluster(cl)
-
-  } else {
-    # Non-parallel version
-    APCnull <- lapply(1:numSim, function(n) {
-      data.frame(value = stats::rnorm(I * J * K),
-                 A = rep(1:I, each = K, times = J),
-                 B = rep(1:J, each = I * K))
-    })
-
-    # Compute null distribution sequentially
-    nullDistSSM <- unlist(lapply(APCnull, APCSSM), use.names = FALSE)
+  if (verbose) {
+    message("→ [.null2APCSSM] Generating ", numSim, " null data sets …")
   }
 
-  # Assign to global environment
-  nameA <- paste0("nullAPCSSM_", i, "x", j, "x", k)
-  assign(nameA, nullDistSSM, envir = .GlobalEnv)
+  if (parallel) {
+    cl <- parallel::makeCluster(parallel::detectCores() - 1)
+    on.exit(parallel::stopCluster(cl), add = TRUE)
+    parallel::clusterExport(
+      cl,
+      varlist = c("APCSSM", ".APCCRMD", ".APCRCMD", "APCSSnullDist", "I", "J", "K"),
+      envir = environment()
+    )
 
-  # Save to working directory
+    APCnull <- pbapply::pblapply(
+      seq_len(numSim),
+      function(n) {
+        data.frame(
+          value = stats::rnorm(I * J * K),
+          A     = rep(1:I, each = K, times = J),
+          B     = rep(1:J, each = I * K)
+        )
+      },
+      cl = cl
+    )
+  } else {
+    APCnull <- pbapply::pblapply(
+      seq_len(numSim),
+      function(n) {
+        data.frame(
+          value = stats::rnorm(I * J * K),
+          A     = rep(1:I, each = K, times = J),
+          B     = rep(1:J, each = I * K)
+        )
+      }
+    )
+  }
+
+  if (verbose) {
+    message("→ [.null2APCSSM] Computing APCSSM for each null …")
+  }
+  nullDistSSM <- unlist(
+    if (parallel) {
+      pbapply::pblapply(APCnull, APCSSM, cl = cl)
+    } else {
+      pbapply::pblapply(APCnull, APCSSM)
+    },
+    use.names = FALSE
+  )
+
+  nameA     <- paste0("nullAPCSSM_", i, "x", j, "x", k)
+  assign(nameA, nullDistSSM, envir = .GlobalEnv)
   save_path <- file.path(getwd(), paste0(nameA, ".RData"))
   save(list = nameA, file = save_path)
 
-  message("Saved result to: ", save_path)
+  if (verbose) {
+    message("→ [.null2APCSSM] Saved result to: ", save_path)
+  }
 
-  return(nullDistSSM)
+  nullDistSSM
 }
