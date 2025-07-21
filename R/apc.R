@@ -78,21 +78,27 @@ APCSSA <- function(formula, data, numSim = 100000) {
     stop("Formula must include exactly one response and two factors.")
   }
 
-  # Extract factor names from the formula
+  # Pull out the response name
   response_name <- names(df)[1]
-  factorA_name <- names(df)[2]
-  factorB_name <- names(df)[3]
 
-  # Prepare data in the required format
+  # Turn the two RHS columns into factors
+  fac <- setNames(lapply(df[2:3], factor), names(df)[2:3])
+
+  # Order them by number of levels (smallest first)
+  ord <- order(vapply(fac, nlevels, integer(1)))
+
+  # Assign A/B names and values so that A always has ≤ levels than B
+  factorA_name <- names(fac)[ord[1]]
+  factorB_name <- names(fac)[ord[2]]
   dataFrame <- data.frame(
-    value = df[, 1],
-    A = df[, 2],
-    B = df[, 3]
+    value = df[[1]],
+    A     = fac[[ord[1]]],
+    B     = fac[[ord[2]]]
   )
 
-  # Extract i, j, k from factor levels
-  i <- nlevels(as.factor(dataFrame[, 2]))
-  j <- nlevels(as.factor(dataFrame[, 3]))
+  # Dimensions (guaranteed i ≤ j)
+  i <- nlevels(dataFrame$A)
+  j <- nlevels(dataFrame$B)
   k <- nrow(dataFrame) / (i * j)
 
   # Check for available null distributions in the global environment
@@ -248,21 +254,27 @@ APCSSM <- function(formula, data, numSim = 100000) {
     stop("Formula must include exactly one response and two factors.")
   }
 
-  # Extract factor names from the formula
+  # Pull out the response name
   response_name <- names(df)[1]
-  factorA_name <- names(df)[2]
-  factorB_name <- names(df)[3]
 
-  # Prepare data in the required format
+  # Turn the two RHS columns into factors
+  fac <- setNames(lapply(df[2:3], factor), names(df)[2:3])
+
+  # Order them by number of levels (smallest first)
+  ord <- order(vapply(fac, nlevels, integer(1)))
+
+  # Assign A/B names and values so that A always has ≤ levels than B
+  factorA_name <- names(fac)[ord[1]]
+  factorB_name <- names(fac)[ord[2]]
   dataFrame <- data.frame(
-    value = df[, 1],
-    A = df[, 2],
-    B = df[, 3]
+    value = df[[1]],
+    A     = fac[[ord[1]]],
+    B     = fac[[ord[2]]]
   )
 
-  # Extract i, j, k from factor levels
-  i <- nlevels(as.factor(dataFrame[, 2]))
-  j <- nlevels(as.factor(dataFrame[, 3]))
+  # Dimensions (guaranteed i ≤ j)
+  i <- nlevels(dataFrame$A)
+  j <- nlevels(dataFrame$B)
   k <- nrow(dataFrame) / (i * j)
 
   # Check for available null distributions in the global environment

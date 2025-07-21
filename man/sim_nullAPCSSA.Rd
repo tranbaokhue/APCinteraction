@@ -4,7 +4,7 @@
 \alias{sim_nullAPCSSA}
 \title{Simulate the null distribution for APCSSA}
 \usage{
-sim_nullAPCSSA(i, j, k, numSim = 1e+05, parallel = TRUE)
+sim_nullAPCSSA(i, j, k, numSim = 1e+05, parallel = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{i}{The number of levels in factor A}
@@ -13,9 +13,11 @@ sim_nullAPCSSA(i, j, k, numSim = 1e+05, parallel = TRUE)
 
 \item{k}{The number of observations at each level of factor A and B}
 
-\item{numSim}{The number of simulations required to generate this null distribution (the number of cases/data sets the tests are applied to)}
+\item{numSim}{The number of simulations (data sets) to generate}
 
-\item{parallel}{This is a Boolean option to run this simulation using multiple cores in parallel or not}
+\item{parallel}{Boolean; if TRUE (the default), uses one fewer than the total number of cores for parallel computation.}
+
+\item{verbose}{Logical; if TRUE (the default), prints a startup notice and progress bar.}
 }
 \value{
 A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equals to the \code{numSim} of all APCSSA statistics on the null data sets
@@ -24,9 +26,19 @@ A data frame with the null mean and standard deviation for the two test statisti
 A complete function that simulate the null distribution for APCSSA and automatically save it to the working directory
 }
 \details{
-While we have provided null distributions for various settings in this package, there are still two-way settings that we don't readily have the null distribution to evaluate the significance of the test statistics (see References for the complete list of settings available). For example, one might wish to estimate the \emph{p}-value with a higher \code{numSim}, ie. 250,000.
+While we have provided null distributions for various settings in this package, there are still two-way settings that we don't readily have the null distribution to evaluate the significance of the test statistics (see \strong{References} for the complete list of settings available). For example, one might wish to estimate the \emph{p}-value with a higher \code{numSim}, ie. 250,000.
+}
+\note{
+Benchmarks for 100,000 simulations (no bias toward any chip type):
+\itemize{
+\item \strong{3×3×3} (243 summands): ~ 5 hours on an Intel i5
+\item \strong{2×5×5} (625 summands): < 5 hours on Apple M1 (7 cores, parallel)
+\item \strong{6×6×5} (9375 summands): ~ 108 hours on Apple M1 (7 cores, parallel)
+Factor levels (i,j) have some impact, but total summands scale as \emph{k^4} (see \strong{References} for more information),
+so replication depth (k) dominates run time.
+}
 
-The parameter \code{parallel} is defaulted to TRUE and will use 1 less than the total number of cores on user's device. This setting helps speed up the simulation by a factor of the number of cores utilized, so please refrain from changing the default unless the device do not work well with parallel-computing.
+\strong{Tip:} leave \code{parallel = TRUE} to shorten run times dramatically.
 }
 \references{
 Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. \emph{arXiv preprint} arXiv:2410.04700.

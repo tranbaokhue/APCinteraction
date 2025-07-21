@@ -9,13 +9,23 @@
 #' @param i The number of levels in factor A
 #' @param j The number of levels in factor B
 #' @param k The number of observations at each level of factor A and B
-#' @param numSim The number of simulations required to generate this null distribution (the number of cases/data sets the tests are applied to)
-#' @param parallel This is a Boolean option to run this simulation using multiple cores in parallel or not
+#' @param numSim The number of simulations (data sets) to generate
+#' @param parallel Boolean; if TRUE (the default), uses one fewer than the total number of cores for parallel computation.
+#' @param verbose Logical; if TRUE (the default), prints a startup notice and progress bar.
+#'
 #'
 #' @details
-#' While we have provided null distributions for various settings in this package, there are still two-way settings that we don't readily have the null distribution to evaluate the significance of the test statistics (see References for the complete list of settings available). For example, one might wish to estimate the *p*-value with a higher `numSim`, ie. 250,000.
+#' While we have provided null distributions for various settings in this package, there are still two-way settings that we don't readily have the null distribution to evaluate the significance of the test statistics (see **References** for the complete list of settings available). For example, one might wish to estimate the *p*-value with a higher `numSim`, ie. 250,000.
 #'
-#' The parameter `parallel` is defaulted to TRUE and will use 1 less than the total number of cores on user's device. This setting helps speed up the simulation by a factor of the number of cores utilized, so please refrain from changing the default unless the device do not work well with parallel-computing.
+#' @note
+#' Benchmarks for 100,000 simulations (no bias toward any chip type):
+#' - **3×3×3** (243 summands): ~ 5 hours on an Intel i5
+#' - **2×5×5** (625 summands): < 5 hours on Apple M1 (7 cores, parallel)
+#' - **6×6×5** (9375 summands): ~ 108 hours on Apple M1 (7 cores, parallel)
+#' Factor levels (i,j) have some impact, but total summands scale as *k^4* (see **References** for more information),
+#' so replication depth (k) dominates run time.
+#'
+#' **Tip:** leave `parallel = TRUE` to shorten run times dramatically.
 #'
 #' @references
 #' Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. *arXiv preprint* arXiv:2410.04700.
@@ -27,10 +37,32 @@
 #'
 #' @importFrom magrittr %>%
 #' @export
-sim_nullAPCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
-  .null1APCSSA(i, j, k, numSim, parallel)
-  .null2APCSSA(i, j, k, numSim, parallel)
+sim_nullAPCSSA <- function(i, j, k,
+                           numSim   = 100000,
+                           parallel = TRUE,
+                           verbose  = TRUE) {
+  if (verbose) {
+    message(
+      "⚠️  sim_nullAPCSSA can take hours to run (depending on CPU & `parallel`).\n",
+      "    See `?sim_nullAPCSSA` for details.\n"
+    )
+  }
+
+  # 1) generate and summarize null #1
+  .null1APCSSA(i, j, k,
+               numSim   = numSim,
+               parallel = parallel,
+               verbose  = verbose)
+
+  # 2) generate and save null #2
+  .null2APCSSA(i, j, k,
+               numSim   = numSim,
+               parallel = parallel,
+               verbose  = verbose)
+
+  invisible(NULL)
 }
+
 
 #' Simulate the null distribution for APCSSM
 #'
@@ -40,13 +72,22 @@ sim_nullAPCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
 #' @param i The number of levels in factor A
 #' @param j The number of levels in factor B
 #' @param k The number of observations at each level of factor A and B
-#' @param numSim The number of simulations required to generate this null distribution (the number of cases/data sets the tests are applied to)
-#' @param parallel This is a Boolean option to run this simulation using multiple cores in parallel or not
+#' @param numSim The number of simulations (data sets) to generate
+#' @param parallel Boolean; if TRUE (the default), uses one fewer than the total number of cores for parallel computation.
+#' @param verbose Logical; if TRUE (the default), prints a startup notice and progress bar.
 #'
 #' @details
-#' While we have provided null distributions for various settings in this package, there are still two-way settings that we don't readily have the null distribution to evaluate the significance of the test statistics (see References for the complete list of settings available). For example, one might wish to estimate the *p*-value with a higher `numSim`, ie. 250,000.
+#' While we have provided null distributions for various settings in this package, there are still two-way settings that we don't readily have the null distribution to evaluate the significance of the test statistics (see **References** for the complete list of settings available). For example, one might wish to estimate the *p*-value with a higher `numSim`, ie. 250,000.
 #'
-#' The parameter `parallel` is defaulted to TRUE and will use 1 less than the total number of cores on user's device. This setting helps speed up the simulation by a factor of the number of cores utilized, so please refrain from changing the default unless the device do not work well with parallel-computing.
+#' @note
+#' Benchmarks for 100,000 simulations (no bias toward any chip type):
+#' - **3×3×3** (243 summands): ~5 hours on an Intel i5
+#' - **2×5×5** (625 summands): < 5 hours on Apple M1 (7 cores, parallel)
+#' - **6×6×5** (9375 summands): ~108 hours on Apple M1 (7 cores, parallel)
+#' Factor levels (i,j) have some impact, but total summands scale as *k^4* (see **References** for more information),
+#' so replication depth (k) dominates run time.
+#'
+#' **Tip:** leave `parallel = TRUE` to shorten run times dramatically.
 #'
 #' @references
 #' Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. *arXiv preprint* arXiv:2410.04700.
@@ -58,7 +99,29 @@ sim_nullAPCSSA <- function(i, j, k, numSim = 100000, parallel = TRUE) {
 #'
 #' @importFrom magrittr %>%
 #' @export
-sim_nullAPCSSM <- function(i, j, k, numSim = 100000, parallel = TRUE) {
-  .null1APCSSM(i, j, k, numSim, parallel)
-  .null2APCSSM(i, j, k, numSim, parallel)
+sim_nullAPCSSM <- function(i, j, k,
+                           numSim   = 100000,
+                           parallel = TRUE,
+                           verbose  = TRUE) {
+  if (verbose) {
+    message(
+      "⚠️  sim_nullAPCSSM can take hours to run (depending on CPU & `parallel`).\n",
+      "    See `?sim_nullAPCSSM` for details.\n"
+    )
+  }
+
+  # 1) generate and summarize null #1
+  .null1APCSSM(i, j, k,
+               numSim   = numSim,
+               parallel = parallel,
+               verbose  = verbose)
+
+  # 2) generate and save null #2
+  .null2APCSSM(i, j, k,
+               numSim   = numSim,
+               parallel = parallel,
+               verbose  = verbose)
+
+  invisible(NULL)
 }
+
