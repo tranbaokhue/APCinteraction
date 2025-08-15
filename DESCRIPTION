@@ -1,9 +1,13 @@
 Package: APCinteraction
 Type: Package
-Title: All possible crossed comparisons (APC) nonparametric tests of interaction in balanced two-way ANOVA models.
+Title: All possible crossed comparisons (APC) nonparametric tests of interaction in balanced two-way ANOVA models
 Version: 0.1.0
-Author: Bao Khue Tran
-Maintainer: Bao Khue Tran <khuebtran03@gmail.com>
+Authors@R: c(
+    person("Bao Khue", "Tran", email = "khuebtran03@gmail.com", role = c("aut", "cre")),
+    person("Amy", "Wagaman", role = c("aut", "ctb")),
+    person("Andrew", "Nguyen", role = c("aut", "ctb")),
+    person("David", "Jacobson", role = "ctb"),
+    person("Bradley", "Hartlaub", role = c("aut", "ctb")))
 Description: Provides nonparametric tests for interaction in two-way ANOVA designs with balanced replications using all possible comparisons. The APCSSA and APCSSM statistics extend previous methods and allow greater flexibility and power in detecting interactions when the data have non-normal errors. The package includes tools for computing these test statistics accompanied with interaction plots and generating these test statistics' null distributions (if necessary). 
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -17,7 +21,7 @@ Imports:
     doParallel,
     dplyr,
     foreach,
-    parallel
+    parallel,
+    pbapply
 Suggests:
-    pbapply,
     testthat

@@ -43,7 +43,7 @@ sim_nullAPCSSA <- function(i, j, k,
                            verbose  = TRUE) {
   if (verbose) {
     message(
-      "⚠️  sim_nullAPCSSA can take hours to run (depending on CPU & `parallel`).\n",
+      "Warning: sim_nullAPCSSA can take hours to run (depending on CPU & `parallel`).\n",
       "    See `?sim_nullAPCSSA` for details.\n"
     )
   }
@@ -105,7 +105,7 @@ sim_nullAPCSSM <- function(i, j, k,
                            verbose  = TRUE) {
   if (verbose) {
     message(
-      "⚠️  sim_nullAPCSSM can take hours to run (depending on CPU & `parallel`).\n",
+      "Warning: sim_nullAPCSSM can take hours to run (depending on CPU & `parallel`).\n",
       "    See `?sim_nullAPCSSM` for details.\n"
     )
   }

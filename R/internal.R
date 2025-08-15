@@ -390,7 +390,7 @@
 # Function to load APCSSA null data
 .nullAPCSSA <- function(i, j, k) {
   # Construct the file name
-  file_name <- paste0("APCSSA Null Distribution ", i, "x", j, "x", k, "_100kSim.RData")
+  file_name <- paste0("APCSSA_Null_Distribution_", i, "x", j, "x", k, "_100kSim.RData")
 
   # Get full file path
   file_path <- system.file("extdata", file_name, package = "APCinteraction")
@@ -428,7 +428,7 @@
 # Function to load APCSSM data
 .nullAPCSSM <- function(i, j, k) {
   # Construct the file name
-  file_name <- paste0("APCSSM Null Distribution ", i, "x", j, "x", k, "_100kSim.RData")
+  file_name <- paste0("APCSSM_Null_Distribution_", i, "x", j, "x", k, "_100kSim.RData")
 
   # Get full file path
   file_path <- system.file("extdata", file_name, package = "APCinteraction")
@@ -479,7 +479,7 @@
   pbapply::pboptions(type = if (verbose) "timer" else "none")
 
   if (verbose) {
-    message("→ [.null1APCSSA] Generating ", numSim, " null data sets …")
+    message("-> [.null1APCSSA] Generating ", numSim, " null data sets ...")
   }
 
   if (parallel) {
@@ -506,7 +506,7 @@
   }
 
   if (verbose) {
-    message("→ [.null1APCSSA] Computing APCCRA for each null …")
+    message("-> [.null1APCSSA] Computing APCCRA for each null ...")
   }
   if (parallel) {
     nullDistCRA <- unlist(
@@ -521,7 +521,7 @@
   }
 
   if (verbose) {
-    message("→ [.null1APCSSA] Computing APCRCA for each null …")
+    message("-> [.null1APCSSA] Computing APCRCA for each null ...")
   }
   if (parallel) {
     nullDistRCA <- unlist(
@@ -546,7 +546,7 @@
   assign(name, nullAPCXXA_summary, envir = .GlobalEnv)
   save_path <- file.path(getwd(), paste0(name, ".RData"))
   save(list = name, file = save_path)
-  if (verbose) message("→ [.null1APCSSA] Saved summary to ", save_path)
+  if (verbose) message("-> [.null1APCSSA] Saved summary to ", save_path)
 
   nullAPCXXA_summary
 }
@@ -579,7 +579,7 @@
   pbapply::pboptions(type = if (verbose) "timer" else "none")
 
   if (verbose) {
-    message("→ [.null2APCSSA] Generating ", numSim, " null data sets …")
+    message("-> [.null2APCSSA] Generating ", numSim, " null data sets ...")
   }
 
   if (parallel) {
@@ -610,7 +610,7 @@
   }
 
   if (verbose) {
-    message("→ [.null2APCSSA] Computing APCSSA for each null …")
+    message("-> [.null2APCSSA] Computing APCSSA for each null ...")
   }
   if (parallel) {
     nullDistSSA <- unlist(
@@ -628,7 +628,7 @@
   assign(nameA, nullDistSSA, envir = .GlobalEnv)
   save_path <- file.path(getwd(), paste0(nameA, ".RData"))
   save(list = nameA, file = save_path)
-  if (verbose) message("→ [.null2APCSSA] Saved result to ", save_path)
+  if (verbose) message("-> [.null2APCSSA] Saved result to ", save_path)
 
   nullDistSSA
 }
@@ -656,7 +656,7 @@
   pbapply::pboptions(type = if (verbose) "timer" else "none")
 
   if (verbose) {
-    message("→ [.null1APCSSM] Generating ", numSim, " null data sets …")
+    message("-> [.null1APCSSM] Generating ", numSim, " null data sets ...")
   }
 
   if (parallel) {
@@ -689,7 +689,7 @@
   }
 
   if (verbose) {
-    message("→ [.null1APCSSM] Computing CRM for each null …")
+    message("-> [.null1APCSSM] Computing CRM for each null ...")
   }
   nullDistCRM <- unlist(
     if (parallel) {
@@ -701,7 +701,7 @@
   )
 
   if (verbose) {
-    message("→ [.null1APCSSM] Computing RCM for each null …")
+    message("-> [.null1APCSSM] Computing RCM for each null ...")
   }
   nullDistRCM <- unlist(
     if (parallel) {
@@ -725,7 +725,7 @@
   save(list = name, file = save_path)
 
   if (verbose) {
-    message("→ [.null1APCSSM] Saved result to: ", save_path)
+    message("-> [.null1APCSSM] Saved result to: ", save_path)
   }
 
   nullAPCXXM_summary
@@ -760,7 +760,7 @@
   pbapply::pboptions(type = if (verbose) "timer" else "none")
 
   if (verbose) {
-    message("→ [.null2APCSSM] Generating ", numSim, " null data sets …")
+    message("-> [.null2APCSSM] Generating ", numSim, " null data sets ...")
   }
 
   if (parallel) {
@@ -797,7 +797,7 @@
   }
 
   if (verbose) {
-    message("→ [.null2APCSSM] Computing APCSSM for each null …")
+    message("-> [.null2APCSSM] Computing APCSSM for each null ...")
   }
   nullDistSSM <- unlist(
     if (parallel) {
@@ -814,7 +814,7 @@
   save(list = nameA, file = save_path)
 
   if (verbose) {
-    message("→ [.null2APCSSM] Saved result to: ", save_path)
+    message("-> [.null2APCSSM] Saved result to: ", save_path)
   }
 
   nullDistSSM

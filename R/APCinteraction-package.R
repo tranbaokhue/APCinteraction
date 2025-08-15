@@ -15,8 +15,8 @@
 #'   \item{\code{\link{sim_nullAPCSSM}}}{Simulate and save the null distribution for the APCSSM statistic.}
 #' }
 #'
-#' @docType _PACKAGE
 #' @name APCinteraction
 #' @author Bao Khue Tran
 #' @keywords internal
+"_PACKAGE"
 NULL
