@@ -24,6 +24,10 @@ distributions.
 }
 
 \author{
-Bao Khue Tran
+Bao Khue Tran (maintainer) \email{baokhuetran@outlook.com}
+
+Andrew Nguyen
 }
-\keyword{internal}
+\keyword{anova}
+\keyword{interaction}
+\keyword{nonparametric}

@@ -16,8 +16,12 @@
 #' }
 #'
 #' @name APCinteraction
-#' @author Bao Khue Tran
-#' @keywords internal
+#' @author
+#' Bao Khue Tran (maintainer) \email{baokhuetran@outlook.com}
+#'
+#' Andrew Nguyen
+#' @keywords interaction nonparametric anova
+
 "_PACKAGE"
 
 #' @importFrom stats median sd model.frame setNames interaction.plot
