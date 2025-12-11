@@ -29,7 +29,7 @@ This function tests for interaction in a two-way layout using all possible cross
 
 These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A \emph{p}-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
 
-If the design is not covered by the package's pre-simulated settings or if higher precision is desired by increasing \code{numSim}, users must first generate the null distribution manually using \code{\link{sim_nullAPCSSM}}.
+If the design is not covered by the package's existing collection of simulated settings or if a higher precision is desired, \code{numSim} > 100,000, users must first generate the null distribution manually using \code{\link{sim_nullAPCSSM}} before using this function to evaluate the interaction effect.
 
 For more information, see the referenced article.
 }

@@ -819,3 +819,6 @@
 
   nullDistSSM
 }
+
+# Making sure the functions are global = seen everywhere
+utils::globalVariables(c("nullAPCSSA", "nullAPCSSM"))
