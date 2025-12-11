@@ -1,6 +1,6 @@
-## First column contains the values of the observations;
-## second contains the break-down of factor A (i of them);
-## third contains the break-down of factor B (j of them);
+## First column contains the values of the observations.
+## Second column contains the break-down of factor A (i of them).
+## Third contains the break-down of factor B (j of them).
 
 # This file contains the codes for running different tests of interaction
 # in a balanced two-way ANOVA
@@ -20,7 +20,7 @@
 #'
 #' These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A *p*-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
 #'
-#' If the design is not covered by the package's pre-simulated settings or if higher precision is desired by increasing `numSim`, users must first generate the null distribution manually using \code{\link{sim_nullAPCSSA}},
+#' If the design is not covered by the package's existing collection of simulated settings or if a higher precision is desired, `numSim` > 100,000, users must first generate the null distribution manually using \code{\link{sim_nullAPCSSA}} before using this function to evaluate the interaction effect.
 #'
 #' For more information, see the referenced article.
 #'
@@ -193,7 +193,7 @@ APCSSA <- function(formula, data, numSim = 100000) {
 #'
 #' These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A *p*-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
 #'
-#' If the design is not covered by the package's pre-simulated settings or if higher precision is desired by increasing `numSim`, users must first generate the null distribution manually using \code{\link{sim_nullAPCSSM}}.
+#' If the design is not covered by the package's existing collection of simulated settings or if a higher precision is desired, `numSim` > 100,000, users must first generate the null distribution manually using \code{\link{sim_nullAPCSSM}} before using this function to evaluate the interaction effect.
 #'
 #' For more information, see the referenced article.
 #'
