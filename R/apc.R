@@ -105,8 +105,8 @@ APCSSA <- function(formula, data, numSim = 100000) {
   nullXXA_name <- paste0("nullAPCXXA_", i, "x", j, "x", k)
   nullSSA_name <- paste0("nullAPCSSA_", i, "x", j, "x", k)
 
-  if (!exists(nullXXA_name, envir = .GlobalEnv) ||
-      !exists(nullSSA_name, envir = .GlobalEnv)) {
+  if (!exists(nullXXA_name, envir = .apc_cache) ||
+      !exists(nullSSA_name, envir = .apc_cache)) {
 
     # If no stored null distributions, check if numSim == 100000
     if (numSim == 100000) {
@@ -124,10 +124,10 @@ APCSSA <- function(formula, data, numSim = 100000) {
 
   # Retrieve the correct null distribution
   prev_name <- paste0("nullAPCXXA_", i, "x", j, "x", k)
-  if (!exists(prev_name, envir = .GlobalEnv)) {
+  if (!exists(prev_name, envir = .apc_cache)) {
     stop("Error: The required null distribution does not exist. Run sim_nullAPCSSA() first.")
   }
-  APCSSnullDist <- get(prev_name, envir = .GlobalEnv)
+  APCSSnullDist <- get(prev_name, envir = .apc_cache)
 
   ## Get the scaled, unstandardized test statistics
   APCCRAD <- .APCCRAD(dataFrame)
@@ -281,8 +281,8 @@ APCSSM <- function(formula, data, numSim = 100000) {
   nullXXM_name <- paste0("nullAPCXXM_", i, "x", j, "x", k)
   nullSSM_name <- paste0("nullAPCSSM_", i, "x", j, "x", k)
 
-  if (!exists(nullXXM_name, envir = .GlobalEnv) ||
-      !exists(nullSSM_name, envir = .GlobalEnv)) {
+  if (!exists(nullXXM_name, envir = .apc_cache) ||
+      !exists(nullSSM_name, envir = .apc_cache)) {
 
     # If no stored null distributions, check if numSim == 100000
     if (numSim == 100000) {
@@ -300,10 +300,10 @@ APCSSM <- function(formula, data, numSim = 100000) {
 
   # Retrieve the correct null distribution
   prev_name <- paste0("nullAPCXXM_", i, "x", j, "x", k)
-  if (!exists(prev_name, envir = .GlobalEnv)) {
+  if (!exists(prev_name, envir = .apc_cache)) {
     stop("Error: The required null distribution does not exist. Run sim_nullAPCSSM() first.")
   }
-  APCSSnullDist <- get(prev_name, envir = .GlobalEnv)
+  APCSSnullDist <- get(prev_name, envir = .apc_cache)
 
   ## Get the scaled, unstandardized test statistics
   APCCRMD <- .APCCRMD(dataFrame)
