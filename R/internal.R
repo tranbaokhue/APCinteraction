@@ -283,7 +283,7 @@
   nullDist <- paste0("null", type, "_", i, "x", j, "x", k)
 
   # Load data if not already in memory
-  if (!exists(nullDist, envir = .GlobalEnv)) {
+  if (!exists(nullDist, envir = .apc_cache)) {
     if (type == "APCSSA") {
       nullAPCSSA(i, j, k)
     } else {
@@ -292,12 +292,12 @@
   }
 
   # Check if loading was successful
-  if (!exists(nullDist, envir = .GlobalEnv)) {
+  if (!exists(nullDist, envir = .apc_cache)) {
     stop("No null distribution readily available. Try running sim_", type, "_null(i, j, k).")
   }
 
   # Retrieve the null distribution
-  nullvals <- get(nullDist, envir = .GlobalEnv)
+  nullvals <- get(nullDist, envir = .apc_cache)
 
   # Compute the approximate p-value (right-tailed)
   p_value <- mean(nullvals >= stat)
@@ -305,6 +305,8 @@
   return(p_value)
 }
 
+# Package-internal environment for storing null distributions ----
+.apc_cache <- new.env(parent = emptyenv())
 
 # Functions relevant to loading existing null distributions ----
 #' Filter the existing null table for APCCRA and APCRCA based on I, J, K values for null mean and standard deviations
@@ -338,7 +340,7 @@
   }
 
   name <- paste0("nullAPCXXA_", i, "x", j, "x", k)
-  assign(name, result, envir = .GlobalEnv)
+  assign(name, result, envir = .apc_cache)
 
   return(result)
 }
@@ -374,7 +376,7 @@
   }
 
   name <- paste0("nullAPCXXM_", i, "x", j, "x", k)
-  assign(name, result, envir = .GlobalEnv)
+  assign(name, result, envir = .apc_cache)
 
   return(result)
 }
@@ -411,7 +413,7 @@
 
   # Rename the first loaded object and assign it to the global environment
   new_name <- paste0("nullAPCSSA_", i, "x", j, "x", k)
-  assign(new_name, env[[loaded_objects[1]]], envir = .GlobalEnv)
+  assign(new_name, env[[loaded_objects[1]]], envir = .apc_cache)
 
   message("Data successfully loaded into the global environment.")
 }
@@ -449,7 +451,7 @@
 
   # Rename the first loaded object and assign it to the global environment
   new_name <- paste0("nullAPCSSM_", i, "x", j, "x", k)
-  assign(new_name, env[[loaded_objects[1]]], envir = .GlobalEnv)
+  assign(new_name, env[[loaded_objects[1]]], envir = .apc_cache)
 
   message("Data successfully loaded into the global environment.")
 }
@@ -543,7 +545,7 @@
     SD_RCA = sd(nullDistRCA)
   )
   name      <- paste0("nullAPCXXA_", i, "x", j, "x", k)
-  assign(name, nullAPCXXA_summary, envir = .GlobalEnv)
+  assign(name, nullAPCXXA_summary, envir = .apc_cache)
   save_path <- file.path(getwd(), paste0(name, ".RData"))
   save(list = name, file = save_path)
   if (verbose) message("-> [.null1APCSSA] Saved summary to ", save_path)
@@ -571,10 +573,10 @@
   I <- i; J <- j; K <- k
 
   prev_name <- paste0("nullAPCXXA_", i, "x", j, "x", k)
-  if (!exists(prev_name, envir = .GlobalEnv)) {
+  if (!exists(prev_name, envir = .apc_cache)) {
     stop("Error: run .null1APCSSA() first for this (i,j,k).")
   }
-  APCSSnullDist <- get(prev_name, envir = .GlobalEnv)
+  APCSSnullDist <- get(prev_name, envir = .apc_cache)
 
   pbapply::pboptions(type = if (verbose) "timer" else "none")
 
@@ -625,7 +627,7 @@
   }
 
   nameA     <- paste0("nullAPCSSA_", i, "x", j, "x", k)
-  assign(nameA, nullDistSSA, envir = .GlobalEnv)
+  assign(nameA, nullDistSSA, envir = .apc_cache)
   save_path <- file.path(getwd(), paste0(nameA, ".RData"))
   save(list = nameA, file = save_path)
   if (verbose) message("-> [.null2APCSSA] Saved result to ", save_path)
@@ -720,7 +722,7 @@
     SD_RCM = sd(nullDistRCM)
   )
   name      <- paste0("nullAPCXXM_", i, "x", j, "x", k)
-  assign(name, nullAPCXXM_summary, envir = .GlobalEnv)
+  assign(name, nullAPCXXM_summary, envir = .apc_cache)
   save_path <- file.path(getwd(), paste0(name, ".RData"))
   save(list = name, file = save_path)
 
@@ -752,10 +754,10 @@
   I <- i; J <- j; K <- k
 
   prev_name <- paste0("nullAPCXXM_", i, "x", j, "x", k)
-  if (!exists(prev_name, envir = .GlobalEnv)) {
+  if (!exists(prev_name, envir = .apc_cache)) {
     stop("Error: .null1APCSSM() must be run first for this (i,j,k).")
   }
-  APCSSnullDist <- get(prev_name, envir = .GlobalEnv)
+  APCSSnullDist <- get(prev_name, envir = .apc_cache)
 
   pbapply::pboptions(type = if (verbose) "timer" else "none")
 
@@ -809,7 +811,7 @@
   )
 
   nameA     <- paste0("nullAPCSSM_", i, "x", j, "x", k)
-  assign(nameA, nullDistSSM, envir = .GlobalEnv)
+  assign(nameA, nullDistSSM, envir = .apc_cache)
   save_path <- file.path(getwd(), paste0(nameA, ".RData"))
   save(list = nameA, file = save_path)
 
