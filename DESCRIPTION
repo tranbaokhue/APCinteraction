@@ -8,7 +8,7 @@ Authors@R: c(
     person("Amy", "Wagaman", role = "ctb"),
     person("Bradley", "Hartlaub", role = "ctb"),
     person("David", "Jacobson", role = "ctb"))
-Description: Provides novel nonparametric tests, APCSSA and APCSSM, for interaction in two-way ANOVA designs with balanced replications using all possible comparisons. These statistics extend previous methods, allow greater flexibility, and demonstrate higher power in detecting interactions for non-normal data. In addition, the package provides intuitive and optimized functions for generating these test statistics' null distributions (if necessary). 
+Description: Provides novel nonparametric tests, APCSSA and APCSSM, for interaction in two-way ANOVA designs with balanced replications using all possible comparisons. These statistics extend previous methods, allow greater flexibility, and demonstrate higher power in detecting interactions for non-normal data. In addition, the package provides intuitive and optimized functions for generating these test statistics' null distributions. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
