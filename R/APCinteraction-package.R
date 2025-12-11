@@ -2,8 +2,8 @@
 #'
 #' Provides nonparametric tests for interaction in two-way ANOVA designs with balanced
 #' replications using All Possible Comparisons (APC). The `APCSSA` and `APCSSM` statistics
-#' extend previous methods and allow greater flexibility and power in detecting interactions
-#' when the data have non-normal errors. The package includes tools for computing these
+#' extend previous methods, allow greater flexibility, and demonstrate higher power in detecting interactions
+#' for non-normal data. The package includes optimized functions for computing these
 #' test statistics, generating interaction plots, and simulating their null
 #' distributions.
 #'
