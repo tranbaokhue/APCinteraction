@@ -1,14 +1,14 @@
 Package: APCinteraction
 Type: Package
-Title: All possible crossed comparisons (APC) nonparametric tests of interaction in balanced two-way ANOVA models
+Title: All Possible Comparisons (APC) Nonparametric Tests for Interaction in Balanced Two-way ANOVA Models
 Version: 0.1.0
 Authors@R: c(
-    person("Bao Khue", "Tran", email = "khuebtran03@gmail.com", role = c("aut", "cre")),
-    person("Amy", "Wagaman", role = c("aut", "ctb")),
+    person("Bao Khue", "Tran", role = c("aut", "cre"), email = "baokhuetran@outlook.com"),
     person("Andrew", "Nguyen", role = c("aut", "ctb")),
-    person("David", "Jacobson", role = "ctb"),
-    person("Bradley", "Hartlaub", role = c("aut", "ctb")))
-Description: Provides nonparametric tests for interaction in two-way ANOVA designs with balanced replications using all possible comparisons. The APCSSA and APCSSM statistics extend previous methods and allow greater flexibility and power in detecting interactions when the data have non-normal errors. The package includes tools for computing these test statistics accompanied with interaction plots and generating these test statistics' null distributions (if necessary). 
+    person("Amy", "Wagaman", role = "ctb"),
+    person("Bradley", "Hartlaub", role = "ctb"),
+    person("David", "Jacobson", role = "ctb"))
+Description: Provides novel nonparametric tests, APCSSA and APCSSM, for interaction in two-way ANOVA designs with balanced replications using all possible comparisons. These statistics extend previous methods, allow greater flexibility, and demonstrate higher power in detecting interactions for non-normal data. In addition, the package provides intuitive and optimized functions for generating these test statistics' null distributions (if necessary). 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -18,9 +18,7 @@ Depends:
     R (>= 2.10)
 Imports: 
     magrittr,
-    doParallel,
     dplyr,
-    foreach,
     parallel,
     pbapply
 Suggests:
