@@ -1,3 +1,6 @@
+# Package-internal environment for storing null distributions ----
+.apc_cache <- new.env(parent = emptyenv())
+
 # Functions for APCSSA/APCSSM statistics ----
 
 ## APCCRA ----
@@ -304,9 +307,6 @@
 
   return(p_value)
 }
-
-# Package-internal environment for storing null distributions ----
-.apc_cache <- new.env(parent = emptyenv())
 
 # Functions relevant to loading existing null distributions ----
 #' Filter the existing null table for APCCRA and APCRCA based on I, J, K values for null mean and standard deviations
