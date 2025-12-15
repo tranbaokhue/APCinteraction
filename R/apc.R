@@ -110,17 +110,17 @@ APCSSA <- function(formula, data, numSim = 100000) {
   if (!exists(nullXXA_name, envir = .apc_cache) ||
       !exists(nullSSA_name, envir = .apc_cache)) {
 
-    # If no stored null distributions, check if numSim == 100000
+    # If not in cache, check if numSim == 100000 ie. pre-computed
     if (numSim == 100000) {
-      # Attempt to generate null distributions
+      # Check if it is amongst the pre-generated ones
       tryCatch({
         .nullAPCXXA(i, j, k)
         .nullAPCSSA(i, j, k)
       }, error = function(e) {
-        stop("Error generating null distributions. Try running `sim_nullAPCSSA()` manually.")
+        stop("No matching pre-computed null distributions. Try running `sim_nullAPCSSA()` manually.")
       })
     } else {
-      stop(paste("No valid null distribution found. Run `sim_nullAPCSSA()` to generate it."))
+      stop(paste("No matching pre-computed null distribution found. Run `sim_nullAPCSSA()` to generate it."))
     }
   }
 
@@ -202,7 +202,7 @@ APCSSA <- function(formula, data, numSim = 100000) {
 #' @references
 #' Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. *arXiv preprint* arXiv:2410.04700.
 #'
-#'#' @note Results are stored in the package's cache. Use \code{\link{save_null}} to save to your local storage.
+#' @note Results are stored in the package's cache. Use \code{\link{save_null}} to save to your local storage.
 #'
 #' @return
 #' A data frame with the following columns:

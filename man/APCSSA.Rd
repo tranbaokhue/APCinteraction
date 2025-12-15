@@ -33,6 +33,9 @@ If the design is not covered by the package's existing collection of simulated s
 
 For more information, see the referenced article.
 }
+\note{
+Results are stored in the package's cache. Use \code{\link{save_null}} to save to your local storage.
+}
 \examples{
 # Set the seed for reproducibility
 set.seed(206)

@@ -2,6 +2,7 @@
 
 export(APCSSA)
 export(APCSSM)
+export(save_null)
 export(sim_nullAPCSSA)
 export(sim_nullAPCSSM)
 importFrom(grDevices,hcl.colors)

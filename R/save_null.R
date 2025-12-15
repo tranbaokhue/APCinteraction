@@ -1,7 +1,7 @@
 #' Save null distribution to working directory
 #'
 #' @description
-#' Saves a null distribution from the package cache to an RData file in the working directory.
+#' Saves a null distribution from the package's cache to an RData file in the working directory.
 #'
 #' @param type Character string: either "APCSSA" or "APCSSM"
 #' @param i The number of levels in factor A
