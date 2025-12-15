@@ -32,7 +32,7 @@ save_null <- function(type, i, j, k, path = NULL) {
     stop("type must be 'APCSSA' or 'APCSSM'")
   }
 
-  # Check for both null distribution types
+  # Check for both null distribution
   name_XXA <- paste0("nullAPCXX", substr(type, 6, 6), "_", i, "x", j, "x", k)
   name_SS <- paste0("null", type, "_", i, "x", j, "x", k)
 
