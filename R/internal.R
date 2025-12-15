@@ -537,7 +537,7 @@
     )
   }
 
-  # summarize, assign, save
+  # summarize
   nullAPCXXA_summary <- data.frame(
     E_CRA = mean(nullDistCRA),
     SD_CRA = sd(nullDistCRA),
@@ -546,9 +546,6 @@
   )
   name      <- paste0("nullAPCXXA_", i, "x", j, "x", k)
   assign(name, nullAPCXXA_summary, envir = .apc_cache)
-  save_path <- file.path(getwd(), paste0(name, ".RData"))
-  save(list = name, file = save_path)
-  if (verbose) message("-> [.null1APCSSA] Saved summary to ", save_path)
 
   nullAPCXXA_summary
 }
@@ -628,9 +625,6 @@
 
   nameA     <- paste0("nullAPCSSA_", i, "x", j, "x", k)
   assign(nameA, nullDistSSA, envir = .apc_cache)
-  save_path <- file.path(getwd(), paste0(nameA, ".RData"))
-  save(list = nameA, file = save_path)
-  if (verbose) message("-> [.null2APCSSA] Saved result to ", save_path)
 
   nullDistSSA
 }
@@ -714,7 +708,7 @@
     use.names = FALSE
   )
 
-  # summarize & save
+  # summarize
   nullAPCXXM_summary <- data.frame(
     E_CRM = mean(nullDistCRM),
     SD_CRM = sd(nullDistCRM),
@@ -723,12 +717,6 @@
   )
   name      <- paste0("nullAPCXXM_", i, "x", j, "x", k)
   assign(name, nullAPCXXM_summary, envir = .apc_cache)
-  save_path <- file.path(getwd(), paste0(name, ".RData"))
-  save(list = name, file = save_path)
-
-  if (verbose) {
-    message("-> [.null1APCSSM] Saved result to: ", save_path)
-  }
 
   nullAPCXXM_summary
 }
@@ -812,12 +800,6 @@
 
   nameA     <- paste0("nullAPCSSM_", i, "x", j, "x", k)
   assign(nameA, nullDistSSM, envir = .apc_cache)
-  save_path <- file.path(getwd(), paste0(nameA, ".RData"))
-  save(list = nameA, file = save_path)
-
-  if (verbose) {
-    message("-> [.null2APCSSM] Saved result to: ", save_path)
-  }
 
   nullDistSSM
 }

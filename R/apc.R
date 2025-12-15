@@ -27,6 +27,8 @@
 #' @references
 #' Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. *arXiv preprint* arXiv:2410.04700.
 #'
+#' @note Results are stored in the package's cache. Use \code{\link{save_null}} to save to your local storage.
+#'
 #' @return
 #' A data frame with the following columns:
 #' \itemize{
@@ -199,6 +201,8 @@ APCSSA <- function(formula, data, numSim = 100000) {
 #'
 #' @references
 #' Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. *arXiv preprint* arXiv:2410.04700.
+#'
+#'#' @note Results are stored in the package's cache. Use \code{\link{save_null}} to save to your local storage.
 #'
 #' @return
 #' A data frame with the following columns:
