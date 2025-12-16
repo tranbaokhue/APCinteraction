@@ -41,7 +41,7 @@ so replication depth (k) dominates run time.
 \strong{Tip:} leave \code{parallel = TRUE} to shorten run times dramatically.
 }
 \examples{
-\donttest{
+\dontrun{
 sim_nullAPCSSA(2, 2, 2, 5000)  # This should take only a few seconds
 }
 
