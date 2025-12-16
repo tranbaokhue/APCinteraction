@@ -27,6 +27,8 @@ distributions.
 Bao Khue Tran (maintainer) \email{baokhuetran@outlook.com}
 
 Andrew Nguyen
+Amy Wagaman
+Bradley Hartlaub
 }
 \keyword{anova}
 \keyword{interaction}
