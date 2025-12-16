@@ -262,14 +262,7 @@
   return(APCRCMD)
 }
 
-#' Compute raw APCSSA statistic
-#'
-#' @param dataFrame A data frame with columns: value, A (factor), B (factor)
-#' @param nullDist A data frame with null means and SDs (E_CRA, SD_CRA, E_RCA, SD_RCA)
-#'
-#' @return A numeric value representing the APCSSA test statistic
-#' @keywords internal
-#' @noRd
+## APCSSA internal compute - for simulation calculations ----
 .compute_APCSSA <- function(dataFrame, nullDist) {
   # Compute the two component statistics
   APCCRAD <- .APCCRAD(dataFrame)
@@ -283,14 +276,7 @@
   max(APCCRADstar, APCRCADstar)
 }
 
-#' Compute raw APCSSM statistic
-#'
-#' @param dataFrame A data frame with columns: value, A (factor), B (factor)
-#' @param nullDist A data frame with null means and SDs (E_CRM, SD_CRM, E_RCM, SD_RCM)
-#'
-#' @return A numeric value representing the APCSSM test statistic
-#' @keywords internal
-#' @noRd
+## APCSSM internal compute - for simulation calculations ----
 .compute_APCSSM <- function(dataFrame, nullDist) {
   # Compute the two component statistics
   APCCRMD <- .APCCRMD(dataFrame)
@@ -800,7 +786,7 @@
     on.exit(parallel::stopCluster(cl), add = TRUE)
     parallel::clusterExport(
       cl,
-      varlist = c("APCSSM", ".APCCRMD", ".APCRCMD", "APCSSnullDist", "I", "J", "K"),
+      varlist = c(".compute_APCSSM", ".APCCRMD", ".APCRCMD", "APCSSnullDist", "I", "J", "K"),
       envir = environment()
     )
 
@@ -833,9 +819,9 @@
   }
   nullDistSSM <- unlist(
     if (parallel) {
-      pbapply::pblapply(APCnull, APCSSM, cl = cl)
+      pbapply::pblapply(APCnull, function(df) .compute_APCSSM(df, APCSSnullDist), cl = cl)
     } else {
-      pbapply::pblapply(APCnull, APCSSM)
+      pbapply::pblapply(APCnull, function(df) .compute_APCSSM(df, APCSSnullDist))
     },
     use.names = FALSE
   )
