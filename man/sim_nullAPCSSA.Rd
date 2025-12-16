@@ -20,7 +20,7 @@ sim_nullAPCSSA(i, j, k, numSim = 1e+05, parallel = TRUE, verbose = TRUE)
 \item{verbose}{Logical; if TRUE (the default), prints a startup notice and progress bar.}
 }
 \value{
-A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equals to the \code{numSim} of all APCSSA statistics on the null data sets
+A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equals to the \code{numSim} of all APCSSA statistics on the null data sets.
 }
 \description{
 A complete function that simulate the null distribution for APCSSA and automatically save it to the working directory
@@ -39,6 +39,12 @@ so replication depth (k) dominates run time.
 }
 
 \strong{Tip:} leave \code{parallel = TRUE} to shorten run times dramatically.
+}
+\examples{
+\donttest{
+sim_nullAPCSSA(2, 2, 2, 5000)  # This should take only a few seconds
+}
+
 }
 \references{
 Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. \emph{arXiv preprint} arXiv:2410.04700.

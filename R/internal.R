@@ -513,7 +513,9 @@
   }
 
   if (parallel) {
-    cl <- parallel::makeCluster(parallel::detectCores() - 1)
+    ncores <- parallel::detectCores(logical = FALSE)
+    ncores <- if (is.na(ncores)) 2 else max(1, ncores - 1)
+    cl <- parallel::makeCluster(ncores)
     on.exit(parallel::stopCluster(cl), add = TRUE)
     parallel::clusterExport(cl, varlist = c("I", "J", "K"), envir = environment())
 
@@ -610,7 +612,9 @@
   }
 
   if (parallel) {
-    cl <- parallel::makeCluster(parallel::detectCores() - 1)
+    ncores <- parallel::detectCores(logical = FALSE)
+    ncores <- if (is.na(ncores)) 2 else max(1, ncores - 1)
+    cl <- parallel::makeCluster(ncores)
     on.exit(parallel::stopCluster(cl), add = TRUE)
     parallel::clusterExport(
       cl,
@@ -684,7 +688,9 @@
   }
 
   if (parallel) {
-    cl <- parallel::makeCluster(parallel::detectCores() - 1)
+    ncores <- parallel::detectCores(logical = FALSE)
+    ncores <- if (is.na(ncores)) 2 else max(1, ncores - 1)
+    cl <- parallel::makeCluster(ncores)
     on.exit(parallel::stopCluster(cl), add = TRUE)
     parallel::clusterExport(cl, varlist = c("I", "J", "K"), envir = environment())
 
@@ -782,7 +788,9 @@
   }
 
   if (parallel) {
-    cl <- parallel::makeCluster(parallel::detectCores() - 1)
+    ncores <- parallel::detectCores(logical = FALSE)
+    ncores <- if (is.na(ncores)) 2 else max(1, ncores - 1)
+    cl <- parallel::makeCluster(ncores)
     on.exit(parallel::stopCluster(cl), add = TRUE)
     parallel::clusterExport(
       cl,
