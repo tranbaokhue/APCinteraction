@@ -30,7 +30,12 @@
 #' @references
 #' Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. *arXiv preprint* arXiv:2410.04700.
 #'
-#' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equals to the `numSim` of all APCSSA statistics on the null data sets
+#' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equals to the `numSim` of all APCSSA statistics on the null data sets.
+#'
+#' @examples
+#' \donttest{
+#' sim_nullAPCSSA(2, 2, 2, 5000)  # This should take only a few seconds
+#' }
 #'
 #' @seealso
 #' \code{\link{APCSSA}}, \code{\link{sim_nullAPCSSM}}
@@ -92,7 +97,12 @@ sim_nullAPCSSA <- function(i, j, k,
 #' @references
 #' Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. *arXiv preprint* arXiv:2410.04700.
 #'
-#' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRM and APCRCM) that will get standardized into APCSSM and a numeric vector with length equals to the `numSim` of all APCSSM statistics on the null data sets
+#' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRM and APCRCM) that will get standardized into APCSSM and a numeric vector with length equals to the `numSim` of all APCSSM statistics on the null data sets.
+#'
+#' @examples
+#' \donttest{
+#' sim_nullAPCSSA(2, 2, 2, 5000)  # This should take only a few seconds
+#' }
 #'
 #' @seealso
 #' \code{\link{APCSSM}}, \code{\link{sim_nullAPCSSA}}
