@@ -20,6 +20,9 @@
 #' Bao Khue Tran (maintainer) \email{baokhuetran@outlook.com}
 #'
 #' Andrew Nguyen
+#' Amy Wagaman
+#' Bradley Hartlaub
+#'
 #' @keywords interaction nonparametric anova
 
 "_PACKAGE"

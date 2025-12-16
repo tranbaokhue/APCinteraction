@@ -12,7 +12,7 @@
 #' @return Invisibly returns the file path where the data was saved
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # After running simulation
 #' sim_nullAPCSSA(2, 2, 2)
 #'
