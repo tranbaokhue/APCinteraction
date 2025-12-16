@@ -262,6 +262,48 @@
   return(APCRCMD)
 }
 
+#' Compute raw APCSSA statistic
+#'
+#' @param dataFrame A data frame with columns: value, A (factor), B (factor)
+#' @param nullDist A data frame with null means and SDs (E_CRA, SD_CRA, E_RCA, SD_RCA)
+#'
+#' @return A numeric value representing the APCSSA test statistic
+#' @keywords internal
+#' @noRd
+.compute_APCSSA <- function(dataFrame, nullDist) {
+  # Compute the two component statistics
+  APCCRAD <- .APCCRAD(dataFrame)
+  APCRCAD <- .APCRCAD(dataFrame)
+
+  # Standardize using null distribution parameters
+  APCCRADstar <- (APCCRAD - nullDist[1, 1]) / nullDist[1, 2]
+  APCRCADstar <- (APCRCAD - nullDist[1, 3]) / nullDist[1, 4]
+
+  # Return the maximum
+  max(APCCRADstar, APCRCADstar)
+}
+
+#' Compute raw APCSSM statistic
+#'
+#' @param dataFrame A data frame with columns: value, A (factor), B (factor)
+#' @param nullDist A data frame with null means and SDs (E_CRM, SD_CRM, E_RCM, SD_RCM)
+#'
+#' @return A numeric value representing the APCSSM test statistic
+#' @keywords internal
+#' @noRd
+.compute_APCSSM <- function(dataFrame, nullDist) {
+  # Compute the two component statistics
+  APCCRMD <- .APCCRMD(dataFrame)
+  APCRCMD <- .APCRCMD(dataFrame)
+
+  # Standardize using null distribution parameters
+  APCCRMDstar <- (APCCRMD - nullDist[1, 1]) / nullDist[1, 2]
+  APCRCMDstar <- (APCRCMD - nullDist[1, 3]) / nullDist[1, 4]
+
+  # Return the maximum
+  max(APCCRMDstar, APCRCMDstar)
+}
+
 ## p-value calculations -----
 #' This function gives the approximate p-value for the test statistics APCSSA or APCSSM
 #'
@@ -411,11 +453,11 @@
     stop("No objects found in the loaded file: ", file_name)
   }
 
-  # Rename the first loaded object and assign it to the global environment
+  # Rename the first loaded object and assign it to the package environment
   new_name <- paste0("nullAPCSSA_", i, "x", j, "x", k)
   assign(new_name, env[[loaded_objects[1]]], envir = .apc_cache)
 
-  message("Data successfully loaded into the global environment.")
+  message("Data successfully loaded into the package environment.")
 }
 
 
@@ -449,11 +491,11 @@
     stop("No objects found in the loaded file: ", file_name)
   }
 
-  # Rename the first loaded object and assign it to the global environment
+  # Rename the first loaded object and assign it to the package environment
   new_name <- paste0("nullAPCSSM_", i, "x", j, "x", k)
   assign(new_name, env[[loaded_objects[1]]], envir = .apc_cache)
 
-  message("Data successfully loaded into the global environment.")
+  message("Data successfully loaded into the package environment.")
 }
 
 # Functions relevant to simulating new null distributions ----
@@ -586,7 +628,7 @@
     on.exit(parallel::stopCluster(cl), add = TRUE)
     parallel::clusterExport(
       cl,
-      varlist = c("APCSSA", ".APCCRAD", ".APCRCAD", "APCSSnullDist", "I", "J", "K"),
+      varlist = c(".compute_APCSSA", ".APCCRAD", ".APCRCAD", "APCSSnullDist", "I", "J", "K"),
       envir = environment()
     )
 
@@ -613,12 +655,12 @@
   }
   if (parallel) {
     nullDistSSA <- unlist(
-      pbapply::pblapply(APCnull, APCSSA, cl = cl),
+      pbapply::pblapply(APCnull, function(df) .compute_APCSSA(df, APCSSnullDist), cl = cl),
       use.names = FALSE
     )
   } else {
     nullDistSSA <- unlist(
-      pbapply::pblapply(APCnull, APCSSA),
+      pbapply::pblapply(APCnull, function(df) .compute_APCSSA(df, APCSSnullDist)),
       use.names = FALSE
     )
   }
@@ -804,5 +846,5 @@
   nullDistSSM
 }
 
-# Making sure the functions are global = seen everywhere
+# Making sure the functions are global
 utils::globalVariables(c("nullAPCSSA", "nullAPCSSM"))
