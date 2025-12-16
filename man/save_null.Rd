@@ -21,7 +21,7 @@ save_null(type, i, j, k, path = NULL)
 Invisibly returns the file path where the data was saved
 }
 \description{
-Saves a null distribution from the package cache to an RData file in the working directory.
+Saves a null distribution from the package's cache to an RData file in the working directory.
 }
 \examples{
 \donttest{

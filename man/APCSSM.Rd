@@ -33,6 +33,9 @@ If the design is not covered by the package's existing collection of simulated s
 
 For more information, see the referenced article.
 }
+\note{
+Results are stored in the package's cache. Use \code{\link{save_null}} to save to your local storage.
+}
 \examples{
 # Set seed for reproducibility
 set.seed(36)
@@ -67,8 +70,6 @@ APCSSM(value ~ A + B, data = data)
 }
 \references{
 Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. \emph{arXiv preprint} arXiv:2410.04700.
-
-#' @note Results are stored in the package's cache. Use \code{\link{save_null}} to save to your local storage.
 }
 \seealso{
 \code{\link{sim_nullAPCSSM}}, \code{\link{APCSSA}}
