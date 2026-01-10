@@ -28,8 +28,13 @@ Key functions the package provide are:
 
 These statistics use All Possible crossed Comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A _p_-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions. In addition to providing the statistics and estimated _p_-value in the summary table, the function will also output an interaction plot to help visualize potential interaction.
 
-- **APCSSA(formula, data, numSim = 1e+05)**: Test using **mean** alignment
-- **APCSSM(formula, data, numSim = 1e+05)**: Test using **median** alignment
+``` r
+# Test using mean alignment
+APCSSA(formula, data, numSim = 1e+05)
+
+# Test using median alignment
+APCSSM(formula, data, numSim = 1e+05)
+```
 
 If the design setting you are hoping to check for interaction is not among the pre-simulated ones that come with the package, we also provide functions to simulate the null distribution on your own device.
 
@@ -39,12 +44,19 @@ While the package comes with an extensive collection of 90 pre-simulated null di
 
 Thus, we also provide functions for generating your own null distributions given a design and replication number. These functions are designed with the same structure as the function to calculate the test statistics for ease of use.
 
-- **sim_nullAPCSSA(formula, data, numSim = 1e+05)**
-- **sim_nullAPCSSM(formula, data, numSim = 1e+05)**
+``` r
+# Simulation for APCSSA null distributions
+sim_nullAPCSSA(formula, data, numSim = 1e+05)
+
+# Simulation for APCSSM null distributions
+sim_nullAPCSSM(formula, data, numSim = 1e+05)
+```
 
 Accompanying the two simulation functions above, we provide users a function to quickly save the simulated values locally so that it is accessible by **APCSSA/APCSSM** even in other R sessions. This is optional, but is highly recommended!
 
-- **save_null**
+``` r
+save_null(type, i, j, k, path = NULL)
+```
 
 
 ## Examples
