@@ -27,7 +27,8 @@
 #' @references
 #' Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. *arXiv preprint* arXiv:2410.04700.
 #'
-#' @note Results are stored in the package's cache. Use \code{\link{save_null}} to save to your local storage.
+#' @note Results are stored in the package's cache.
+#' The customized function \code{\link{save_null}} is highly recommended for saving the null distribution to your local storage for future reference and testing in the same design.
 #'
 #' @return
 #' A data frame with the following columns:
@@ -202,7 +203,8 @@ APCSSA <- function(formula, data, numSim = 100000) {
 #' @references
 #' Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. *arXiv preprint* arXiv:2410.04700.
 #'
-#' @note Results are stored in the package's cache. Use \code{\link{save_null}} to save to your local storage.
+#' @note Results are stored in the package's cache.
+#' The customized function \code{\link{save_null}} is highly recommended for saving the null distribution to your local storage for future reference and testing in the same design.
 #'
 #' @return
 #' A data frame with the following columns:

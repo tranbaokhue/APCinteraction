@@ -4,7 +4,7 @@
 #' Simulate the null distribution for APCSSA
 #'
 #' @description
-#' A complete function that simulate the null distribution for APCSSA and automatically save it to the working directory
+#' A function for simulating the null distribution of APCSSA
 #'
 #' @param i The number of levels in factor A
 #' @param j The number of levels in factor B
@@ -16,6 +16,8 @@
 #'
 #' @details
 #' While we have provided null distributions for various settings in this package, there are still two-way settings that we don't readily have the null distribution to evaluate the significance of the test statistics (see **References** for the complete list of settings available). For example, one might wish to estimate the *p*-value with a higher `numSim`, ie. 250,000.
+#'
+#' Accompanying this function is our customized \code{\link{save_null}} to help researchers save the null distribution generated for future reference and calculations of the statistics in similar experiment design.
 #'
 #' @note
 #' Benchmarks for 100,000 simulations (no bias toward any chip type):
@@ -38,7 +40,7 @@
 #' }
 #'
 #' @seealso
-#' \code{\link{APCSSA}}, \code{\link{sim_nullAPCSSM}}
+#' \code{\link{save_null}}, \code{\link{APCSSA}}, \code{\link{sim_nullAPCSSM}}
 #'
 #' @importFrom magrittr %>%
 #' @export
@@ -72,7 +74,7 @@ sim_nullAPCSSA <- function(i, j, k,
 #' Simulate the null distribution for APCSSM
 #'
 #' @description
-#' A complete function that simulate the null distribution for APCSSM and automatically save it to the working directory
+#' A function for simulating the null distribution of APCSSM
 #'
 #' @param i The number of levels in factor A
 #' @param j The number of levels in factor B
@@ -83,6 +85,8 @@ sim_nullAPCSSA <- function(i, j, k,
 #'
 #' @details
 #' While we have provided null distributions for various settings in this package, there are still two-way settings that we don't readily have the null distribution to evaluate the significance of the test statistics (see **References** for the complete list of settings available). For example, one might wish to estimate the *p*-value with a higher `numSim`, ie. 250,000.
+#'
+#' #' Accompanying this function is our customized \code{\link{save_null}} to help researchers save the null distribution generated for future reference and calculations of the statistics in similar experiment design.
 #'
 #' @note
 #' Benchmarks for 100,000 simulations (no bias toward any chip type):
@@ -105,7 +109,7 @@ sim_nullAPCSSA <- function(i, j, k,
 #' }
 #'
 #' @seealso
-#' \code{\link{APCSSM}}, \code{\link{sim_nullAPCSSA}}
+#' \code{\link{save_null}}, \code{\link{APCSSM}}, \code{\link{sim_nullAPCSSA}}
 #'
 #' @importFrom magrittr %>%
 #' @export
