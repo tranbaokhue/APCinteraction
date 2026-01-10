@@ -23,10 +23,12 @@ sim_nullAPCSSA(i, j, k, numSim = 1e+05, parallel = TRUE, verbose = TRUE)
 A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equals to the \code{numSim} of all APCSSA statistics on the null data sets.
 }
 \description{
-A complete function that simulate the null distribution for APCSSA and automatically save it to the working directory
+A function for simulating the null distribution of APCSSA
 }
 \details{
 While we have provided null distributions for various settings in this package, there are still two-way settings that we don't readily have the null distribution to evaluate the significance of the test statistics (see \strong{References} for the complete list of settings available). For example, one might wish to estimate the \emph{p}-value with a higher \code{numSim}, ie. 250,000.
+
+Accompanying this function is our customized \code{\link{save_null}} to help researchers save the null distribution generated for future reference and calculations of the statistics in similar experiment design.
 }
 \note{
 Benchmarks for 100,000 simulations (no bias toward any chip type):
@@ -50,5 +52,5 @@ sim_nullAPCSSA(2, 2, 2, 5000)  # This should take only a few seconds
 Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. \emph{arXiv preprint} arXiv:2410.04700.
 }
 \seealso{
-\code{\link{APCSSA}}, \code{\link{sim_nullAPCSSM}}
+\code{\link{save_null}}, \code{\link{APCSSA}}, \code{\link{sim_nullAPCSSM}}
 }

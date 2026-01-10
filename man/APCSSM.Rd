@@ -34,7 +34,8 @@ If the design is not covered by the package's existing collection of simulated s
 For more information, see the referenced article.
 }
 \note{
-Results are stored in the package's cache. Use \code{\link{save_null}} to save to your local storage.
+Results are stored in the package's cache.
+The customized function \code{\link{save_null}} is highly recommended for saving the null distribution to your local storage for future reference and testing in the same design.
 }
 \examples{
 # Set seed for reproducibility
