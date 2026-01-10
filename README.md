@@ -18,19 +18,33 @@ devtools::install_github("tranbaokhue/APCinteraction")
 
 ## Overview
 
-The **APCinteraction** R package provides nonparametric tests for detecting interaction in two-way ANOVA designs with balanced replications. The core test statistics — **APCSSA** and **APCSSM** — are based on *All Possible Crossed Comparisons* (APC) and extend the methods of Hartlaub, Dean, and Wolfe (1999) to settings with replication, as recommended by Salazar-Alvarez et al. (2014).
+The **APCinteraction** R package provides nonparametric tests for detecting interaction in two-way ANOVA designs with balanced replications. The core test statistics — **APCSSA** and **APCSSM** — are based on *All Possible Comparisons* (APC) and extend the methods of Hartlaub, Dean, and Wolfe (1999) to settings with replication, as recommended by Salazar-Alvarez et al. (2014).
 
-These tests are designed to be robust and flexible, avoiding reliance on restrictive parametric assumptions. The methods utilize rank-based procedures with alignment to eliminate nuisance effects, offering enhanced power and interpretability in detecting interactions.
+These tests are designed to be robust and flexible, avoiding reliance on restrictive parametric assumptions. The methods utilize rank-based procedures with alignment to eliminate nuisance effects, offering enhanced power in detecting interactions.
 
-Key features include:
+Key functions the package provide are:
 
-- Nonparametric testing of interaction in two-way designs
-- Support for balanced designs with replication
-- Methods based on mean or median alignment (APCSSA and APCSSM)
-- Functions for simulation of null distributions when needed
-- Integrated plotting and summary outputs
+### Functions for calculating the test statistics
 
-This package is particularly useful for researchers seeking robust alternatives to traditional ANOVA F-tests when normality assumptions may not hold.
+These statistics use All Possible crossed Comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A _p_-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions. In addition to providing the statistics and estimated _p_-value in the summary table, the function will also output an interaction plot to help visualize potential interaction.
+
+- **APCSSA(formula, data, numSim = 1e+05)**: Test using **mean** alignment
+- **APCSSM(formula, data, numSim = 1e+05)**: Test using **median** alignment
+
+If the design setting you are hoping to check for interaction is not among the pre-simulated ones that come with the package, we also provide functions to simulate the null distribution on your own device.
+
+### Functions related to simulating null distributions
+
+While the package comes with an extensive collection of 90 pre-simulated null distributions (with 100,000 replications), there are definitely still scenarios where that is not sufficient. For example, a researcher might have an experiment with more factor levels or want to guarantee the accuracy of the estimated _p_-value by comparing it with null distributions generated from 150,000 and 250,000 replications.
+
+Thus, we also provide functions for generating your own null distributions given a design and replication number. These functions are designed with the same structure as the function to calculate the test statistics for ease of use.
+
+- **sim_nullAPCSSA(formula, data, numSim = 1e+05)**
+- **sim_nullAPCSSM(formula, data, numSim = 1e+05)**
+
+Accompanying the two simulation functions above, we provide users a function to quickly save the simulated values locally so that it is accessible by **APCSSA/APCSSM** even in other R sessions. This is optional, but is highly recommended!
+
+- **save_null**
 
 
 ## Examples
