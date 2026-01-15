@@ -10,20 +10,16 @@
 #' @section Main functions:
 #' \describe{
 #'   \item{\code{\link{APCSSA}}}{Compute the APCSSA interaction test statistic.}
-#'   \item{\code{\link{sim_nullAPCSSA}}}{Simulate and save the null distribution for the APCSSA statistic.}
+#'   \item{\code{\link{sim_nullAPCSSA}}}{Simulate the null distribution for the APCSSA statistic.}
 #'   \item{\code{\link{APCSSM}}}{Compute the APCSSM interaction test statistic.}
-#'   \item{\code{\link{sim_nullAPCSSM}}}{Simulate and save the null distribution for the APCSSM statistic.}
+#'   \item{\code{\link{sim_nullAPCSSM}}}{Simulate the null distribution for the APCSSM statistic.}
 #'
 #'   \item{\code{\link{save_null}}}{Save the simulated null distributions locally for future usage.}
 #' }
 #'
 #' @name APCinteraction
 #' @author
-#' Bao Khue Tran (maintainer) \email{baokhuetran@outlook.com}
-#'
-#' Andrew Nguyen
-#' Amy Wagaman
-#' Bradley Hartlaub
+#' Bao Khue Tran (maintainer) \email{baokhuetran@outlook.com}, Andrew Nguyen, Amy Wagaman, and Bradley Hartlaub
 #'
 #' @keywords interaction nonparametric anova
 
