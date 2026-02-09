@@ -7,18 +7,18 @@
 save_null(type, i, j, k, path = NULL)
 }
 \arguments{
-\item{type}{Character string: either "APCSSA" or "APCSSM"}
+\item{type}{Character string: either "APCSSA" or "APCSSM."}
 
-\item{i}{The number of levels in factor A}
+\item{i}{The number of levels for factor A.}
 
-\item{j}{The number of levels in factor B}
+\item{j}{The number of levels for factor B.}
 
-\item{k}{The number of observations at each level of factor A and B}
+\item{k}{The number of replications at each combination of Factor A and Factor B.}
 
 \item{path}{Optional custom file path. If NULL (default), saves to working directory.}
 }
 \value{
-Invisibly returns the file path where the data was saved
+Invisibly returns the file path to where the data were saved.
 }
 \description{
 Saves a null distribution from the package's cache to an RData file in the working directory.

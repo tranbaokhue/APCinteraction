@@ -3,13 +3,13 @@
 #' @description
 #' Saves a null distribution from the package's cache to an RData file in the working directory.
 #'
-#' @param type Character string: either "APCSSA" or "APCSSM"
-#' @param i The number of levels in factor A
-#' @param j The number of levels in factor B
-#' @param k The number of observations at each level of factor A and B
+#' @param type Character string: either "APCSSA" or "APCSSM."
+#' @param i The number of levels for factor A.
+#' @param j The number of levels for factor B.
+#' @param k The number of replications at each combination of Factor A and Factor B.
 #' @param path Optional custom file path. If NULL (default), saves to working directory.
 #'
-#' @return Invisibly returns the file path where the data was saved
+#' @return Invisibly returns the file path to where the data were saved.
 #'
 #' @examples
 #' \dontrun{

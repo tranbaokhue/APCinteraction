@@ -19,7 +19,7 @@
 #'
 #' @name APCinteraction
 #' @author
-#' Bao Khue Tran (maintainer) \email{baokhuetran at outlook.com}, Andrew Nguyen, Amy Wagaman, and Bradley Hartlaub
+#' Bao Khue Tran (maintainer) \email{baokhuetran@outlook.com}, Andrew Nguyen, Amy Wagaman, and Bradley Hartlaub
 #'
 #' @keywords interaction nonparametric anova
 

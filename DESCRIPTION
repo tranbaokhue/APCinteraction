@@ -1,6 +1,6 @@
 Package: APCinteraction
 Type: Package
-Title: All Possible Comparisons (APC) Nonparametric Tests for Interaction in Balanced Two-way ANOVA Models
+Title: All Possible Comparisons (APC) Nonparametric Tests for Interaction in Balanced Two-Way ANOVA Models
 Version: 0.1.0
 Authors@R: c(
     person("Bao Khue", "Tran", role = c("aut", "cre"), email = "baokhuetran@outlook.com"),
@@ -14,7 +14,7 @@ LazyData: true
 RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 Depends: 
-    R (>= 3.5.0)
+    R (>= 4.0.0)
 Imports: 
     magrittr,
     dplyr,

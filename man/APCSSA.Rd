@@ -7,17 +7,17 @@
 APCSSA(formula, data, numSim = 1e+05)
 }
 \arguments{
-\item{formula}{A formula specifying the model, with one response and two factors.}
+\item{formula}{A formula specifying the model, with one response variable and two experimental factors.}
 
-\item{data}{A data frame in long format: the first column contains observed values, the second Factor A, and the third Factor B.}
+\item{data}{A data frame in long format: the first column contains observed values of the response variable, the second column contains the levels of Factor A, and the third column contains the levels of Factor B.}
 
-\item{numSim}{An integer specifying the number of simulations used to estimate the null distribution. Defaults to 100,000.}
+\item{numSim}{An integer specifying the number of simulations used to estimate the null distribution. Defaults to 100,000 (1e+05). Even though this default might take longer to run for designs with factors of more than 5 levels, we recommend using at least 100,000 simulations to get reliable results.}
 }
 \value{
 A data frame with the following columns:
 \itemize{
-\item \strong{Statistic}: The APCSSA test statistic (maximum of APCCRA and APCRCA).
-\item \strong{\emph{p}-value}: The estimated \emph{p}-value.
+\item \strong{Statistic}: The APCSSA test statistic (maximum of APCCRA and APCRCA) is provided.
+\item \strong{\emph{p}-value}: The estimated \emph{p}-value is displayed.
 }
 A summary table is printed to the console, and an interaction plot is generated.
 }
@@ -25,17 +25,13 @@ A summary table is printed to the console, and an interaction plot is generated.
 This function tests for interaction in a two-way layout using all possible crossed comparisons (APC) based on aligned ranks, with alignment performed using the mean.
 }
 \details{
-\code{APCSSA} performs a nonparametric test for interaction in a two-way layout with balanced replication. It computes two statistics - APCCRA and APCRCA - by aligning the data by means and ranking across rows or columns.
+\code{APCSSA} performs a nonparametric test for interaction in a two-way layout with balanced replication. Two statistics, APCCRA and APCRCA, are computed by aligning the data with the averages and ranking within the rows or columns.
 
 These statistics use all possible crossed comparisons to detect interaction effects. The final test statistic is the maximum of the two standardized statistics. A \emph{p}-value is estimated by comparing this statistic to a pre-simulated null distribution specific to the design dimensions.
 
-If the design is not covered by the package's existing collection of simulated settings or if a higher precision is desired, \code{numSim} > 100,000, users must first generate the null distribution manually using \code{\link{sim_nullAPCSSA}} before using this function to evaluate the interaction effect.
+If the design is not covered by the package's existing collection of simulated settings or if a higher precision is desired, \code{numSim} > 100,000, users must first generate the null distribution using \code{\link{sim_nullAPCSSA}} before using this function to evaluate the interaction effect.
 
 For more information, see the referenced article.
-}
-\note{
-Results are stored in the package's cache.
-The customized function \code{\link{save_null}} is highly recommended for saving the null distribution to your local storage for future reference and testing in the same design.
 }
 \examples{
 # Set the seed for reproducibility
@@ -66,7 +62,9 @@ APCSSA(value ~ A + B, data = data)
 
 }
 \references{
-Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. \emph{arXiv preprint} arXiv:2410.04700.
+Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024).
+Nonparametric tests for interaction in two-way ANOVA with balanced replications.
+\emph{arXiv preprint} arXiv:2410.04700. \url{https://arxiv.org/abs/2410.04700}
 }
 \seealso{
 \code{\link{sim_nullAPCSSA}}, \code{\link{APCSSM}}

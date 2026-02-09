@@ -7,26 +7,26 @@
 sim_nullAPCSSA(i, j, k, numSim = 1e+05, parallel = TRUE, verbose = TRUE)
 }
 \arguments{
-\item{i}{The number of levels in factor A}
+\item{i}{The number of levels for factor A.}
 
-\item{j}{The number of levels in factor B}
+\item{j}{The number of levels for factor B.}
 
-\item{k}{The number of observations at each level of factor A and B}
+\item{k}{The number of replications at each combination of Factor A and Factor B.}
 
-\item{numSim}{The number of simulations (data sets) to generate}
+\item{numSim}{The number of simulations (data sets) to generate. Defaults to 100,000 (1e+05). Even though this default might take longer to run for designs with factors of more than 5 levels, we recommend using at least 100,000 simulations to get reliable results.}
 
 \item{parallel}{Boolean; if TRUE (the default), uses one fewer than the total number of cores for parallel computation.}
 
 \item{verbose}{Logical; if TRUE (the default), prints a startup notice and progress bar.}
 }
 \value{
-A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equals to the \code{numSim} of all APCSSA statistics on the null data sets.
+A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equal to the \code{numSim} of all APCSSA statistics on the null data sets.
 }
 \description{
-A function for simulating the null distribution of APCSSA
+A function for simulating the null distribution of APCSSA.
 }
 \details{
-While we have provided null distributions for various settings in this package, there are still two-way settings that we don't readily have the null distribution to evaluate the significance of the test statistics (see \strong{References} for the complete list of settings available). For example, one might wish to estimate the \emph{p}-value with a higher \code{numSim}, ie. 250,000.
+While we have provided null distributions for various settings in this package, there are still two-way settings that we don't readily have the null distribution to evaluate the significance of the test statistics (see \strong{References} for the complete list of settings available). For example, one might wish to estimate the \emph{p}-value with a higher \code{numSim}, e.g., 250,000.
 
 Accompanying this function is our customized \code{\link{save_null}} to help researchers save the null distribution generated for future reference and calculations of the statistics in similar experiment design.
 }
@@ -41,6 +41,9 @@ so replication depth (k) dominates run time.
 }
 
 \strong{Tip:} leave \code{parallel = TRUE} to shorten run times dramatically.
+
+Results are stored in the package's cache.
+The customized function \code{\link{save_null}} is highly recommended for saving the null distribution to your local storage for future reference and testing in the same design.
 }
 \examples{
 \dontrun{
@@ -49,7 +52,9 @@ sim_nullAPCSSA(2, 2, 2, 5000)  # This should take only a few seconds
 
 }
 \references{
-Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024). Nonparametric tests for interaction in two-way ANOVA with balanced replications. \emph{arXiv preprint} arXiv:2410.04700.
+Tran, B. K., Wagaman, A. S., Nguyen, A., Jacobson, D., & Hartlaub, B. (2024).
+Nonparametric tests for interaction in two-way ANOVA with balanced replications.
+\emph{arXiv preprint} arXiv:2410.04700. \url{https://arxiv.org/abs/2410.04700}
 }
 \seealso{
 \code{\link{save_null}}, \code{\link{APCSSA}}, \code{\link{sim_nullAPCSSM}}
