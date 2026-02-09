@@ -117,17 +117,17 @@ APCSSA <- function(formula, data, numSim = 100000) {
         .nullAPCXXA(i, j, k)
         .nullAPCSSA(i, j, k)
       }, error = function(e) {
-        stop("No matching pre-computed null distributions. Try running `sim_nullAPCSSA()` manually.")
+        stop("No matching pre-computed null distributions.\nInstall APCinteractionData: devtools::install_github('tranbaokhue/APCinteractionData')\nOr run `sim_nullAPCSSA()` manually.")
       })
     } else {
-      stop(paste("No matching pre-computed null distribution found. Run `sim_nullAPCSSA()` to generate it."))
+      stop("No matching null distribution found.\nInstall APCinteractionData: devtools::install_github('tranbaokhue/APCinteractionData')\nOr run `sim_nullAPCSSA()` to generate it.")
     }
   }
 
   # Retrieve the correct null distribution
   prev_name <- paste0("nullAPCXXA_", i, "x", j, "x", k)
   if (!exists(prev_name, envir = .apc_cache)) {
-    stop("Error: The required null distribution does not exist. Run sim_nullAPCSSA() first.")
+    stop("The required null distribution does not exist.\nInstall APCinteractionData: devtools::install_github('tranbaokhue/APCinteractionData')\nOr run sim_nullAPCSSA() first.")
   }
   APCSSnullDist <- get(prev_name, envir = .apc_cache)
 
@@ -295,17 +295,17 @@ APCSSM <- function(formula, data, numSim = 100000) {
         .nullAPCXXM(i, j, k)
         .nullAPCSSM(i, j, k)
       }, error = function(e) {
-        stop("Error generating null distributions. Try running `sim_nullAPCSSM()` manually.")
+        stop("No matching pre-computed null distributions.\nInstall APCinteractionData: devtools::install_github('tranbaokhue/APCinteractionData')\nOr run `sim_nullAPCSSM()` manually.")
       })
     } else {
-      stop(paste("No valid null distribution found. Run `sim_nullAPCSSM()` to generate it."))
+      stop("No matching null distribution found.\nInstall APCinteractionData: devtools::install_github('tranbaokhue/APCinteractionData')\nOr run `sim_nullAPCSSM()` to generate it.")
     }
   }
 
   # Retrieve the correct null distribution
   prev_name <- paste0("nullAPCXXM_", i, "x", j, "x", k)
   if (!exists(prev_name, envir = .apc_cache)) {
-    stop("Error: The required null distribution does not exist. Run sim_nullAPCSSM() first.")
+    stop("The required null distribution does not exist.\nInstall APCinteractionData: devtools::install_github('tranbaokhue/APCinteractionData')\nOr run sim_nullAPCSSM() first.")
   }
   APCSSnullDist <- get(prev_name, envir = .apc_cache)
 
