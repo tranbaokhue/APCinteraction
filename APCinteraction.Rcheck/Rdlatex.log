@@ -1,0 +1,156 @@
+Hmm ... looks like a package
+Converting parsed Rd's to LaTeX 
+Creating pdf output from LaTeX ...
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2025-06-01> patch level 1
+L3 programming layer <2025-09-02>
+
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2025/01/22 v1.4n Standard LaTeX document class
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo)) (/opt/homebrew/Cellar/r/4.5.1/lib/R/share/texmf/tex/latex/Rd.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty)) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty)) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/eucal.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex))))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty)))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+Writing index file Rd2.idx
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def)
+No file Rd2.aux.
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4.fd) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd)
+No file Rd2.toc.
+
+[1{/Users/khuetran/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/khuetran/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{/Users/khuetran/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}] (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+[2]
+Overfull \hbox (0.8792pt too wide) in paragraph at lines 113--115
+\T1/ptm/m/n/10 repli-ca-tions. In-stall it with []\T1/zi4/m/n/10 devtools::install_github("tranbaokhue/APCinteractionData")
+
+[3]
+[4]
+Overfull \hbox (0.8792pt too wide) in paragraph at lines 200--202
+\T1/ptm/m/n/10 repli-ca-tions. In-stall it with []\T1/zi4/m/n/10 devtools::install_github("tranbaokhue/APCinteractionData")
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+[5{/Users/khuetran/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}]
+[6]
+[7]
+[8]
+[9]
+No file Rd2.ind.
+
+[10] (./Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information) </Users/khuetran/Library/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (10 pages, 104100 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.17 [TeX Live 2025] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (33 entries accepted, 0 rejected).
+Sorting entries....done (178 comparisons).
+Generating output file Rd2.ind....done (33 lines written, 2 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2025-06-01> patch level 1
+L3 programming layer <2025-09-02>
+
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2025/01/22 v1.4n Standard LaTeX document class
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo)) (/opt/homebrew/Cellar/r/4.5.1/lib/R/share/texmf/tex/latex/Rd.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty)) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty)) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/eucal.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex))))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty)))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+Writing index file Rd2.idx
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def) (./Rd2.aux) (./Rd2.out) (./Rd2.out) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4.fd) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd) (./Rd2.toc)
+[1{/Users/khuetran/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/khuetran/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{/Users/khuetran/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}] (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+[2]
+Overfull \hbox (0.8792pt too wide) in paragraph at lines 113--115
+\T1/ptm/m/n/10 repli-ca-tions. In-stall it with []\T1/zi4/m/n/10 devtools::install_github("tranbaokhue/APCinteractionData")
+
+[3]
+[4]
+Overfull \hbox (0.8792pt too wide) in paragraph at lines 200--202
+\T1/ptm/m/n/10 repli-ca-tions. In-stall it with []\T1/zi4/m/n/10 devtools::install_github("tranbaokhue/APCinteractionData")
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+[5{/Users/khuetran/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}]
+[6]
+[7]
+[8]
+[9] (./Rd2.ind
+[10]
+
+LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
+(Font)              using `T1/zi4/m/n' instead on input line 13.
+
+
+
+[11]) (./Rd2.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information) </Users/khuetran/Library/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (11 pages, 115733 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.17 [TeX Live 2025] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (33 entries accepted, 0 rejected).
+Sorting entries....done (178 comparisons).
+Generating output file Rd2.ind....done (33 lines written, 2 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2025-06-01> patch level 1
+L3 programming layer <2025-09-02>
+
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2025/01/22 v1.4n Standard LaTeX document class
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo)) (/opt/homebrew/Cellar/r/4.5.1/lib/R/share/texmf/tex/latex/Rd.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty)) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty)) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/eucal.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex))))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty)))) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+Writing index file Rd2.idx
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def) (./Rd2.aux) (./Rd2.out) (./Rd2.out) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4.fd) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd) (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd) (./Rd2.toc)
+[1{/Users/khuetran/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/khuetran/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{/Users/khuetran/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}] (/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+[2]
+Overfull \hbox (0.8792pt too wide) in paragraph at lines 113--115
+\T1/ptm/m/n/10 repli-ca-tions. In-stall it with []\T1/zi4/m/n/10 devtools::install_github("tranbaokhue/APCinteractionData")
+
+[3]
+[4]
+Overfull \hbox (0.8792pt too wide) in paragraph at lines 200--202
+\T1/ptm/m/n/10 repli-ca-tions. In-stall it with []\T1/zi4/m/n/10 devtools::install_github("tranbaokhue/APCinteractionData")
+(/Users/khuetran/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+[5{/Users/khuetran/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}]
+[6]
+[7]
+[8]
+[9] (./Rd2.ind
+[10]
+
+LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
+(Font)              using `T1/zi4/m/n' instead on input line 13.
+
+
+
+[11]) (./Rd2.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information) </Users/khuetran/Library/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/khuetran/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (11 pages, 116014 bytes).
+Transcript written on Rd2.log.
+Saving output to ‘APCinteraction-manual.pdf’ ...
+Done
+You may want to clean up by 'rm -Rf /var/folders/53/tnd81rj52sn_jgnkfq461_p40000gn/T//Rtmp2uNGIY/Rd2pdf60ff412920ba'

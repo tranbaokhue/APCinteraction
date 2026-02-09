@@ -1,0 +1,8 @@
+APCSSA                  APCSSA
+APCSSM                  APCSSM
+APCinteraction          APCinteraction: All Possible Comparisons (APC)
+                        Nonparametric Tests for Interaction in Balanced
+                        Two-way ANOVA Models
+save_null               Save null distribution to working directory
+sim_nullAPCSSA          Simulate the null distribution for APCSSA
+sim_nullAPCSSM          Simulate the null distribution for APCSSM

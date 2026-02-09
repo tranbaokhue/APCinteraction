@@ -2,3 +2,7 @@
 ^\.Rproj\.user$
 ^data-raw$
 ^LICENSE\.md$
+^README\.md$
+^cran-comments\.md$
+^\.git$
+^\.DS_Store$
