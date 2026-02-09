@@ -422,13 +422,19 @@
   # Construct the file name
   file_name <- paste0("APCSSA_Null_Distribution_", i, "x", j, "x", k, "_100kSim.RData")
 
-  # Get full file path
   file_path <- system.file("extdata", file_name, package = "APCinteraction")
 
-  # Ensure file exists
-  if (!file.exists(file_path)) {
-    stop("Error: File not found: ", file_name, ". Try running sim_nullAPCSSA().")
+  if (file_path == "") {
+    file_path <- system.file("extdata", file_name, package = "APCinteractionData")
   }
+
+  if (file_path == "") {
+    stop("Null distribution file not found: ", file_name,
+         "\nInstall APCinteractionData for pre-computed nulls: ",
+         "devtools::install_github('tranbaokhue/APCinteractionData')",
+         "\nOr generate your own with sim_nullAPCSSA().")
+  }
+
 
   # Load the data into a temporary environment
   env <- new.env()
@@ -460,13 +466,19 @@
   # Construct the file name
   file_name <- paste0("APCSSM_Null_Distribution_", i, "x", j, "x", k, "_100kSim.RData")
 
-  # Get full file path
   file_path <- system.file("extdata", file_name, package = "APCinteraction")
 
-  # Ensure file exists
-  if (!file.exists(file_path)) {
-    stop("File not found: ", file_name, ". Try running simulate_APCSSM_null(i, j, k).")
+  if (file_path == "") {
+    file_path <- system.file("extdata", file_name, package = "APCinteractionData")
   }
+
+  if (file_path == "") {
+    stop("Null distribution file not found: ", file_name,
+         "\nInstall APCinteractionData for pre-computed nulls: ",
+         "devtools::install_github('tranbaokhue/APCinteractionData')",
+         "\nOr generate your own with sim_nullAPCSSA().")
+  }
+
 
   # Load the data into a temporary environment
   env <- new.env()
