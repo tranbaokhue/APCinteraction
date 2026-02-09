@@ -476,7 +476,7 @@
     stop("Null distribution file not found: ", file_name,
          "\nInstall APCinteractionData for pre-computed nulls: ",
          "devtools::install_github('tranbaokhue/APCinteractionData')",
-         "\nOr generate your own with sim_nullAPCSSA().")
+         "\nOr generate your own with sim_nullAPCSSM().")
   }
 
 
