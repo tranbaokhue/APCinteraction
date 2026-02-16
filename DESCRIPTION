@@ -7,7 +7,8 @@ Authors@R: c(
     person("Andrew", "Nguyen", role = c("aut", "ctb")),
     person("Amy", "Wagaman", role = "ctb"),
     person("Bradley", "Hartlaub", role = "ctb"))
-Description: Provides novel nonparametric tests, 'APCSSA' and 'APCSSM', for interaction in two-way ANOVA designs with balanced replications using all possible comparisons. These statistics extend previous methods, allow greater flexibility, and demonstrate higher power in detecting interactions for non-normal data. The package includes optimized functions for computing these test statistics, generating interaction plots, and simulating their null distributions. The companion package 'APCinteractionData' is available on GitHub <https://github.com/tranbaokhue/APCinteractionData>.
+Description: Provides novel nonparametric tests, 'APCSSA' and 'APCSSM', for interaction in two-way ANOVA designs with balanced replications using all possible comparisons. These statistics extend previous methods, allow greater flexibility, and demonstrate higher power in detecting interactions for non-normal data. The package includes optimized functions for computing these test statistics, generating interaction plots, and simulating their null distributions. The companion package 'APCinteractionData' is available on GitHub <https://github.com/tranbaokhue/APCinteractionData>. Methods are described and compared empirically in Tran, Wagaman, Nguyen, Jacobson, and Hartlaub (2024) <doi:10.48550/arXiv.2410.04700>.
+
 License: MIT + file LICENSE
 Encoding: UTF-8
 URL: https://github.com/tranbaokhue/APCinteraction
