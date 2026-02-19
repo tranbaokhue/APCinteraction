@@ -40,8 +40,8 @@
 #' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRA and APCRCA) that will get standardized into APCSSA and a numeric vector with length equal to the `numSim` of all APCSSA statistics on the null data sets.
 #'
 #' @examples
-#' \dontrun{
-#' sim_nullAPCSSA(2, 2, 2, 5000)  # This should take only a few seconds
+#' \donttest{
+#' sim_nullAPCSSA(2, 2, 2, 50000)
 #' }
 #'
 #' @seealso
@@ -114,8 +114,8 @@ sim_nullAPCSSA <- function(i, j, k,
 #' @returns A data frame with the null mean and standard deviation for the two test statistics (APCCRM and APCRCM) that will get standardized into APCSSM and a numeric vector with length equal to the `numSim` of all APCSSM statistics on the null data sets.
 #'
 #' @examples
-#' \dontrun{
-#' sim_nullAPCSSM(2, 2, 2, 5000)  # This should take only a few seconds
+#' \donttest{
+#' sim_nullAPCSSM(2, 2, 2, 50000)
 #' }
 #'
 #' @seealso
