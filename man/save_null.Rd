@@ -2,9 +2,9 @@
 % Please edit documentation in R/save_null.R
 \name{save_null}
 \alias{save_null}
-\title{Save null distribution to working directory}
+\title{Save null distribution to a directory}
 \usage{
-save_null(type, i, j, k, path = NULL)
+save_null(type, i, j, k, path)
 }
 \arguments{
 \item{type}{Character string: either "APCSSA" or "APCSSM."}
@@ -15,24 +15,25 @@ save_null(type, i, j, k, path = NULL)
 
 \item{k}{The number of replications at each combination of Factor A and Factor B.}
 
-\item{path}{Optional custom file path. If NULL (default), saves to working directory.}
+\item{path}{Character string specifying the directory to save the files to.}
 }
 \value{
-Invisibly returns the file path to where the data were saved.
+Invisibly returns the file paths to where the data were saved.
 }
 \description{
-Saves a null distribution from the package's cache to an RData file in the working directory.
+Saves a null distribution from the package's cache to RData files in the
+specified directory.
 }
 \examples{
-\dontrun{
-# After running simulation
-sim_nullAPCSSA(2, 2, 2)
+\donttest{
+# First generate the desired null distribution
+sim_nullAPCSSA(2, 2, 2, 50000)
 
-# Save to working directory
-save_null("APCSSA", 2, 2, 2)
+# Save to a temporary directory
+save_null("APCSSA", 2, 2, 2, path = tempdir())
 
-# Or save to custom location
-save_null("APCSSA", 2, 2, 2, path = "~/my_nulls/")
+# Or save to a custom location
+save_null("APCSSA", 2, 2, 2, path = "path/to/directory")
 }
 
 }

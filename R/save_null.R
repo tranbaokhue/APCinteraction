@@ -50,8 +50,8 @@ save_null <- function(type, i, j, k, path) {
   }
 
   # Save both files
-  file_XXA <- file.path(save_dir, paste0(name_XXA, ".RData"))
-  file_SS <- file.path(save_dir, paste0(name_SS, ".RData"))
+  file_XXA <- file.path(path, paste0(name_XXA, ".RData"))
+  file_SS <- file.path(path, paste0(name_SS, ".RData"))
 
   save(list = name_XXA, file = file_XXA, envir = .apc_cache)
   save(list = name_SS, file = file_SS, envir = .apc_cache)

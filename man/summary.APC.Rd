@@ -10,7 +10,7 @@
 \item{object}{An object of class \code{"APC"}, as returned by
 \code{\link{APCSSA}} or \code{\link{APCSSM}}.}
 
-\item{...}{Additional arguments (currently unused).}
+\item{...}{Additional arguments to be passed to or from other methods.}
 }
 \value{
 Invisibly returns the input object.

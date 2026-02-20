@@ -2,7 +2,22 @@
 
 0 errors | 0 warnings | 0 notes
 
-* This is a new submission.
+* This is a resubmission. Changes based on reviewer feedback:
+  - Replaced direct `cat()`/`print()` calls in `APCSSA()` and `APCSSM()` with
+    a proper S3 `summary.APC()` method. The test functions now return objects
+    of class `"APC"` silently; users call `summary.APC()` to view results and plots.
+  - Removed default file-writing to working directory in `save_null()`. The
+    `path` argument is now required (no default). Examples use `tempdir()`.
+  - Changed `\dontrun{}` to `\donttest{}` for example chunks that are not
+    dependent on external packages but may exceed 5 seconds.
+
+## Note on `R/sysdata.rda`
+
+`R/sysdata.rda` (5.6 KB) contains internal standardization parameters
+(means and standard deviations) for all 90 supported design
+configurations. These are required to compute the APCSSA and APCSSM
+test statistics without any external dependency. The companion package
+`APCinteractionData` is only needed for _p_-value estimation.
 
 ## Companion data package
 
