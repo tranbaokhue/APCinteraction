@@ -1,34 +1,33 @@
-#' Save null distribution to a directory
+#' Save null distribution to working directory
 #'
 #' @description
-#' Saves a null distribution from the package's cache to RData files in the
-#' specified directory.
+#' Saves a null distribution from the package's cache to an RData file in the working directory.
 #'
 #' @param type Character string: either "APCSSA" or "APCSSM."
 #' @param i The number of levels for factor A.
 #' @param j The number of levels for factor B.
 #' @param k The number of replications at each combination of Factor A and Factor B.
-#' @param path Character string specifying the directory to save the files to.
+#' @param path Optional custom file path. If NULL (default), saves to working directory.
 #'
-#' @return Invisibly returns the file paths to where the data were saved.
+#' @return Invisibly returns the file path to where the data were saved.
 #'
 #' @examples
-#' \donttest{
-#' # First generate the desired null distribution
-#' sim_nullAPCSSA(2, 2, 2, 50000)
+#' \dontrun{
+#' # After running simulation
+#' sim_nullAPCSSA(2, 2, 2)
 #'
-#' # Save to a temporary directory
-#' save_null("APCSSA", 2, 2, 2, path = tempdir())
+#' # Save to working directory
+#' save_null("APCSSA", 2, 2, 2)
 #'
-#' # Or save to a custom location
-#' save_null("APCSSA", 2, 2, 2, path = "path/to/directory")
+#' # Or save to custom location
+#' save_null("APCSSA", 2, 2, 2, path = "~/my_nulls/")
 #' }
 #'
 #' @seealso
 #' \code{\link{sim_nullAPCSSA}}, \code{\link{sim_nullAPCSSM}}
 #'
 #' @export
-save_null <- function(type, i, j, k, path) {
+save_null <- function(type, i, j, k, path = NULL) {
   if (!type %in% c("APCSSA", "APCSSM")) {
     stop("type must be 'APCSSA' or 'APCSSM'")
   }
@@ -44,9 +43,10 @@ save_null <- function(type, i, j, k, path) {
     stop("Null distribution ", name_SS, " not found in cache. Run sim_null", type, "() first.")
   }
 
-  # Validate save directory
-  if (!dir.exists(path)) {
-    stop("Directory does not exist: ", path)
+  # Determine save directory
+  save_dir <- if (is.null(path)) getwd() else path
+  if (!dir.exists(save_dir)) {
+    stop("Directory does not exist: ", save_dir)
   }
 
   # Save both files
