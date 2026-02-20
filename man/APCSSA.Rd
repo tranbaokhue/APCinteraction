@@ -14,12 +14,14 @@ APCSSA(formula, data, numSim = 1e+05)
 \item{numSim}{An integer specifying the number of simulations used to estimate the null distribution. Defaults to 100,000 (1e+05). Even though this default might take longer to run for designs with factors of more than 5 levels, we recommend using at least 100,000 simulations to get reliable results.}
 }
 \value{
-A data frame with the following columns:
+An object of class \code{"APC"}, which is a data frame with columns:
 \itemize{
-\item \strong{Statistic}: The APCSSA test statistic (maximum of APCCRA and APCRCA) is provided.
-\item \strong{\emph{p}-value}: The estimated \emph{p}-value is displayed.
+\item \strong{Interaction}: The interaction term.
+\item \strong{Statistic}: The APCSSA test statistic (maximum of APCCRA and APCRCA).
+\item \strong{p.value}: The estimated \emph{p}-value.
 }
-A summary table is printed to the console, and an interaction plot is generated.
+Use \code{\link{summary.APC}} to print a formatted summary table and
+generate an interaction plot.
 }
 \description{
 This function tests for interaction in a two-way layout using all possible crossed comparisons (APC) based on aligned ranks, with alignment performed using the mean.
@@ -60,8 +62,9 @@ data <- data.frame(
   B = factor(design$B)
 )
 
-# Run the APCSSA test
-APCSSA(value ~ A + B, data = data)
+# Run the APCSSA test and view summary
+result <- APCSSA(value ~ A + B, data = data)
+summary.APC(result)
 
 }
 \references{
@@ -70,5 +73,5 @@ Nonparametric tests for interaction in two-way ANOVA with balanced replications.
 \emph{arXiv preprint} arXiv:2410.04700. \url{https://arxiv.org/abs/2410.04700}
 }
 \seealso{
-\code{\link{sim_nullAPCSSA}}, \code{\link{APCSSM}}
+\code{\link{summary.APC}}, \code{\link{sim_nullAPCSSA}}, \code{\link{APCSSM}}
 }

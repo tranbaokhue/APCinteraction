@@ -46,8 +46,8 @@ Results are stored in the package's cache.
 The customized function \code{\link{save_null}} is highly recommended for saving the null distribution to your local storage for future reference and testing in the same design.
 }
 \examples{
-\dontrun{
-sim_nullAPCSSA(2, 2, 2, 5000)  # This should take only a few seconds
+\donttest{
+sim_nullAPCSSA(2, 2, 2, 50000)
 }
 
 }

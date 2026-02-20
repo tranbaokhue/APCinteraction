@@ -7,13 +7,15 @@ A nonparametric R package for detecting interaction in two-way ANOVA designs wit
 
 You can install the development version of `APCinteraction` from [GitHub](https://github.com/) with:
 
-
 ``` r
 # Install devtools if you don't have it
 install.packages("devtools")
 
 # Install APCinteraction from GitHub
 devtools::install_github("tranbaokhue/APCinteraction")
+
+# Load the package
+library(APCinteraction)
 ```
 
 ## Overview
@@ -67,7 +69,6 @@ The following are basic examples which show you how to solve a common problem of
 ### Example 1: Data with normal error (recommend: aov or APCSSA)
 
 ``` r
-library(APCinteraction)
 # Set the seed for reproducibility
 set.seed(206)
 
@@ -91,8 +92,9 @@ data <- data.frame(
   B = factor(design$B)
 )
 
-# Run the APCSSA test
-APCSSA(value ~ A + B, data = data)
+# Run the APCSSA test and view summary
+result <- APCSSA(value ~ A + B, data = data)
+summary.APC(result)
 ```
 
 
@@ -127,7 +129,8 @@ data <- data.frame(
 )
 
 # With Cauchy errors, we opt for APCSSM to check for interaction
-APCSSM(value ~ A + B, data = data)
+result <- APCSSM(value ~ A + B, data = data)
+summary.APC(result)
 ```
 
 

@@ -33,15 +33,17 @@
 #' *arXiv preprint* arXiv:2410.04700. \url{https://arxiv.org/abs/2410.04700}
 #'
 #' @return
-#' A data frame with the following columns:
+#' An object of class \code{"APC"}, which is a data frame with columns:
 #' \itemize{
-#'   \item \strong{Statistic}: The APCSSA test statistic (maximum of APCCRA and APCRCA) is provided.
-#'   \item \strong{*p*-value}: The estimated *p*-value is displayed.
+#'   \item \strong{Interaction}: The interaction term.
+#'   \item \strong{Statistic}: The APCSSA test statistic (maximum of APCCRA and APCRCA).
+#'   \item \strong{p.value}: The estimated *p*-value.
 #' }
-#' A summary table is printed to the console, and an interaction plot is generated.
+#' Use \code{\link{summary.APC}} to print a formatted summary table and
+#' generate an interaction plot.
 #'
 #' @seealso
-#' \code{\link{sim_nullAPCSSA}}, \code{\link{APCSSM}}
+#' \code{\link{summary.APC}}, \code{\link{sim_nullAPCSSA}}, \code{\link{APCSSM}}
 #'
 #' @examples
 #' # Set the seed for reproducibility
@@ -67,8 +69,9 @@
 #'   B = factor(design$B)
 #' )
 #'
-#' # Run the APCSSA test
-#' APCSSA(value ~ A + B, data = data)
+#' # Run the APCSSA test and view summary
+#' result <- APCSSA(value ~ A + B, data = data)
+#' summary.APC(result)
 #'
 #' @importFrom magrittr %>%
 #' @export
@@ -154,32 +157,15 @@ APCSSA <- function(formula, data, numSim = 100000) {
     `p-value` = p_value
   )
 
-  # Display result in aov-style format
-  cat(strrep("=", 40), "\n")
-  cat("APCSSA Test Summary\n")
-  cat(strrep("=", 40), "\n")
+  # Store metadata for summary method
+  attr(result, "test_name") <- "APCSSA"
+  attr(result, "numSim") <- numSim
+  attr(result, "dataFrame") <- dataFrame
+  attr(result, "factorA_name") <- factorA_name
+  attr(result, "factorB_name") <- factorB_name
+  attr(result, "response_name") <- response_name
+  class(result) <- c("APC", "data.frame")
 
-  print(result, row.names = FALSE)
-
-  cat("\nNote: The p-value is estimated using the null distribution with", numSim, "simulations.\n\n")
-
-  # Generate a color palette with `hcl.colors()`
-  num_levels <- nlevels(as.factor(dataFrame$B))
-  color_palette <- hcl.colors(num_levels, "Viridis")
-
-  # Generate interaction plot with gradient colors
-  interaction.plot(
-    x.factor = dataFrame$A,
-    trace.factor = dataFrame$B,
-    response = dataFrame$value,
-    xlab = factorA_name,
-    ylab = response_name,
-    trace.label = factorB_name,
-    col = color_palette,
-    lwd = 2,
-    main = "Interaction Plot"
-  )
-  # Return result invisibly for flexibility
   invisible(result)
 }
 
@@ -211,15 +197,17 @@ APCSSA <- function(formula, data, numSim = 100000) {
 #' *arXiv preprint* arXiv:2410.04700. \url{https://arxiv.org/abs/2410.04700}
 #'
 #' @return
-#' A data frame with the following columns:
+#' An object of class \code{"APC"}, which is a data frame with columns:
 #' \itemize{
-#'   \item \strong{Statistic}: The APCSSM test statistic (maximum of APCCRM and APCRCM) is provided.
-#'   \item \strong{*p*-value}: The estimated *p*-value is displayed.
+#'   \item \strong{Interaction}: The interaction term.
+#'   \item \strong{Statistic}: The APCSSM test statistic (maximum of APCCRM and APCRCM).
+#'   \item \strong{p.value}: The estimated *p*-value.
 #' }
-#' A summary table is printed to the console, and an interaction plot is generated.
+#' Use \code{\link{summary.APC}} to print a formatted summary table and
+#' generate an interaction plot.
 #'
 #' @seealso
-#' \code{\link{sim_nullAPCSSM}}, \code{\link{APCSSA}}
+#' \code{\link{summary.APC}}, \code{\link{sim_nullAPCSSM}}, \code{\link{APCSSA}}
 #'
 #' @examples
 #' # Set seed for reproducibility
@@ -250,7 +238,8 @@ APCSSA <- function(formula, data, numSim = 100000) {
 #' )
 #'
 #' # With Cauchy errors, we opt for APCSSM to check for interaction
-#' APCSSM(value ~ A + B, data = data)
+#' result <- APCSSM(value ~ A + B, data = data)
+#' summary.APC(result)
 #'
 #' @importFrom magrittr %>%
 #' @export
@@ -335,20 +324,55 @@ APCSSM <- function(formula, data, numSim = 100000) {
     `p-value` = p_value
   )
 
-  # Display result in aov-style format
+  # Store metadata for summary method
+  attr(result, "test_name") <- "APCSSM"
+  attr(result, "numSim") <- numSim
+  attr(result, "dataFrame") <- dataFrame
+  attr(result, "factorA_name") <- factorA_name
+  attr(result, "factorB_name") <- factorB_name
+  attr(result, "response_name") <- response_name
+  class(result) <- c("APC", "data.frame")
+
+  invisible(result)
+}
+
+
+#' Summary method for APC objects
+#'
+#' @description
+#' Prints a formatted summary table and generates an interaction plot for
+#' objects returned by \code{\link{APCSSA}} or \code{\link{APCSSM}}.
+#'
+#' @param object An object of class \code{"APC"}, as returned by
+#'   \code{\link{APCSSA}} or \code{\link{APCSSM}}.
+#' @param ... Additional arguments to be passed to or from other methods.
+#'
+#' @return Invisibly returns the input object.
+#'
+#' @seealso \code{\link{APCSSA}}, \code{\link{APCSSM}}
+#'
+#' @export
+summary.APC <- function(object, ...) {
+  test_name <- attr(object, "test_name")
+  numSim <- attr(object, "numSim")
+  dataFrame <- attr(object, "dataFrame")
+  factorA_name <- attr(object, "factorA_name")
+  factorB_name <- attr(object, "factorB_name")
+  response_name <- attr(object, "response_name")
+
   cat(strrep("=", 40), "\n")
-  cat("APCSSM Test Summary\n")
+  cat(test_name, "Test Summary\n")
   cat(strrep("=", 40), "\n")
 
-  print(result, row.names = FALSE)
+  print.data.frame(object, row.names = FALSE)
 
-  cat("\nNote: The p-value is estimated using the null distribution with", numSim, "simulations.\n\n")
+  cat("\nNote: The p-value is estimated using the null distribution with",
+      numSim, "simulations.\n\n")
 
-  # Generate a color palette with `hcl.colors()`
+  # Generate interaction plot
   num_levels <- nlevels(as.factor(dataFrame$B))
   color_palette <- hcl.colors(num_levels, "Viridis")
 
-  # Generate interaction plot with gradient colors
   interaction.plot(
     x.factor = dataFrame$A,
     trace.factor = dataFrame$B,
@@ -360,7 +384,7 @@ APCSSM <- function(formula, data, numSim = 100000) {
     lwd = 2,
     main = "Interaction Plot"
   )
-  # Return result invisibly for flexibility
-  invisible(result)
+
+  invisible(object)
 }
 
