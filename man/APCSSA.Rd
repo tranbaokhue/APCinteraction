@@ -64,7 +64,7 @@ data <- data.frame(
 
 # Run the APCSSA test and view summary
 result <- APCSSA(value ~ A + B, data = data)
-summary.APC(result)
+summary(result)
 
 }
 \references{

@@ -71,7 +71,7 @@
 #'
 #' # Run the APCSSA test and view summary
 #' result <- APCSSA(value ~ A + B, data = data)
-#' summary.APC(result)
+#' summary(result)
 #'
 #' @importFrom magrittr %>%
 #' @export
@@ -239,7 +239,7 @@ APCSSA <- function(formula, data, numSim = 100000) {
 #'
 #' # With Cauchy errors, we opt for APCSSM to check for interaction
 #' result <- APCSSM(value ~ A + B, data = data)
-#' summary.APC(result)
+#' summary(result)
 #'
 #' @importFrom magrittr %>%
 #' @export

@@ -68,7 +68,7 @@ data <- data.frame(
 
 # With Cauchy errors, we opt for APCSSM to check for interaction
 result <- APCSSM(value ~ A + B, data = data)
-summary.APC(result)
+summary(result)
 
 }
 \references{

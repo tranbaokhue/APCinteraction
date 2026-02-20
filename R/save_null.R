@@ -13,7 +13,7 @@
 #' @return Invisibly returns the file paths to where the data were saved.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # First generate the desired null distribution
 #' sim_nullAPCSSA(2, 2, 2, 50000)
 #'

@@ -8,8 +8,10 @@
     of class `"APC"` silently; users call `summary.APC()` to view results and plots.
   - Removed default file-writing to working directory in `save_null()`. The
     `path` argument is now required (no default). Examples use `tempdir()`.
-  - Changed `\dontrun{}` to `\donttest{}` for example chunks that are not
-    dependent on external packages but may exceed 5 seconds.
+  - Examples for `sim_nullAPCSSA()`, `sim_nullAPCSSM()`, and `save_null()`
+    use `\dontrun{}` because these functions spawn parallel processes
+    (via `parallel::makeCluster`), which is incompatible with CRAN's
+    check environment that limits the number of cores.
 
 ## Note on `R/sysdata.rda`
 

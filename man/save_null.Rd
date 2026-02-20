@@ -25,7 +25,7 @@ Saves a null distribution from the package's cache to RData files in the
 specified directory.
 }
 \examples{
-\donttest{
+\dontrun{
 # First generate the desired null distribution
 sim_nullAPCSSA(2, 2, 2, 50000)
 
