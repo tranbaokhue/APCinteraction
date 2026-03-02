@@ -1,4 +1,4 @@
-#' APCinteraction: All Possible Comparisons (APC) Nonparametric Tests for Interaction in Balanced Two-way ANOVA Models
+#' APCinteraction: Nonparametric Interaction Tests in Balanced Two-Way ANOVA Models
 #'
 #' Provides nonparametric tests for interaction in two-way ANOVA designs with balanced
 #' replications using All Possible Comparisons (APC). The `APCSSA` and `APCSSM` statistics

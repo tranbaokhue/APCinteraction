@@ -1,6 +1,6 @@
 Package: APCinteraction
 Type: Package
-Title: All Possible Comparisons (APC) Nonparametric Tests for Interaction in Balanced Two-Way ANOVA Models
+Title: Nonparametric Interaction Tests in Balanced Two-Way ANOVA Models
 Version: 0.1.0
 Authors@R: c(
     person("Bao Khue", "Tran", role = c("aut", "cre"), email = "baokhuetran@outlook.com"),

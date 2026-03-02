@@ -4,7 +4,7 @@
 \name{APCinteraction}
 \alias{APCinteraction-package}
 \alias{APCinteraction}
-\title{APCinteraction: All Possible Comparisons (APC) Nonparametric Tests for Interaction in Balanced Two-way ANOVA Models}
+\title{APCinteraction: Nonparametric Interaction Tests in Balanced Two-Way ANOVA Models}
 \description{
 Provides nonparametric tests for interaction in two-way ANOVA designs with balanced
 replications using All Possible Comparisons (APC). The \code{APCSSA} and \code{APCSSM} statistics
